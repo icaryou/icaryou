@@ -99,7 +99,7 @@
                 },
                 "plazas": {
                     required:true,
-                    numbre:true,
+                    number:true,
                     min: 2                    
                 },              
                 
@@ -143,7 +143,7 @@
                 },
                 "plazas": {
                 	required: "Introduce un numero de plazas máximas(incluido tu)",
-                    numbre:"Introduce un número correcto",
+                    number:"Introduce un número correcto",
                     min: "Número mínimo 2"
                 },                 
             } 
@@ -153,7 +153,7 @@
 </script>
 </head>
 <body>
-<form id="formularioTrayecto" action="<?=base_url('registro/crearTrayectoPost')?>" method="post">
+<form id="formularioTrayecto" action="<?=base_url('trayecto/crearTrayectoPost')?>" method="post">
 
 <div class="container-fluid">
     <section class="container">
@@ -233,7 +233,7 @@
        			</div>
 				
 				<div class="form-group col-lg-12">
-					<input type="hidden" name="none" class="form-control" id="none" value="">
+					<input type="hidden" class="form-control" id="none" value="">
 				</div>
 				
 				<div class="form-group col-lg-6">
@@ -242,12 +242,12 @@
 				</div>
 				
 				<div class="form-group col-lg-12">
-					<input type="hidden" name="none" class="form-control" id="none" value="">
+					<input type="hidden" class="form-control" id="none" value="">
 				</div>			
 				
 											
 				
-				<div class="col-xs-12 col-lg-8"><input type="submit" value="Registrarse" class="btn btn-primary btn-block btn-lg" tabindex="7"></div>			
+				<div class="col-xs-12 col-lg-8"><input type="submit" name="submitOk" value="Registrarse" class="btn btn-primary btn-block btn-lg" tabindex="7"></div>			
 			</div>	
 				
 		</div>
