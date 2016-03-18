@@ -1,0 +1,27 @@
+
+*
+{
+	font-size:40px;
+}
+
+a
+{
+	color:green;
+}
+
+
+body ul
+{
+	display:inline;
+}
+
+body ul:first-child 
+{
+	display:inline;	
+}
+
+ul li:hover+ul
+{
+	display:inline;
+}
+
