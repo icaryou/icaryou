@@ -61,8 +61,9 @@
                 }
               },
             rules: {
+                /*
             	"cpOrigen": {
-                    required: true,
+                    required:true,
                     number:true,
                     minlength: 5,
                     maxlength: 5,
@@ -102,7 +103,7 @@
                     number:true,
                     min: 2                    
                 },              
-                
+                */
             },
             messages: {
             	"cpOrigen": {
