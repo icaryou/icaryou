@@ -61,7 +61,7 @@
                 }
               },
             rules: {
-                /*
+                
             	"cpOrigen": {
                     required:true,
                     number:true,
@@ -86,11 +86,11 @@
                 },
                 "horaLlegada": {
                     required: true,
-                    regx:/^([01]\d|2[0-3]):([0-5]\d)$///TODO    PROBAR
+                    regx:/^([01]\d|2[0-3]):([0-5]\d)$/ //TODO    PROBAR
                 },
                 "horaRetorno": {
                     required: true,
-                    regx:/^([01]\d|2[0-3]):?([0-5]\d)$///TODO    PROBAR
+                    regx:/^([01]\d|2[0-3]):?([0-5]\d)$/ //TODO    PROBAR
                 },
                 "comentarios": {
                 	maxlength: 140                    
@@ -103,7 +103,7 @@
                     number:true,
                     min: 2                    
                 },              
-                */
+                
             },
             messages: {
             	"cpOrigen": {

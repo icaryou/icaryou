@@ -53,14 +53,21 @@
           	   },
             debug: false,
             errorPlacement: function(error, element) {
-                if (element.attr("name") == "sexo") {
-                  error.insertAfter("#sexo");
-                } else {
-                  error.insertAfter(element);
+                if (element.attr("name") == "sexo") 
+                {
+                   error.insertAfter("#sexo");
+                } 
+                else if(element.attr("name") == "cochePropio")
+                {
+                   error.insertAfter("#cochePropio");
+                }
+                else 
+                {
+                   error.insertAfter(element);
                 }
               },
             rules: {
-                /*
+                
                 "nombre": {
                     required: true,
                     //PARA AÑADIR ESPRESION REGULAR PERSONAL    regx:/^[AB]{3}$/
@@ -85,7 +92,7 @@
                 },
                 "fechaNac": {
                     required: true,
-                    regx:/^(?:(?:31(\/|-|\.)(?:0?[13578]|1[02]))\1|(?:(?:29|30)(\/|-|\.)(?:0?[1,3-9]|1[0-2])\2))(?:(?:1[6-9]|[2-9]\d)?\d{2})$|^(?:29(\/|-|\.)0?2\3(?:(?:(?:1[6-9]|[2-9]\d)?(?:0[48]|[2468][048]|[13579][26])|(?:(?:16|[2468][048]|[3579][26])00))))$|^(?:0?[1-9]|1\d|2[0-8])(\/|-|\.)(?:(?:0?[1-9])|(?:1[0-2]))\4(?:(?:1[6-9]|[2-9]\d)?\d{2})$/
+                    regx:/^(((0[1-9]|[12]\d|3[01])\/(0[13578]|1[02])\/((19|[2-9]\d)\d{2}))|((0[1-9]|[12]\d|30)\/(0[13456789]|1[012])\/((19|[2-9]\d)\d{2}))|((0[1-9]|1\d|2[0-8])\/02\/((19|[2-9]\d)\d{2}))|(29\/02\/((1[6-9]|[2-9]\d)(0[48]|[2468][048]|[13579][26])|((16|[2468][048]|[3579][26])00))))$/
                 },
                 "cp": {
                     required: true,
@@ -97,7 +104,10 @@
                 "sexo": {
                     required: true
                 },
-                */               
+                "cochePropio": {
+                    required: true
+                },
+                               
                 
             },
             messages: {
@@ -113,12 +123,12 @@
                 },
                 "password": {
                     required: "Introduce tu contraseña",
-                    minlength:"Introduce al menos 5 caracteres.",
+                    minlength:"Introduce al menos 8 caracteres.",
                     maxlength: "Introduce como máximo 20 caracteres."                    
                 },
                 "passwordRepetido": {
                     required: "Introduce tu contraseña de nuevo",
-                    minlength: "Introduce al menos 5 caracteres.",
+                    minlength: "Introduce al menos 8 caracteres.",
                     maxlength: "Introduce como máximo 20 caracteres.",
                     equalTo:"La contraseña no se corresponde con la anterior"
                 },
@@ -136,7 +146,10 @@
 
                 "sexo": {
                     required: "Introduce tu sexo."
-                },                 
+                }, 
+                "cochePropio": {
+                    required: "Introduce si dispones o no de coche propio."
+                },                
             } 
         });
 });
@@ -179,7 +192,7 @@
 				
 				<div class="form-group col-lg-12">
 					<label>Fecha nacimiento</label>
-					<input type="date" placeholder="dd/mm/aaaa" name="fechaNac" class="form-control" id="fechaNac" value="">
+					<input type="text" placeholder="dd/mm/aaaa" name="fechaNac" class="form-control" id="fechaNac" value="">
 				</div>
 				
 				<div class="form-group col-lg-12">
@@ -199,6 +212,21 @@
 		                <label class="radio-inline">
 		                    <input type="radio" name="sexo" value="mujer">
 		                    Mujer
+		                </label>
+		              	<span class="field-validation-valid help-block"></span>
+		            </div>
+       			</div>
+       			
+       			<div class="form-group">
+		            <label class="col-lg-4 control-label" id="cochePropio" for="cochePropio">Coche propio</label>
+		            <div class="col-lg-12">
+		                <label class="radio-inline">
+		                    <input type="radio" name="cochePropio" value="si">
+		                    Si
+		                </label>
+		                <label class="radio-inline">
+		                    <input type="radio" name="cochePropio" value="no">
+		                    No
 		                </label>
 		              	<span class="field-validation-valid help-block"></span>
 		            </div>
