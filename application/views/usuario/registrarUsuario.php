@@ -33,7 +33,7 @@
 	$( document ).ready(function() 
 	{
 
-		//A�ADIR EXPRESIONES REGULARES
+		//AÑADIR EXPRESIONES REGULARES
 		$.validator.addMethod("regx", function(value, element, regexpr) {          
 		    return regexpr.test(value);
 		}, "Introduce un dato correcto.");
@@ -60,6 +60,7 @@
                 }
               },
             rules: {
+                /*
                 "nombre": {
                     required: true,
                     //PARA AÑADIR ESPRESION REGULAR PERSONAL    regx:/^[AB]{3}$/
@@ -73,17 +74,18 @@
                 },
                 "password": {
                     required: true,
-                    minlength: 5,
+                    minlength: 8,
                     maxlength: 20                    
                 },
                 "passwordRepetido": {
                     required: true,
-                    minlength: 5,
+                    minlength: 8,
                     maxlength: 20,
                     equalTo:"#password",
                 },
                 "fechaNac": {
-                    required: true
+                    required: true,
+                    regx:/^(?:(?:31(\/|-|\.)(?:0?[13578]|1[02]))\1|(?:(?:29|30)(\/|-|\.)(?:0?[1,3-9]|1[0-2])\2))(?:(?:1[6-9]|[2-9]\d)?\d{2})$|^(?:29(\/|-|\.)0?2\3(?:(?:(?:1[6-9]|[2-9]\d)?(?:0[48]|[2468][048]|[13579][26])|(?:(?:16|[2468][048]|[3579][26])00))))$|^(?:0?[1-9]|1\d|2[0-8])(\/|-|\.)(?:(?:0?[1-9])|(?:1[0-2]))\4(?:(?:1[6-9]|[2-9]\d)?\d{2})$/
                 },
                 "cp": {
                     required: true,
@@ -94,7 +96,8 @@
                 },
                 "sexo": {
                     required: true
-                },               
+                },
+                */               
                 
             },
             messages: {
@@ -120,7 +123,8 @@
                     equalTo:"La contraseña no se corresponde con la anterior"
                 },
                 "fechaNac": {
-                    required: "Fecha nacimiento obligatoria."
+                    required: "Fecha nacimiento obligatoria.",
+                    regx:"Formato fecha inválido(Formato requerido:dd/mm/yyyy)"
                 },                
                 "cp": {
                     required: "Introduce tu código postal.",
