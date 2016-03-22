@@ -1,19 +1,21 @@
 <?php
 
+if ( ! defined('BASEPATH')) exit('No direct script access allowed');
+
 class Usuario extends CI_Controller
 {
-	/*
+	
 	public function __construct() {
 		parent::__construct();
 			
 		//Cargamos la librería de validación (todos las librerias, helpers, etc pueden ser cargados en los controladores o auto cargarlos indicándolo en los ficheros de configuración)
 		//$this->load->library('form_validation');
 	}
-	*/
+	
 	public function registrarUsuario() 
 	{
-		//enmarcar($this,'usuario/registrarUsuario.php');
-		$this->load->view('usuario/registrarUsuario.php');
+		enmarcar($this,'usuario/registrarUsuario.php');
+		//$this->load->view('usuario/registrarUsuario.php');
 	}
 	
 	public function registrarUsuarioPost()
@@ -22,6 +24,7 @@ class Usuario extends CI_Controller
 		//VALIDACION
 		if($this->input->post())
 		{
+			//reglas de validacion
 			$this->form_validation->set_rules('nombre', 'nombre', 'required|trim');
 			$this->form_validation->set_rules('apellidos', 'apellidos', 'required|trim');
 			$this->form_validation->set_rules('email', 'email', 'required|valid_email|trim');
@@ -49,19 +52,9 @@ class Usuario extends CI_Controller
 			$this->form_validation->set_message('valid_email','El campo %s debe ser un email correcto');
 			$this->form_validation->set_message('matches','El campo %s debe coincidir con el campo %s');
 			 
-			if($this->form_validation->run()!=false){ //Si la validación es correcta
-				//RECOGIDA DATOS
-				/*
-				$registro['nombre']=isset($_REQUEST['nombre'])?$_REQUEST['nombre']:null;
-				$registro['apellidos']=isset($_REQUEST['apellidos'])?$_REQUEST['apellidos']:null;
-				$registro['email']=isset($_REQUEST['email'])?$_REQUEST['email']:null;
-				$registro['password']=isset($_REQUEST['password'])?$_REQUEST['password']:null;
-				$registro['passwordRepetido']=isset($_REQUEST['passwordRepetido'])?$_REQUEST['passwordRepetido']:null;
-				$registro['fechaNac']=isset($_REQUEST['fechaNac'])?$_REQUEST['fechaNac']:null;
-				$registro['cp']=isset($_REQUEST['cp'])?$_REQUEST['cp']:null;
-				$registro['sexo']=isset($_REQUEST['cp'])?$_REQUEST['cp']:null;
-				*/
-				
+			if($this->form_validation->run()!=false)//Si la validación es correcta
+			{ 
+				//RECOGIDA DATOS			
 				$registro['email']=$this->input->post('email');
 				$registro['password']=$this->input->post('password');
 				$registro['nombre']=$this->input->post('nombre');
@@ -72,34 +65,35 @@ class Usuario extends CI_Controller
 				$registro['cochePropio']=$this->input->post('cochePropio')=='si'?true:false;
 				
 				$this->load->model("Usuario_Model");
-				$resultado=$this->Usuario_Model->crearUsuario($registro);
+				$resultado=$this->Usuario_Model->crearUsuario($registro);//CREAMOS EN EL MODELO
 				
-				$datos["mensaje"]="Validación correcta";
+				$datos["mensaje"]="Validación correcta";//TODO
 				
 			}else{
-				$datos["mensaje"]="Validación incorrectaa";
+				$datos["mensaje"]="Validación incorrectaa";//TODO
 			}
 		
-			$this->load->view("usuario/registrarUsuarioPost",$registro);
-		}
+			//$this->load->view("usuario/registrarUsuarioPost",$datos);
+			enmarcar($this, "usuario/registrarUsuarioPost",$datos);//TODO
+			
+		}		
 		
-		
-		
-		/*
-		$this->load->model("Usuario_Model");
-		$resultado=$this->Usuario_Model->crearUsuario($registro);
-		*/
 		
 	}	//FIN REGISTRARUSUARIOPOST
+	
 	
 	
 	//=========LOGIN=================
 	
 	public function loginUsuario()
 	{
-		//enmarcar($this,'usuario/registrarUsuario.php');
-		$this->load->view('usuario/loginUsuario.php');
+		//RECOGEMOS DOS VARIABLES POR SI RETORNAMOS DE UN INTENTO DE LOGIN FALLIDO(LOGINUSUARIOPOST)
+		$datos['error']=$this->session->flashdata('error');
+		$datos['email']=$this->session->flashdata('email');
+		enmarcar($this,'usuario/loginUsuario.php',$datos);
+		//$this->load->view('usuario/loginUsuario.php');
 	}
+	
 	
 	public function loginUsuarioPost()
 	{
@@ -110,13 +104,34 @@ class Usuario extends CI_Controller
 			
 			$this->form_validation->set_message('required','El campo %s es obligatorio');
 		}
-		if($this->form_validation->run()!=false)
+		if($this->form_validation->run()!=false)//VALIDACION CORRECTA
 		{
+			//RECOGIDA DATOS
 			$login['email']=$this->input->post('email');
 			$login['password']=$this->input->post('password');
 			
 			$this->load->model("Usuario_Model");
-			$resultado=$this->Usuario_Model->loguearUsuario($login);
+			$usuario=$this->Usuario_Model->loguearUsuario($login);//COMPROBAMOS EN EL MODELO
+			
+			if ($usuario!=null)//ENCUENTRA USUARIO
+			{
+				$usuario_data = array(
+						'id' => $usuario->id,
+						'nombre' => $usuario->nombre,
+						'apellidos' => $usuario->apellidos,
+						'logueado' => TRUE
+				);
+				$this->session->set_userdata($usuario_data);
+				//SI SE HUBIERA FORZADO EL LOGIN POR INTENTAR ACCEDER A UN SITIO SIN PERMISO LE MANSDAMOS AL MISMO
+				isset($_REQUEST['redireccion'])?redirect($this->input->post('redireccion')):redirect('trayecto/buscarTrayecto');
+			}
+			else//NO ENCUENTRA
+			{
+				//GUARDAMOS DOS DATOS EN SESIONES TEMPORALES Y RETORNAMOS A LOGIN
+				$this->session->set_flashdata('error', 'El usuario o la contraseña son incorrectos.');
+				$this->session->set_flashdata('email', $login['email']);
+				redirect('usuario/loginUsuario');
+			}
 		}
 		
 		
@@ -125,7 +140,19 @@ class Usuario extends CI_Controller
 		//$this->load->view('usuario/registrarUsuario.php');
 	}
 	
-	//FUNCIONES PERSONALIZADAS ---  SE PUEDEN AGREGAR EN LIBRARIES/FORM_VALIDATION.PHP
+	
+	public function logoutUsuario()
+	{		
+		//PARAMETRO LOGUEADO A FALSE Y DESTRUIMOS SESION
+		$usuario_data = array(
+				'logueado' => FALSE
+		);
+		$this->session->set_userdata($usuario_data);
+		$this->session->sess_destroy();
+		redirect('trayecto/buscarTrayecto');	
+	}
+	
+	//FUNCIONES PERSONALIZADAS VALIDACION ---  SE PUEDEN AGREGAR EN LIBRARIES/FORM_VALIDATION.PHP
 	
 	//dd/mm/yyyy
 	public function _fechaRegexEuropeo($fecha) {

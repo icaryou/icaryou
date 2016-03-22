@@ -20,28 +20,13 @@ class Usuario_Model extends RedBean_SimpleModel
 	}
 	
 	public function loguearUsuario($login)
-	{
-		$usuario->email=$login['email'];
-		$usuario->password=sha1($login['password']);
+	{		
+		$usuario=R::findOne("usuario","email=? AND password=?",array($login['email'],sha1($login['password'])));
 		
-		//$usuario = R::findOne( 'usuario', ' email LIKE :emailLogin ', [ ':emailLogin' => $login['email']]);
-		//$usuario = R::findOne( 'usuario', ' email LIKE :emailLogin ', [ ':emailLogin' => $login['email']]);
-		
-		//$usuario=R::getAll( 'select * from usuario where email= :emailLogin AND password = :passwordLogin',
-			//	array(':emailLogin'=>$login['email'],':passwordLogin' => $login['password']) );
-		
-		//$usuario=R::getAll( 'select * from usuario' );
-		
-		if ($usuario!=null) 
-		{
-			echo "encontrado";
-			var_dump($usuario[0]['nombre']);
-		}
-		else
-		{
-			echo "no encontrado";
-		}
-		
+		//OTRA FORMA
+		//$usuario=R::getAll( 'select * from usuario where email= :emailLogin AND password = :passwordLogin',array(':emailLogin'=>$login['email'],':passwordLogin' => sha1($login['password'])) );
+			
+		return $usuario;		
 	}
 	
 	

@@ -5,21 +5,39 @@ class Trayecto extends CI_Controller
 	public function __construct() {
 		parent::__construct();
 		 
-		//Cargamos la librería de validación (todos las librerias, helpers, etc pueden ser cargados en los controladores o auto cargarlos indicándolo en los ficheros de configuración)
+		//Cargamos la librería de validación (todos las librerias, helpers, etc pueden ser cargados en los controladores o autocargarlos indicándolo en los ficheros de configuración)
 		$this->load->library('form_validation');
+	}
+	
+	public function buscarTrayecto()
+	{
+		enmarcar($this,'trayecto/buscarTrayecto.php');
+		//$this->load->view('trayecto/crearTrayecto.php');	
 	}
 	
 	public function crearTrayecto() 
 	{
-		//enmarcar($this,'registro/registrarUsuario.php');
-		$this->load->view('trayecto/crearTrayecto.php');
+		//VALIDAMOS SI HAY USUARIO ACTIVO
+		if($this->session->userdata('logueado'))
+		{
+			enmarcar($this,'trayecto/crearTrayecto.php');
+			//$this->load->view('trayecto/crearTrayecto.php');
+		}
+		else//SI NO ESTA LOGUEADO LE MANDAMOS AL LOGIN CON UN CAMPO REDIRECCION PARA QUE LUEGO LE LLEVE A LA PAGINA QUE QUERIA
+		{
+			//$datos=array();
+			$datos['redireccion']='trayecto/crearTrayecto';
+			enmarcar($this,'usuario/loginUsuario.php',$datos);
+		}
+		
 	}
 	
 	public function crearTrayectoPost()
 	{
 		
-		if($this->input->post("submitOk"))
+		if($this->input->post("submitOk"))//se puede quitar el "submitok"
 		{
+			//reglas de validacion
 			$this->form_validation->set_rules('cpOrigen', 'CP origen', 'required|exact_length[5]|is_natural|less_than[53000]|trim');
 			$this->form_validation->set_rules('poblacionOrigen', 'Población origen', 'required|trim');
 			$this->form_validation->set_rules('cpDestino', 'CP destino', 'required|exact_length[5]|is_natural|less_than[53000]|trim');
@@ -45,12 +63,13 @@ class Trayecto extends CI_Controller
             //$this->form_validation->set_message('valid_email','El campo %s debe ser un email correcto');
              
              if($this->form_validation->run()!=false){ //Si la validación es correcta
-                $datos["mensaje"]="Validación correcta";
+                $datos["mensaje"]="Validación correcta";//TODO
              }else{
-                $datos["mensaje"]="Validación incorrectaa";
+                $datos["mensaje"]="Validación incorrectaa";//TODO
              }
               
-             $this->load->view("trayecto/crearTrayectoPost",$datos);
+             //$this->load->view("trayecto/crearTrayectoPost",$datos);
+             //enmarcar($this, "trayecto/crearTrayectoPost",$datos);//TODO
 		}	
 	}
 	

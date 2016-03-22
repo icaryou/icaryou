@@ -1,3 +1,4 @@
+<!--  
 <html>
 
 <head>
@@ -27,6 +28,10 @@
 	}
 	
 </style>
+
+-->
+
+
 <script>
 	
 	
@@ -155,8 +160,12 @@
 });
 	
 </script>
+
+<!--  
 </head>
 <body>
+-->
+
 <form id="formularioRegistro" action="<?=base_url('usuario/registrarUsuarioPost')?>" method="post">
 
 <div class="container-fluid">
@@ -242,6 +251,7 @@
 </div>
 
 </form>
-
+<!-- 
 </body>
 </html>
+ -->

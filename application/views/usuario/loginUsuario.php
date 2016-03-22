@@ -11,6 +11,12 @@
 <script src="<?= base_url();?>assets/js/bootstrap.min.js"></script>
 
 <style>
+
+	.error
+	{
+		color: red;
+	}
+
 	input.error 
 	{
     	color: red;
@@ -77,25 +83,33 @@
 			<div class="col-md-6">
 				<h3 class="dark-grey">Login</h3>
 												
-				<div class="form-group col-lg-12">
+				<div class="form-group col-lg-8">
 					<label>Email</label>
-					<input type="text" name="email" class="form-control" id="email" value="">
+					<input type="text" name="email" class="form-control" id="email" value="<?php echo isset($email)?$email:''?>">
 				</div>				
-				<div class="form-group col-lg-12">
+				<div class="form-group col-lg-8">
 					<label>Contraseña</label>
 					<input type="password" name="password" class="form-control" id="password" value="">
 				</div>										
 				
-				<div class="col-xs-12 col-lg-8"><input type="submit" value="Login" class="btn btn-primary btn-block btn-lg" tabindex="7"></div>			
+				<?php if(isset($error)):?>
+					<p class="error col-lg-8"><?=$error?></p>
+				<?php endif;?>
+				
+				<?php if(isset($redireccion)):?>
+					<input type="hidden" name="redireccion" value="<?php echo $redireccion?>"/>
+				<?php endif;?>					
+				
+				<div class="col-xs-12 col-lg-6"><input type="submit" value="Login" class="btn btn-primary btn-block btn-lg" tabindex="7"></div>			
+			<p class="col-lg-8"><a href="<?=base_url('usuario/registrarUsuario')?>">Crear una cuenta</a></p>	
 			</div>	
 				
-		</div>
+		</div>	
 		
-	</section>
-	
+	</section>	
 </div>
 
 </form>
-
+	
 </body>
 </html>
