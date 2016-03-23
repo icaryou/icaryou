@@ -38,6 +38,9 @@
 	$( document ).ready(function() 
 	{
 
+		var getUrl = window.location;
+		var baseUrl = getUrl .protocol + "//" + getUrl.host + "/" + getUrl.pathname.split('/')[1]+"/"+getUrl.pathname.split('/')[2]+"/"+getUrl.pathname.split('/')[3];
+		
 		//AÑADIR EXPRESIONES REGULARES
 		$.validator.addMethod("regx", function(value, element, regexpr) {          
 		    return regexpr.test(value);
@@ -83,6 +86,11 @@
                 "email": {
                     required: true,
                     email: true,
+                    remote : {
+                        url: "comprobarEmail",
+                        type: "post",
+                        dataType: 'json'
+                     }
                 },
                 "password": {
                     required: true,
@@ -124,7 +132,8 @@
                 },
                 "email": {
                     required: "Introduce tu email.",
-                    email: "Introduce un email válido."
+                    email: "Introduce un email válido.",
+                    remote: "Email existente."
                 },
                 "password": {
                     required: "Introduce tu contraseña",

@@ -2,6 +2,18 @@
 
 class Usuario_Model extends RedBean_SimpleModel
 {		
+	public function comprobarEmail($email)
+	{
+		$usuario=R::findOne("usuario","email=?",array($email));
+		return $usuario;
+		
+	}
+	
+	public function obtenerUsuarioPorId($id)
+	{
+		$usuario=R::load('usuario',$id);
+		return $usuario;
+	}
 	
 	public function crearUsuario($registro)
 	{	
@@ -21,11 +33,10 @@ class Usuario_Model extends RedBean_SimpleModel
 	
 	public function loguearUsuario($login)
 	{		
-		$usuario=R::findOne("usuario","email=? AND password=?",array($login['email'],sha1($login['password'])));
-		
+		$usuario=R::findOne("usuario","email=? AND password=?",array($login['email'],sha1($login['password'])));		
 		//OTRA FORMA
 		//$usuario=R::getAll( 'select * from usuario where email= :emailLogin AND password = :passwordLogin',array(':emailLogin'=>$login['email'],':passwordLogin' => sha1($login['password'])) );
-			
+		
 		return $usuario;		
 	}
 	

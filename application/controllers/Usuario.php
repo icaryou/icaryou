@@ -12,6 +12,29 @@ class Usuario extends CI_Controller
 		//$this->load->library('form_validation');
 	}
 	
+	public function comprobarEmail()
+	{
+		
+		if (isset($_REQUEST['email'])&&$_REQUEST['email']!='')
+		{
+			$this->load->model("Usuario_Model");
+			$resultado=$this->Usuario_Model->comprobarEmail($_REQUEST['email']);	
+			if($resultado!=null)
+			{
+				echo 'false';//SI ENCUENTRA EMAIL DEVOLVEMOS FALSE(ERROR)
+			}
+			else
+			{
+				echo 'true';
+			}
+		}
+		else
+		{
+			echo 'false';//No deberia entra aqui, pero lo ponemos por si acaso
+		}
+		
+	}
+	
 	public function registrarUsuario() 
 	{
 		enmarcar($this,'usuario/registrarUsuario.php');

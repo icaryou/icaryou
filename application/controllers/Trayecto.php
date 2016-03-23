@@ -47,8 +47,6 @@ class Trayecto extends CI_Controller
 			$this->form_validation->set_rules('comentarios', 'comentarios', 'max_length[140]|trim');
 			$this->form_validation->set_rules('dias[]', 'dias', 'required');
 			$this->form_validation->set_rules('plazas', 'plazas', 'required|is_natural|greater_than[1]|trim');
-            //$this->form_validation->set_rules('email', 'Email', 'required|min_length[3]|valid_email|trim');
-            //$this->form_validation->set_rules('password', 'Contraseña', 'required|min_length[3]');
              
             //Mensajes
             // %s es el nombre del campo que ha fallado
@@ -62,9 +60,35 @@ class Trayecto extends CI_Controller
             $this->form_validation->set_message('_horaRegex','Formato de hora inválido');
             //$this->form_validation->set_message('valid_email','El campo %s debe ser un email correcto');
              
-             if($this->form_validation->run()!=false){ //Si la validación es correcta
-                $datos["mensaje"]="Validación correcta";//TODO
-             }else{
+             if($this->form_validation->run()!=false)//Si la validación es correcta
+             { 
+             	
+             	//RECOGIDA DE DATOS
+             	$trayecto['cpOrigen']=$this->input->post('cpOrigen');
+             	$trayecto['poblacionOrigen']=$this->input->post('poblacionOrigen');
+             	$trayecto['cpDestino']=$this->input->post('cpDestino');
+             	$trayecto['poblacionDestino']=$this->input->post('poblacionDestino');
+             	$trayecto['horaLlegada']=$this->input->post('horaLlegada');
+             	$trayecto['horaRetorno']=$this->input->post('horaRetorno');
+             	$trayecto['comentarios']=$this->input->post('comentarios');
+             	$trayecto['dias[]']=$this->input->post('dias[]');
+             	$trayecto['plazas']=$this->input->post('plazas');
+             	$trayecto['creador_id']=$this->session->userdata('id');
+             	
+             	
+                $this->load->Model('Usuario_Model');
+                $usuario=$this->Usuario_Model->obtenerUsuarioPorId($this->session->userdata('id'));
+                
+             	/*
+             	$this->load->Model('Lugar_Model');
+             	$usuario=$this->Usuario_Model->obtenerUsuarioPorEmail($this->session->userdata('id'));
+             	*/
+             	
+                $this->load->Model('Trayecto_Model');
+                $trayectoCreado=$this->Trayecto_Model->crearTrayecto($trayecto,$usuario);
+             }
+             else
+             {
                 $datos["mensaje"]="Validación incorrectaa";//TODO
              }
               
