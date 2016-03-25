@@ -9,10 +9,16 @@ class Usuario extends CI_Controller
 		parent::__construct();
 			
 		//Cargamos la librería de validación (todos las librerias, helpers, etc pueden ser cargados en los controladores o auto cargarlos indicándolo en los ficheros de configuración)
-		//$this->load->library('form_validation');
+		$this->load->library('email');
 	}
 	
-	public function comprobarEmail()
+	public function enviarEmail()//DEBUG
+	{		
+		$this->load->model("Usuario_Model");
+		$usuario=$this->Usuario_Model->enviarEmail();//COMPROBAMOS EN EL MODELO
+	}
+	
+	public function comprobarEmail()//PETICION AJAX DESDE FORMULARIO
 	{
 		
 		if (isset($_REQUEST['email'])&&$_REQUEST['email']!='')
