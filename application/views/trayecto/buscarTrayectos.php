@@ -60,6 +60,7 @@
                   error.insertAfter(element);
                 }
               },
+              /*
             rules: {
                 
             	"cpOrigen": {
@@ -84,11 +85,19 @@
                     required: true
                     //PARA AÑADIR ESPRESION REGULAR PERSONAL    regx:/^[AB]{3}$/
                 },
-                "horaLlegada": {
+                "horaLlegadaDesde": {
                     required: true,
                     regx:/^([01]\d|2[0-3]):([0-5]\d)$/ //TODO    PROBAR
                 },
-                "horaRetorno": {
+                "horaLlegadaHasta": {
+                    required: true,
+                    regx:/^([01]\d|2[0-3]):([0-5]\d)$/ //TODO    PROBAR
+                },
+                "horaRetornoDesde": {
+                    required: true,
+                    regx:/^([01]\d|2[0-3]):?([0-5]\d)$/ //TODO    PROBAR
+                },
+                "horaRetornoHasta": {
                     required: true,
                     regx:/^([01]\d|2[0-3]):?([0-5]\d)$/ //TODO    PROBAR
                 },
@@ -105,6 +114,7 @@
                 },              
                 
             },
+            */
             messages: {
             	"cpOrigen": {
             		required: "Introduce tu código postal de origen.",
@@ -125,15 +135,23 @@
                     max:"Introduce un valor válido."
                 },
                 "poblacionDestino": {
-                	required: "Introduce tu población de destino.",
+                	required: "Introduce tu población de destino."
                     //PARA AÑADIR ESPRESION REGULAR PERSONAL    regx:/^[AB]{3}$/
                 },
-                "horaLlegada": {
-                    required: "Introduce una hora de llegada al trabajo",
+                "horaLlegadaDesde": {
+                    required: "Introduce una hora",
                     regx:"Introduce un formato de hora válido"
                 },
-                "horaRetorno": {
-                	required: "Introduce una hora de retorno del trabajo",
+                "horaLlegadaHasta": {
+                    required: "Introduce una hora",
+                    regx:"Introduce un formato de hora válido"
+                },
+                "horaRetornoDesde": {
+                	required: "Introduce una hora",
+                    regx:"Introduce un formato de hora válido"
+                },
+                "horaRetornoHasta": {
+                	required: "Introduce una hora",
                     regx:"Introduce un formato de hora válido"
                 },
                 "comentarios": {
@@ -154,7 +172,7 @@
 </script>
 </head>
 <body>
-<form id="formularioTrayecto" action="<?=base_url('trayecto/crearTrayectoPost')?>" method="post">
+<form id="formularioTrayecto" action="<?=base_url('trayecto/buscarTrayectosPost')?>" method="post">
 
 <div class="container-fluid">
     <section class="container">
@@ -181,21 +199,26 @@
 					<label>Población destino</label>
 					<input type="text" name="poblacionDestino" class="form-control" id="poblacionDestino" value="">
 				</div>				
-				
-				<div class="form-group col-lg-12">
-					<label>Hora de llegada al trabajo</label>
-					<input type="text" placeholder="HH:MM" name="horaLlegada" class="form-control" id="horaLlegada" value="">
+				<h4>Hora de llegada al trabajo</h4>
+				<div class="form-group col-lg-6">
+					<label>Desde</label>
+					<input type="text" placeholder="HH:MM" name="horaLlegadaDesde" class="form-control" id="horaLlegadaDesde" value="">
+				</div>
+				<div class="form-group col-lg-6">
+					<label>hasta</label>
+					<input type="text" placeholder="HH:MM" name="horaLlegadaHasta" class="form-control" id="horaLlegadaHasta" value="">
+				</div>
+				<h4>Hora de vuelta del trabajo</h4>
+				<div class="form-group col-lg-6">
+					<label>Desde</label>
+					<input type="text" placeholder="HH:MM" name="horaRetornoDesde" class="form-control" id="horaRetornoDesde" value="">
 				</div>
 				
-				<div class="form-group col-lg-12">
-					<label>Hora de vuelta del trabajo</label>
-					<input type="text" placeholder="HH:MM" name="horaRetorno" class="form-control" id="horaRetorno" value="">
-				</div>
+				<div class="form-group col-lg-6">
+					<label>hasta</label>
+					<input type="text" placeholder="HH:MM" name="horaRetornoHasta" class="form-control" id="horaRetornoHasta" value="">
+				</div>				
 				
-				<div class="form-group col-lg-12">
-					<label>Comentarios</label>
-					<textarea maxlength="140" name="comentarios" class="form-control" id="cp" ></textarea>
-				</div>	
 				
 				<!-- CHECKBOX -->
 				<div class="form-group">
@@ -237,18 +260,11 @@
 					<input type="hidden" class="form-control" id="none" value="">
 				</div>
 				
-				<div class="form-group col-lg-6">
-					<label>Plazas máximas(incluido tú).</label>
-					<input type="text" name="plazas" class="form-control" id="plazas" value="">
-				</div>
-				
-				<div class="form-group col-lg-12">
-					<input type="hidden" class="form-control" id="none" value="">
-				</div>			
+							
 				
 											
 				
-				<div class="col-xs-12 col-lg-8"><input type="submit" name="submitOk" value="Registrarse" class="btn btn-primary btn-block btn-lg" tabindex="7"></div>			
+				<div class="col-xs-12 col-lg-8"><input type="submit" name="submitOk" value="Buscar" class="btn btn-primary btn-block btn-lg" tabindex="7"></div>			
 			</div>	
 				
 		</div>

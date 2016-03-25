@@ -10,6 +10,24 @@ class Trayecto_Model extends RedBean_SimpleModel
 		return $trayecto;
 	}
 	
+	public function buscarTrayectos($trayecto)
+	{
+		//TODO creo que ya esta funcional, solo añadir las poblaciones y dias
+		$trayectosEncontrado=R::getAll('select * from trayecto t 
+				join lugar li on t.inicio_id=li.id
+				join lugar ld on t.destino_id=ld.id
+				where t.hora_llegada_destino>= :horaLlegadaDesde
+				AND t.hora_llegada_destino<= :horaLlegadaHasta
+				AND t.hora_retorno_destino>= :horaRetornoDesde
+				AND t.hora_retorno_destino<= :horaRetornoHasta',
+				array(':horaLlegadaDesde'=>$trayecto['horaLlegadaDesde'],
+						':horaLlegadaHasta'=>$trayecto['horaLlegadaHasta'],
+						':horaRetornoDesde'=>$trayecto['horaRetornoDesde'],
+						':horaRetornoHasta'=>$trayecto['horaRetornoHasta']));
+		var_dump($trayectosEncontrado);
+		//return $trayecto;
+	}
+	
 	public function crearTrayecto($trayectoInput,$usuario)
 	{	
 		
@@ -42,6 +60,8 @@ class Trayecto_Model extends RedBean_SimpleModel
 		R::Store($usuario_trayecto);
 	}
 	
+	
+	//funcion para convertir array dias en string tipo(LMXJV)
 	public function diasToString($dias)
 	{
 		$diasString="";
