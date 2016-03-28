@@ -22,4 +22,19 @@ class Welcome extends CI_Controller {
 	{
 		$this->load->view('welcome_message');
 	}
+	
+	public function plantilla()
+	{
+		$this->load->view('bootstrap/index');
+	}
+	
+	public function service()
+	{
+		$this->load->view('bootstrap/service');
+	}
+	
+	public function registrarUsuario()
+	{
+		$this->load->view('bootstrap/registrarUsuario');
+	}
 }

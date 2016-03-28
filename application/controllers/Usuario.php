@@ -43,8 +43,8 @@ class Usuario extends CI_Controller
 	
 	public function registrarUsuario() 
 	{
-		enmarcar($this,'usuario/registrarUsuario.php');
-		//$this->load->view('usuario/registrarUsuario.php');
+		//enmarcar($this,'usuario/registrarUsuario.php');
+		$this->load->view('bootstrap/registrarUsuario.php');
 	}
 	
 	public function registrarUsuarioPost()
