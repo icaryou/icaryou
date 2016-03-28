@@ -12,18 +12,26 @@ class Trayecto_Model extends RedBean_SimpleModel
 	
 	public function buscarTrayectos($trayecto)
 	{
-		//TODO creo que ya esta funcional, solo añadir las poblaciones y dias
+		//TODO creo que ya esta funcional, solo añadir  dias
 		$trayectosEncontrado=R::getAll('select * from trayecto t 
 				join lugar li on t.inicio_id=li.id
 				join lugar ld on t.destino_id=ld.id
 				where t.hora_llegada_destino>= :horaLlegadaDesde
 				AND t.hora_llegada_destino<= :horaLlegadaHasta
 				AND t.hora_retorno_destino>= :horaRetornoDesde
-				AND t.hora_retorno_destino<= :horaRetornoHasta',
+				AND t.hora_retorno_destino<= :horaRetornoHasta
+				AND (li.cp= :cpOrigen OR li.poblacion like :poblacionOrigen)
+				AND (ld.cp= :cpDestino OR ld.poblacion like :poblacionDestino)
+				AND (t.dias like :dias)',
 				array(':horaLlegadaDesde'=>$trayecto['horaLlegadaDesde'],
 						':horaLlegadaHasta'=>$trayecto['horaLlegadaHasta'],
 						':horaRetornoDesde'=>$trayecto['horaRetornoDesde'],
-						':horaRetornoHasta'=>$trayecto['horaRetornoHasta']));
+						':horaRetornoHasta'=>$trayecto['horaRetornoHasta'],
+						':cpOrigen'=>$trayecto['cpOrigen'],
+						':poblacionOrigen'=>$trayecto['poblacionOrigen'],
+						':cpDestino'=>$trayecto['cpDestino'],
+						':poblacionDestino'=>$trayecto['poblacionDestino'],
+						':dias'=>$this->diasToStringParaBuscar($trayecto['dias[]']),));
 		var_dump($trayectosEncontrado);
 		//return $trayecto;
 	}
@@ -35,7 +43,7 @@ class Trayecto_Model extends RedBean_SimpleModel
 		
 		$trayecto=R::dispense('trayecto');
 		
-		$trayecto->dias=$this->diasToString($trayectoInput['dias[]']);
+		$trayecto->dias=$this->diasToStringParaGuardar($trayectoInput['dias[]']);
 		$trayecto->horaLlegadaDestino=$trayectoInput['horaLlegada'];		
 		$trayecto->horaRetornoDestino=$trayectoInput['horaRetorno'];
 		$trayecto->comentarios=$trayectoInput['comentarios'];
@@ -62,7 +70,17 @@ class Trayecto_Model extends RedBean_SimpleModel
 	
 	
 	//funcion para convertir array dias en string tipo(LMXJV)
-	public function diasToString($dias)
+	public function diasToStringParaBuscar($dias)
+	{
+		$diasString="%";
+		foreach ($dias as $dia)
+		{
+			$diasString.=$dia.'%';
+		}
+		return $diasString;
+	}
+	
+	public function diasToStringParaGuardar($dias)
 	{
 		$diasString="";
 		foreach ($dias as $dia)
