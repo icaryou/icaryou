@@ -148,11 +148,12 @@ class Usuario extends CI_Controller
 						'id' => $usuario->id,
 						'nombre' => $usuario->nombre,
 						'apellidos' => $usuario->apellidos,
+						'email' => $usuario->email,
 						'logueado' => TRUE
 				);
 				$this->session->set_userdata($usuario_data);
 				//SI SE HUBIERA FORZADO EL LOGIN POR INTENTAR ACCEDER A UN SITIO SIN PERMISO LE MANSDAMOS AL MISMO
-				isset($_REQUEST['redireccion'])?redirect($this->input->post('redireccion')):redirect('trayecto/buscarTrayecto');
+				isset($_REQUEST['redireccion'])?redirect($this->input->post('redireccion')):redirect('trayecto/buscarTrayectos');
 			}
 			else//NO ENCUENTRA
 			{
@@ -178,7 +179,56 @@ class Usuario extends CI_Controller
 		);
 		$this->session->set_userdata($usuario_data);
 		$this->session->sess_destroy();
-		redirect('trayecto/buscarTrayecto');	
+		redirect('trayecto/buscarTrayectos');	//TODO este y el login meten un index.php en el login
+	}
+	
+	public function cambiarPassword()
+	{
+		//RECOGEMOS DOS VARIABLES POR SI RETORNAMOS DE UN INTENTO DE LOGIN FALLIDO(LOGINUSUARIOPOST)
+		$datos['error']=$this->session->flashdata('error');
+		enmarcar($this,'usuario/cambiarPassword.php',$datos);
+	}
+	
+	public function cambiarPasswordPost()
+	{
+		//VALIDACION
+		if($this->input->post())
+		{
+			//reglas de validacion
+			
+			$this->form_validation->set_rules('password', 'contraseña', 'required|min_length[8]|max_length[20]|trim');
+			$this->form_validation->set_rules('passwordRepetido', 'repetir contraseña', 'required|min_length[8]|max_length[20]|trim|matches[password]');
+			$this->form_validation->set_rules('passwordAntiguo', 'contraseña', 'required|min_length[8]|max_length[20]|trim');
+			
+		
+			//Mensajes
+			// %s es el nombre del campo que ha fallado
+			$this->form_validation->set_message('required','El campo %s es obligatorio');
+			$this->form_validation->set_message('min_length','El campo %s debe tener como mínimo %s carácteres');
+			$this->form_validation->set_message('max_length','El campo %s debe tener como máximo %s carácteres');//PERSONALIZAR CON DOBLE %s			
+			$this->form_validation->set_message('matches','El campo %s debe coincidir con el campo %s');
+		
+			if($this->form_validation->run()!=false)//Si la validación es correcta
+			{
+				//RECOGIDA DATOS
+				$cambioPassword['password']=$this->input->post('password');
+				$cambioPassword['passwordAntiguo']=$this->input->post('passwordAntiguo');
+				$cambioPassword['email']=$this->session->userdata('logueado')?$this->session->userdata('email'):null;
+		
+				$this->load->model("Usuario_Model");
+				$resultado=$this->Usuario_Model->cambiarPassword($cambioPassword);
+			}	
+				/*
+				$datos["mensaje"]="Validación correcta";//TODO
+		
+			}else{
+				$datos["mensaje"]="Validación incorrectaa";//TODO
+			}
+		
+			//$this->load->view("usuario/registrarUsuarioPost",$datos);
+			enmarcar($this, "usuario/registrarUsuarioPost",$datos);//TODO
+			*/	
+		}		
 	}
 	
 	//FUNCIONES PERSONALIZADAS VALIDACION ---  SE PUEDEN AGREGAR EN LIBRARIES/FORM_VALIDATION.PHP
