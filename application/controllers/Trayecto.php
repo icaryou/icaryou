@@ -19,8 +19,7 @@ class Trayecto extends CI_Controller
 	{
 	
 		if($this->input->post())
-		{
-			echo 'reglas';
+		{			
 			
 			//reglas de validacion //TODO
 			
@@ -50,7 +49,6 @@ class Trayecto extends CI_Controller
 			 
 			if($this->form_validation->run()!=false)//Si la validación es correcta
 			{
-				echo 'validado';
 				//RECOGIDA DE DATOS
 				$trayecto['cpOrigen']=$this->input->post('cpOrigen');
 				$trayecto['poblacionOrigen']=$this->input->post('poblacionOrigen');
