@@ -35,11 +35,11 @@ class Welcome extends CI_Controller {
 	
 	public function registrarUsuario()
 	{
-		$this->load->view('bootstrap/registrarUsuario');
+		enmarcar($this,'bootstrap/registrarUsuario.php');
 	}
 	
 	public function crearTrayecto()
 	{
-		$this->load->view('bootstrap/crearTrayecto');
+		enmarcar($this,'bootstrap/crearTrayecto.php');
 	}
 }

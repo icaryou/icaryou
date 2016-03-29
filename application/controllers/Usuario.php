@@ -43,8 +43,8 @@ class Usuario extends CI_Controller
 	
 	public function registrarUsuario() 
 	{
-		//enmarcar($this,'usuario/registrarUsuario.php');
-		$this->load->view('bootstrap/registrarUsuario.php');
+		enmarcar($this,'bootstrap/registrarUsuario.php');
+		//$this->load->view('bootstrap/registrarUsuario.php');
 	}
 	
 	public function registrarUsuarioPost()
@@ -102,8 +102,8 @@ class Usuario extends CI_Controller
 				$datos["mensaje"]="Validación incorrectaa";//TODO
 			}
 		
-			//$this->load->view("usuario/registrarUsuarioPost",$datos);
-			enmarcar($this, "usuario/registrarUsuarioPost",$datos);//TODO
+			//$this->load->view("bootstrap/registrarUsuarioPost",$datos);
+			enmarcar($this, "bootstrap/registrarUsuarioPost",$datos);//TODO
 			
 		}		
 		
@@ -119,7 +119,7 @@ class Usuario extends CI_Controller
 		//RECOGEMOS DOS VARIABLES POR SI RETORNAMOS DE UN INTENTO DE LOGIN FALLIDO(LOGINUSUARIOPOST)
 		$datos['error']=$this->session->flashdata('error');
 		$datos['email']=$this->session->flashdata('email');
-		enmarcar($this,'usuario/loginUsuario.php',$datos);
+		enmarcar($this,'bootstrap/loginUsuario',$datos);
 		//$this->load->view('usuario/loginUsuario.php');
 	}
 	

@@ -1,5 +1,7 @@
 <?php
 function enmarcar($controlador,$vista,$datos=[]) {
+	//ESTO ES EL CODIGO ORIGINAL, LO DEJO SIN TOCAR
+	/*
 	$controlador->load->view('templates/head');
 	$controlador->load->view('templates/header');
 
@@ -10,5 +12,9 @@ function enmarcar($controlador,$vista,$datos=[]) {
 	$controlador->load->view($vista,$datos);
 	$controlador->load->view('templates/footer');
 	$controlador->load->view('templates/end');
+	*/
+	$controlador->load->view('bootstrap/head');
+	$controlador->load->view($vista,$datos);
+	$controlador->load->view('bootstrap/footer');
 }
 ?>
