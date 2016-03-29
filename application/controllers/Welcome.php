@@ -37,4 +37,9 @@ class Welcome extends CI_Controller {
 	{
 		$this->load->view('bootstrap/registrarUsuario');
 	}
+	
+	public function crearTrayecto()
+	{
+		$this->load->view('bootstrap/crearTrayecto');
+	}
 }
