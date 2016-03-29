@@ -1,41 +1,4 @@
-<!DOCTYPE html>
-<html>
-  <head>
-    <meta charset="utf-8">
-    <title>I Car You</title>
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="">
-    <meta name="author" content="">
-    <!-- Bootstrap -->
-    <link href="<?= base_url();?>assets/css/bootstrap.css" rel="stylesheet">
-    <link href="<?= base_url();?>assets/css/bootstrap-responsive.css" rel="stylesheet">
-    <link href="<?= base_url();?>assets/css/style.css" rel="stylesheet"> 
-    
-    <!--Font-->
-    <link href='http://fonts.googleapis.com/css?family=Source+Sans+Pro:200,300,400,600' rel='stylesheet' type='text/css'>
-    
-    
-    
-    <!-- HTML5 shim, for IE6-8 support of HTML5 elements -->
-    <!--[if lt IE 9]>
-      <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
-    <![endif]-->
-      
-      <!-- Fav and touch icons -->
-      <link rel="shortcut icon" href="ico/favicon.ico">
-      <link rel="apple-touch-icon-precomposed" sizes="144x144" href="ico/apple-touch-icon-144-precomposed.png">
-      <link rel="apple-touch-icon-precomposed" sizes="114x114" href="ico/apple-touch-icon-114-precomposed.png">
-      <link rel="apple-touch-icon-precomposed" sizes="72x72" href="ico/apple-touch-icon-72-precomposed.png">
-      <link rel="apple-touch-icon-precomposed" href="ico/apple-touch-icon-57-precomposed.png">
-
-
-      
-
-    <!-- SCRIPT 
-    ============================================================-->  
-    <script src="http://code.jquery.com/jquery.js"></script>
-    <script src="<?= base_url();?>assets/js/bootstrap.min.js"></script>
-      
+ 
       
   </head>
   <body>
@@ -69,6 +32,9 @@
                         <li><a href="<?= base_url();?>welcome/services">Services</a></li>
                         <li><a href="blog.html">Blog</a></li>
                         <li><a href="contact.html">Contact</a></li>
+                        <li class="login">
+                            <a data-toggle="modal" href="#loginForm"><i class="icon-lock"></i></a>
+                        </li>
                  
                     </ul>
                   </div>
@@ -81,6 +47,69 @@
     </div>
   </div>
   <!-- /HEADER ROW -->
+
+
+
+
+
+<!--  Login form -->
+<div class="modal hide fade in" id="loginForm" aria-hidden="false">
+    <div class="modal-header">
+        <i class="icon-remove" data-dismiss="modal" aria-hidden="true"></i>
+        <h4>Login Usuario</h4>
+    </div>
+    <!--Modal Body-->
+    <div class="modal-body">
+
+
+				<form id="formularioLogin"
+					action="<?=base_url('usuario/loginUsuarioPost')?>" method="post"
+					class="form-inline loginForm">
+
+
+					
+
+						
+							<label>Email</label> <input type="text" name="email"
+								id="email"
+								value="<?php echo isset($email)?$email:''?>" class="input-login left-buffer">
+						
+							<label class="left-buffer">Contrase&ntilde;a</label> <input type="password" name="password"
+								id="password" value="" class="input-login left-buffer">
+															
+				
+				<?php if(isset($error)):?>
+					<p class="error col-lg-8"><?=$error?></p>
+				<?php endif;?>
+				
+				<?php if(isset($redireccion)):?>
+					<input type="hidden" name="redireccion"
+							value="<?php echo $redireccion?>" />
+				<?php endif;?>					
+				
+				
+							<input type="submit" value="Login"
+								class="btn btn-primary left-buffer" tabindex="7">
+						
+						<p class="col-lg-3 top-buffer">
+							<a href="<?=base_url('usuario/registrarUsuario')?>">Crear una
+								cuenta</a>
+						</p>
+
+
+					
+
+				</form>
+    
+    
+    </div>
+    <!--/Modal Body-->
+</div>
+<!--  /Login form -->
+
+
+
+
 
   
 
@@ -100,14 +129,14 @@
               <div class="span6">
 
                 <div class="carousel-caption">
-                      <h1>Example headline</h1>
-                      <p class="lead">Cras justo odio, dapibus ac facilisis in, egestas eget quam. Donec id elit non mi porta gravida at eget metus. Nullam id dolor id nibh ultricies vehicula ut id elit.</p>
-                      <a class="btn btn-large btn-primary" href="#">Sign up today</a>
+                      <h1>Encuentra tu trayecto</h1>
+                      <p class="lead">Crea o encuentra el trayecto que mejor se adapte a tus necesidades diarias. Reg&iacute;strate y encuentra a tu compa&ntilde;ero de viaje.</p>
+                      <a class="btn btn-large btn-primary" href="<?= base_url();?>usuario/loginUsuario">Reg&iacute;strate gratis</a>
                 </div>
 
               </div>
 
-                <div class="span6"> <img src="<?= base_url();?>assets/img/slide/slide1.jpg"></div>
+                <div class="span6"> <img src="<?= base_url();?>assets/img/slide/slide1.png"></div>
 
           </div>
         </div>
@@ -219,32 +248,3 @@
 
 
 <!-- /.Row View -->
-
-
-
-<!--Footer
-==========================-->
-
-<footer>
-    <div class="container">
-      <div class="row">
-        <div class="span6">Copyright &copy 2013 Shapebootstrap | All Rights Reserved  <br>
-        <small>Aliquam tincidunt mauris eu risus.</small>
-        </div>
-        <div class="span6">
-            <div class="social pull-right">
-                <a href="#"><img src="<?= base_url();?>assets/img/social/googleplus.png" alt=""></a>
-                <a href="#"><img src="<?= base_url();?>assets/img/social/dribbble.png" alt=""></a>
-                <a href="#"><img src="<?= base_url();?>assets/img/social/twitter.png" alt=""></a>
-                <a href="#"><img src="<?= base_url();?>assets/img/social/dribbble.png" alt=""></a>
-                <a href="#"><img src="<?= base_url();?>assets/img/social/rss.png" alt=""></a>
-            </div>
-        </div>
-      </div>
-    </div>
-</footer>
-
-<!--/.Footer-->
-
-  </body>
-</html>

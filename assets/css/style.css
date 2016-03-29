@@ -236,5 +236,15 @@ margin-top:40px;
 
 /* EXTRAS */
 .top-buffer { margin-top:20px; }
+.left-buffer { margin-left:20px; }
+.loginForm {overflow-x: hidden;
+display: inline-block;
+    margin-bottom: 0;
+    vertical-align: middle;
+    
+}
+.input-login{
+	width: 110px;
+}
 
 
