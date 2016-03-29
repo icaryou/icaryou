@@ -1,6 +1,6 @@
 <?php
 
-class Usuario_Model extends RedBean_SimpleModel
+class Usuario_Model extends CI_Model//RedBean_SimpleModel
 {		
 	
 	public function comprobarEmail($email)
@@ -56,9 +56,9 @@ class Usuario_Model extends RedBean_SimpleModel
 	}
 	
 	function enviarEmail()//NO FUNCIONA
-	{
-			
-		
+	{	
+		/*
+		$this->email->initialize();
 		$this->email->from('icaryouspain@gmail.com', 'Your Name');
 		$this->email->to('javicurso6@gmail.com');
 		//$this->email->cc('another@another-example.com');
@@ -70,17 +70,20 @@ class Usuario_Model extends RedBean_SimpleModel
 		$this->email->send();
 		
 		echo $this->email->print_debugger();
+		echo "----";
 		
-		/*
+		*/
+		$to_email="javicurso6@gmail.com";//cambiar por parametro funcion
 		
 		$from_email = 'icaryouspain@gmail.com'; //change this to yours
 		$subject = 'Verify Your Email Address';
-		$message = 'Dear User,<br /><br />Please click on the below activation link to verify your email address.<br /><br /> http://localhost/CI_EXAMEN/Proyecto/usuario/verificarEmail/' . md5($emailDestino) . '<br /><br /><br />Thanks<br />Mydomain Team';
+		$message = 'Dear User,<br /><br />Please click on the below activation link to verify your email address.<br />
+				<br /> http://localhost/CI_EXAMEN/Proyecto/usuario/verificarEmail/' . md5($to_email) . '<br /><br /><br />Thanks<br />Mydomain Team';
 	
 		//configure email settings
 		$config['protocol'] = 'smtp';
-		$config['smtp_host'] = 'ssl://smtp.mydomain.com'; //smtp host name
-		$config['smtp_port'] = '465'; //smtp port number
+		$config['smtp_host'] = 'smtp.gmail.com'; //smtp host name
+		$config['smtp_port'] = '587'; //smtp port number
 		$config['smtp_user'] = $from_email;
 		$config['smtp_pass'] = 'micochecito'; //$from_email password
 		$config['mailtype'] = 'html';
@@ -95,7 +98,7 @@ class Usuario_Model extends RedBean_SimpleModel
 		$this->email->subject($subject);
 		$this->email->message($message);
 		return $this->email->send();
-		*/
+		
 	}
 	
 	//activate user account

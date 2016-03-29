@@ -13,6 +13,10 @@
 <link href="<?= base_url();?>assets/css/bootstrap-responsive.min.css"
 	rel="stylesheet">
 <link href="<?= base_url();?>assets/css/style.css" rel="stylesheet">
+<link href="<?= base_url();?>assets/css/formularios.css" rel="stylesheet">
+
+
+
 
 <!-- HTML5 shim, for IE6-8 support of HTML5 elements -->
 <!--[if lt IE 9]>
@@ -35,6 +39,10 @@
 <!-- SCRIPT 
     ============================================================-->
 <script src="http://code.jquery.com/jquery.js"></script>
+<script src="<?= base_url();?>assets/js/bootstrap.min.js"></script>
+
+<script src="<?= base_url();?>assets/js/jquery-2.1.3.js"></script>
+<script src="<?= base_url();?>assets/js/jquery.validate.min.js"></script>
 <script src="<?= base_url();?>assets/js/bootstrap.min.js"></script>
 
 <!-- ========================== SCRIPT VALIDACIONES ================================ -->

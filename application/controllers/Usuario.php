@@ -9,7 +9,7 @@ class Usuario extends CI_Controller
 		parent::__construct();
 			
 		//Cargamos la librería de validación (todos las librerias, helpers, etc pueden ser cargados en los controladores o auto cargarlos indicándolo en los ficheros de configuración)
-		$this->load->library('email');
+		//$this->load->library('email');
 	}
 	
 	public function enviarEmail()//DEBUG

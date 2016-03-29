@@ -1,0 +1,14 @@
+input.error 
+	{
+    	color: red;
+    	border:solid 1px red;
+	}
+	
+	input.valid 
+	{
+    	border:solid 1px green;
+	}
+	#formularioRegistro .error
+	{
+		color:red;
+	}
