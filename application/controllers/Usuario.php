@@ -116,14 +116,15 @@ class Usuario extends CI_Controller
 	
 	public function loginUsuario()
 	{
+		
 		//RECOGEMOS DOS VARIABLES POR SI RETORNAMOS DE UN INTENTO DE LOGIN FALLIDO(LOGINUSUARIOPOST)
 		$datos['error']=$this->session->flashdata('error');
 		$datos['email']=$this->session->flashdata('email');
-		enmarcar($this,'usuario/loginUsuario',$datos);
+		enmarcar($this,'usuario/loginUsuario.php',$datos);
 		//$this->load->view('usuario/loginUsuario.php');
-	}
-	
-	
+		
+		 
+	}	
 	public function loginUsuarioPost()
 	{
 		if($this->input->post())
@@ -152,10 +153,9 @@ class Usuario extends CI_Controller
 						'logueado' => TRUE
 				);
 				$this->session->set_userdata($usuario_data);
-				//SI SE HUBIERA FORZADO EL LOGIN POR INTENTAR ACCEDER A UN SITIO SIN PERMISO LE MANSDAMOS AL MISMO
-				//isset($_REQUEST['redireccion'])?redirect($this->input->post('redireccion'),refresh):redirect('trayecto/buscarTrayectos',refresh);
+				//SI SE HUBIERA FORZADO EL LOGIN POR INTENTAR ACCEDER A UN SITIO SIN PERMISO LE MANSDAMOS AL MISMO				
+				//$this->session->userdata('redireccion')!=null?header("Location:".base_url().$this->session->userdata('redireccion')):header("Location:".base_url().'trayecto/buscarTrayectos');
 				isset($_REQUEST['redireccion'])?header("Location:".base_url().$this->input->post('redireccion')):header("Location:".base_url().'trayecto/buscarTrayectos');
-				//echo $_REQUEST['redireccion'];
 			}
 			else//NO ENCUENTRA
 			{
