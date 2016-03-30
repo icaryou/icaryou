@@ -25,7 +25,7 @@ class Welcome extends CI_Controller {
 	
 	public function plantilla()
 	{
-		enmarcar($this,'bootstrap/index');
+		enmarcar($this,'bootstrap/index.php');
 	}
 	
 	public function service()

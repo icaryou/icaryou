@@ -1,56 +1,3 @@
- 
-      
-  </head>
-  <body>
-  <!--HEADER ROW-->
-  <div id="header-row">
-    <div class="container">
-      <div class="row">
-              <!--LOGO-->
-              <div class="span3"><a class="brand" href="#"><img src="<?= base_url();?>assets/img/logo.png"/></a></div>
-              <!-- /LOGO -->
-
-            <!-- MAIN NAVIGATION -->  
-              <div class="span9">
-                <div class="navbar  pull-right">
-                  <div class="navbar-inner">
-                    <a data-target=".navbar-responsive-collapse" data-toggle="collapse" class="btn btn-navbar"><span class="icon-bar"></span><span class="icon-bar"></span><span class="icon-bar"></span></a>
-                    <div class="nav-collapse collapse navbar-responsive-collapse">
-                    <ul class="nav">
-                        <li class="active"><a href="index.html">Home</a></li>
-                        
-                        <li class="dropdown">
-                          <a href="about.html" class="dropdown-toggle" data-toggle="dropdown">About <b class="caret"></b></a>
-                            <ul class="dropdown-menu">
-                                  <li><a href="about.html">Company</a></li>
-                                  <li><a href="about.html">History</a></li>
-                                  <li><a href="about.html">Team</a></li>
-                            </ul>
-
-                        </li>
-
-                        <li><a href="<?= base_url();?>welcome/services">Services</a></li>
-                        <li><a href="blog.html">Blog</a></li>
-                        <li><a href="contact.html">Contact</a></li>
-                        <li class="login">
-                            <a data-toggle="modal" href="#loginForm"><i class="icon-lock"></i></a>
-                        </li>
-                 
-                    </ul>
-                  </div>
-
-                  </div>
-                </div>
-              </div>
-            <!-- MAIN NAVIGATION -->  
-      </div>
-    </div>
-  </div>
-  <!-- /HEADER ROW -->
-
-
-
-
 
 <!--  Login form -->
 <div class="modal hide fade in" id="loginForm" aria-hidden="false">
@@ -65,9 +12,7 @@
 				<form id="formularioLogin"
 					action="<?=base_url('usuario/loginUsuarioPost')?>" method="post"
 					class="form-inline loginForm">
-
-
-					
+				
 
 						
 							<label>Email</label> <input type="text" name="email"
@@ -136,7 +81,7 @@
 
               </div>
 
-                <div class="span6"> <img src="<?= base_url();?>assets/img/slide/slide1.png"></div>
+                <div class="span6"> <img src="<?= base_url();?>assets/img/slide/slide1.jpg"></div>
 
           </div>
         </div>

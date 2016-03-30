@@ -14,6 +14,9 @@ function enmarcar($controlador,$vista,$datos=[]) {
 	$controlador->load->view('templates/end');
 	*/
 	$controlador->load->view('bootstrap/head');
+	$datos['js']=substr(explode("/",$vista)[1], 0, -4);;
+	$controlador->load->view('bootstrap/masScripts',$datos);
+	$controlador->load->view('bootstrap/header');
 	$controlador->load->view($vista,$datos);
 	$controlador->load->view('bootstrap/footer');
 }

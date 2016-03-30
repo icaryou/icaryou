@@ -10,6 +10,12 @@ class Trayecto_Model extends RedBean_SimpleModel
 		return $trayecto;
 	}
 	
+	public function comprobarCP($cp,$poblacionOrigen)
+	{
+		$poblacion=R::findOne("poblacion","email=?",array($email));
+		return $usuario;
+	}
+	
 	public function buscarTrayectos($trayecto)
 	{
 		//TODO creo que ya esta funcional, solo añadir  dias

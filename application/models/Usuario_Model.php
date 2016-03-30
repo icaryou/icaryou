@@ -1,6 +1,6 @@
 <?php
 
-class Usuario_Model extends CI_Model//RedBean_SimpleModel
+class Usuario_Model extends RedBean_SimpleModel //CI_Model//
 {		
 	
 	public function comprobarEmail($email)

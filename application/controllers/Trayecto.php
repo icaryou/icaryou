@@ -165,6 +165,30 @@ class Trayecto extends CI_Controller
 		}	
 	}
 	
+	public function comprobarCP()//TODO
+	{
+		echo "false";
+		/*
+		if (isset($_REQUEST['cpOrigen'])&&$_REQUEST['cpOrigen']!='')
+		{
+			$this->load->model("Trayecto_Model");
+			$resultado=$this->Trayecto_Model->comprobarCP($_REQUEST['cpOrigen']);
+			if($resultado!=null)
+			{
+				echo 'false';//SI ENCUENTRA EMAIL DEVOLVEMOS FALSE(ERROR)
+			}
+			else
+			{
+				echo 'true';
+			}
+		}
+		else
+		{
+			echo 'false';//No deberia entra aqui, pero lo ponemos por si acaso
+		}	
+		*/
+	}
+	
 	//FUNCIONES PERSONALIZADAS ---  SE PUEDEN AGREGAR EN LIBRARIES/FORM_VALIDATION.PHP
 	public function _horaRegex($hora) {
 		if (preg_match('/^([01]\d|2[0-3]):([0-5]\d)$/', $hora ) )

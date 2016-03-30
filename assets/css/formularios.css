@@ -8,7 +8,9 @@ input.error
 	{
     	border:solid 1px green;
 	}
-	#formularioRegistro .error
+	
+	
+	.formularioGenerico .error
 	{
 		color:red;
 	}
