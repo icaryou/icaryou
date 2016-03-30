@@ -42,4 +42,17 @@ class Welcome extends CI_Controller {
 	{
 		enmarcar($this,'trayecto/buscarTrayectos.php');
 	}
+	
+	public function filter()
+	{
+		$this->load->view('trayecto/filterCrearTrayecto');
+	}
+	
+	public function pruebajson()
+	{
+		$this->load->model("Welcome_Model");
+		$datos=$this->Welcome_Model->leerTodos();
+		$json_string = json_encode($datos);
+		echo $json_string;
+	}
 }
