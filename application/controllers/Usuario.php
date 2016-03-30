@@ -116,11 +116,32 @@ class Usuario extends CI_Controller
 	
 	public function loginUsuario()
 	{
+		if(isset ($_SERVER['HTTP_REFERER']))
+		{
+			echo $_SERVER['HTTP_REFERER'];
+		}
+		else
+		{
+			echo 'no';
+		};
+		
+		if(isset ($_SERVER['HTTPS_REFERER']))
+		{
+			echo $_SERVER['HTTPS_REFERER'];
+		}
+		else
+		{
+			echo 'no';
+		};
+		
+		/*
 		//RECOGEMOS DOS VARIABLES POR SI RETORNAMOS DE UN INTENTO DE LOGIN FALLIDO(LOGINUSUARIOPOST)
 		$datos['error']=$this->session->flashdata('error');
 		$datos['email']=$this->session->flashdata('email');
 		enmarcar($this,'usuario/loginUsuario',$datos);
 		//$this->load->view('usuario/loginUsuario.php');
+		  */
+		 
 	}
 	
 	
