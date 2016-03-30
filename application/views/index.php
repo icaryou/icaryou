@@ -76,7 +76,7 @@
                 <div class="carousel-caption">
                       <h1>Encuentra tu trayecto</h1>
                       <p class="lead">Crea o encuentra el trayecto que mejor se adapte a tus necesidades diarias. Reg&iacute;strate y encuentra a tu compa&ntilde;ero de viaje.</p>
-                      <a class="btn btn-large btn-primary" href="<?= base_url();?>usuario/loginUsuario">Reg&iacute;strate gratis</a>
+                      <a class="btn btn-large btn-primary" href="<?= base_url();?>usuario/registrarUsuario">Reg&iacute;strate gratis</a>
                 </div>
 
               </div>
