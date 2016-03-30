@@ -20,12 +20,12 @@ class Welcome extends CI_Controller {
 	 */
 	public function index()
 	{
-		$this->load->view('welcome_message');
+		enmarcar($this,'index.php');
 	}
 	
 	public function plantilla()
 	{
-		enmarcar($this,'bootstrap/index.php');
+		enmarcar($this,'index.php');
 	}
 	
 	public function service()
@@ -35,11 +35,11 @@ class Welcome extends CI_Controller {
 	
 	public function registrarUsuario()
 	{
-		enmarcar($this,'bootstrap/registrarUsuario.php');
+		enmarcar($this,'usuario/registrarUsuario.php');
 	}
 	
 	public function crearTrayecto()
 	{
-		enmarcar($this,'bootstrap/crearTrayecto.php');
+		enmarcar($this,'trayecto/crearTrayecto.php');
 	}
 }

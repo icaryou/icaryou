@@ -87,15 +87,15 @@ class Trayecto extends CI_Controller
 		//VALIDAMOS SI HAY USUARIO ACTIVO
 		if($this->session->userdata('logueado'))
 		{
-			enmarcar($this,'bootstrap/crearTrayecto.php');
-			//$this->load->view('bootstrap/crearTrayecto.php');
+			enmarcar($this,'trayecto/crearTrayecto.php');
+			//$this->load->view('trayecto/crearTrayecto.php');
 		}
 		else//SI NO ESTA LOGUEADO LE MANDAMOS AL LOGIN CON UN CAMPO REDIRECCION PARA QUE LUEGO LE LLEVE A LA PAGINA QUE QUERIA
 		{
 			//$datos=array();
-			$datos['redireccion']='bootstrap/crearTrayecto';
-			enmarcar($this,'bootstrap/loginUsuario.php',$datos);
-			//$this->load->view('bootstrap/loginUsuario',$datos);
+			$datos['redireccion']='trayecto/crearTrayecto';
+			enmarcar($this,'usuario/loginUsuario.php',$datos);
+			//$this->load->view('usuario/loginUsuario',$datos);
 		}
 		
 	}
