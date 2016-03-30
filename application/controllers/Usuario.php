@@ -153,8 +153,9 @@ class Usuario extends CI_Controller
 				);
 				$this->session->set_userdata($usuario_data);
 				//SI SE HUBIERA FORZADO EL LOGIN POR INTENTAR ACCEDER A UN SITIO SIN PERMISO LE MANSDAMOS AL MISMO
-				isset($_REQUEST['redireccion'])?redirect($this->input->post('redireccion'),refresh):redirect('trayecto/buscarTrayectos',refresh);
-				
+				//isset($_REQUEST['redireccion'])?redirect($this->input->post('redireccion'),refresh):redirect('trayecto/buscarTrayectos',refresh);
+				isset($_REQUEST['redireccion'])?header("Location:".base_url().$this->input->post('redireccion')):header("Location:".base_url().'trayecto/buscarTrayectos');
+				//echo $_REQUEST['redireccion'];
 			}
 			else//NO ENCUENTRA
 			{
