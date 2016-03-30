@@ -38,8 +38,8 @@ class Welcome extends CI_Controller {
 		enmarcar($this,'usuario/registrarUsuario.php');
 	}
 	
-	public function crearTrayecto()
+	public function buscarTrayectos()
 	{
-		enmarcar($this,'trayecto/crearTrayecto.php');
+		enmarcar($this,'trayecto/buscarTrayectos.php');
 	}
 }
