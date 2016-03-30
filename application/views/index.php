@@ -81,7 +81,7 @@
 
               </div>
 
-                <div class="span6"> <img src="<?= base_url();?>assets/img/slide/slide1.jpg"></div>
+                <div class="span6"> <img src="<?= base_url();?>assets/img/slide/slide1.png"></div>
 
           </div>
         </div>
