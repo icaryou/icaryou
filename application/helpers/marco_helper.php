@@ -26,6 +26,7 @@ function enmarcar($controlador,$vista,$datos=[]) {
 	
 	$controlador->load->view('templates/masScripts',$datos);
 	$controlador->load->view('templates/header');
+	$controlador->load->view('templates/loginDiv');
 	$controlador->load->view($vista,$datos);
 	$controlador->load->view('templates/footer');
 }
