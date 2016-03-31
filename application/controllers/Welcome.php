@@ -45,9 +45,20 @@ class Welcome extends CI_Controller {
 	
 	public function cargarMunicipios()
 	{
-		$this->load->model("Welcome_Model");
-		$datos=$this->Welcome_Model->cargarMunicipios();
-		echo $datos;
+		$this->load->model("Municipios_Model");
+		$datos="var municipios=";
+		$datos.=$this->Municipios_Model->leerTodos();
+		$datos.=";";
+
+		if ( ! write_file('./assets/resources/municipios.js', $datos, 'r+'))
+		{
+			echo 'Unable to write the file';
+		}
+		else
+		{
+			echo 'File written!';
+		}
+		
 	}
 
 	public function autocompletar()

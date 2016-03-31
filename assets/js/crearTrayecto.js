@@ -136,7 +136,7 @@
 			var arrayMuni=new Array();
 			
 			for (var i=0;i<objetos.length;i++){
-				arrayMuni.push(objetos[i].title);
+				arrayMuni.push(objetos[i].poblacion);
 			}
 
 
@@ -153,16 +153,22 @@
 	 
 	 /************************* VALIDAR MUNICIPIO **********************************************/
 	 
-	    function search(nameKey, myArray){
-	    	console.log(Object.keys(myArray).length);
-	    	console.log($.inArray(nameKey, myArray[0]));
-	    	console.log(myArray[4]);
-	        for (var i=0; i < Object.keys(myArray).length; i++) {
-	        	if (myArray[i].title === nameKey) {
+	    function search(nameKey, myString){
+        	if (myString.indexOf(nameKey)) {
+            	alert(nameKey);
+                return -1;
+            }
+	    	
+	    	/*
+	    	var sinCorchetes = myString.substring(1,myString.length-1);
+	    	var arrayFinal= sinCorchetes.split(", ");
+	    	console.log(arrayFinal.length);
+	        for (var i=0; i < arrayFinal.length; i++) {
+	        	if (arrayFinal[i].poblacion === nameKey) {
 	            	alert(nameKey);
 	                return -1;
 	            }
-	        }
+	        }*/
 	    }
 	 
 	 jQuery.validator.addMethod("isstate", function(value) {
@@ -188,6 +194,5 @@
 		 $("#poblacionOrigen").validate();
 		 
 	 });
-	 
-	 
+
 
