@@ -43,10 +43,13 @@ class Welcome extends CI_Controller {
 		enmarcar($this,'trayecto/buscarTrayectos.php');
 	}
 	
-	public function filter()
+	public function cargarMunicipios()
 	{
-		$this->load->view('trayecto/filterCrearTrayecto');
+		$this->load->model("Welcome_Model");
+		$datos=$this->Welcome_Model->cargarMunicipios();
+		echo $datos;
 	}
+
 	public function autocompletar()
 	{
 		enmarcar($this,'trayecto/CopyOfcrearTrayecto.php');

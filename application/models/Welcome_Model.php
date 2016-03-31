@@ -1,14 +1,14 @@
 <?php
 class Welcome_Model extends RedBean_SimpleModel {
-	public $id_municipio;
-	public $nombre;
-	
 	
 	private function crearArray($municipios) {
 		$sol = [ ];
 		foreach ( $municipios as $obj ) {
-			$elem ['nombre'] = $obj['nombre'];
-			$elem ['id_municipio'] = $obj['id_municipio'];			
+			$elem ['idpoblacion'] = $obj['idpoblacion'];
+			$elem ['idprovincia'] = $obj['idprovincia'];
+			$elem ['poblacion'] = $obj['poblacion'];
+			$elem ['poblacionseo'] = $obj['poblacionseo'];
+			$elem ['postal'] = $obj['postal'];
 			
 			array_push ( $sol, $elem );
 		}
@@ -16,7 +16,7 @@ class Welcome_Model extends RedBean_SimpleModel {
 	}
 
 	function leerTodos() {
-		return $this->crearArray( R::getAll( 'select nombre, id_municipio from municipios' ));
+		return $this->crearArray( R::getAll( 'select * from poblacion' ));
 	}
 }
 ?>

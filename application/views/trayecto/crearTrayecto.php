@@ -33,7 +33,7 @@
 
 					<div class="form-group top-buffer">
 						<label for="poblacionOrigen">Poblaci&oacute;n origen</label> <input type="text"
-							name="poblacionOrigen" class="form-control" id="poblacionOrigen"
+							name="poblacionOrigen" class="form-control isstate" id="poblacionOrigen"
 							value="">
 					</div>
 
