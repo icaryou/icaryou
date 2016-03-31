@@ -77,7 +77,7 @@
             rules: {
                 
                 
-                "password": {
+                "passwd": {
                     required: true,
                     minlength: 8,
                     maxlength: 20                    
@@ -86,7 +86,7 @@
                     required: true,
                     minlength: 8,
                     maxlength: 20,
-                    equalTo:"#password",
+                    equalTo:"#passwd",
                 },
                 "passwordAntiguo": {
                     required: true,
@@ -96,7 +96,7 @@
                 
             },
             messages: {                
-                "password": {
+                "passwd": {
                     required: "Introduce tu contraseña",
                     minlength:"Introduce al menos 8 caracteres.",
                     maxlength: "Introduce como máximo 20 caracteres."                    
@@ -133,7 +133,7 @@
 				
 				<div class="form-group col-lg-12">
 					<label>Nueva contraseña</label>
-					<input type="password" name="password" class="form-control" id="password" value="">
+					<input type="password" name="passwd" class="form-control" id="passwd" value="">
 				</div>
 				
 				<div class="form-group col-lg-12">
