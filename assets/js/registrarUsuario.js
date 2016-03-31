@@ -55,7 +55,7 @@ $( document ).ready(function()
                         dataType: 'json'
                      }
                 },
-                "password": {
+                "passwd": {
                     required: true,
                     minlength: 8,
                     maxlength: 20                    
@@ -64,7 +64,7 @@ $( document ).ready(function()
                     required: true,
                     minlength: 8,
                     maxlength: 20,
-                    equalTo:"#password",
+                    equalTo:"#passwd"
                 },
                 "fechaNac": {
                     required: true,
@@ -98,7 +98,7 @@ $( document ).ready(function()
                     email: "Introduce un email válido.",
                     remote: "Email existente."
                 },
-                "password": {
+                "passwd": {
                     required: "Introduce tu contraseña",
                     minlength:"Introduce al menos 8 caracteres.",
                     maxlength: "Introduce como máximo 20 caracteres."                    

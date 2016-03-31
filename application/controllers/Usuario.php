@@ -57,8 +57,8 @@ class Usuario extends CI_Controller
 			$this->form_validation->set_rules('nombre', 'nombre', 'required|trim');
 			$this->form_validation->set_rules('apellidos', 'apellidos', 'required|trim');
 			$this->form_validation->set_rules('email', 'email', 'required|valid_email|trim');
-			$this->form_validation->set_rules('password', 'contraseña', 'required|min_length[8]|max_length[20]|trim');
-			$this->form_validation->set_rules('passwordRepetido', 'repetir contraseña', 'required|min_length[8]|max_length[20]|trim|matches[password]');
+			$this->form_validation->set_rules('passwd', 'contraseña', 'required|min_length[8]|max_length[20]|trim');
+			$this->form_validation->set_rules('passwordRepetido', 'repetir contraseña', 'required|min_length[8]|max_length[20]|trim|matches[passwd]');
 			$this->form_validation->set_rules('fechaNac', 'fecha de nacimiento', 'required|trim|callback__fechaRegex');
 			$this->form_validation->set_rules('cp', 'código postal', 'required|exact_length[5]|is_natural|less_than[53000]|trim');
 			$this->form_validation->set_rules('sexo', 'sexo', 'required');
@@ -85,7 +85,7 @@ class Usuario extends CI_Controller
 			{ 
 				//RECOGIDA DATOS			
 				$registro['email']=$this->input->post('email');
-				$registro['password']=$this->input->post('password');
+				$registro['passwd']=$this->input->post('passwd');
 				$registro['nombre']=$this->input->post('nombre');
 				$registro['apellidos']=$this->input->post('apellidos');
 				$registro['sexo']=$this->input->post('sexo');				
@@ -110,7 +110,89 @@ class Usuario extends CI_Controller
 		
 	}	//FIN REGISTRARUSUARIOPOST
 	
+	public function mostrarPerfil()
+	{
+		enmarcar($this, 'usuario/mostrarPerfil.php');
+	}
 	
+	public function editarPerfil()
+	{
+		enmarcar($this, 'usuario/editarPerfil.php');
+	}
+	
+	public function editarPerfilPost()
+	{
+	
+		//VALIDACION
+		if($this->input->post())
+		{
+			//reglas de validacion
+			$this->form_validation->set_rules('nombre', 'nombre', 'required|trim');
+			$this->form_validation->set_rules('apellidos', 'apellidos', 'required|trim');
+			$this->form_validation->set_rules('fechaNac', 'fecha de nacimiento', 'required|trim|callback__fechaRegex');
+			$this->form_validation->set_rules('cp', 'código postal', 'required|exact_length[5]|is_natural|less_than[53000]|trim');
+			$this->form_validation->set_rules('sexo', 'sexo', 'required');
+			$this->form_validation->set_rules('cochePropio', 'coche propio', 'required');
+			//$this->form_validation->set_rules('email', 'Email', 'required|min_length[3]|valid_email|trim');
+			//$this->form_validation->set_rules('password', 'Contraseña', 'required|min_length[3]');
+	
+			//Mensajes
+			// %s es el nombre del campo que ha fallado
+			$this->form_validation->set_message('required','El campo %s es obligatorio');
+			$this->form_validation->set_message('alpha_numeric','El campo %s debe estar compuesto solo por letras y espacios');
+			$this->form_validation->set_message('is_natural','El campo %s debe ser un número entero');
+			$this->form_validation->set_message('min_length','El campo %s debe tener como mínimo %s carácteres');
+			$this->form_validation->set_message('max_length','El campo %s debe tener como máximo %s carácteres');//PERSONALIZAR CON DOBLE %s
+			$this->form_validation->set_message('exact_length','El campo %s debe tener %s carácteres');
+			$this->form_validation->set_message('less_than','El campo %s debe ser menor que %s');
+			$this->form_validation->set_message('greater_than','El campo %s debe ser mayor que %s');
+			//$this->form_validation->set_message('_horaRegex','Formato de hora inválido');
+			$this->form_validation->set_message('_fechaRegex','Formato de fecha inválido');
+			$this->form_validation->set_message('valid_email','El campo %s debe ser un email correcto');
+			$this->form_validation->set_message('matches','El campo %s debe coincidir con el campo %s');
+	
+			if($this->form_validation->run()!=false)//Si la validación es correcta
+			{
+				//RECOGIDA DATOS
+				$perfil['nombre']=$this->input->post('nombre');
+				$perfil['apellidos']=$this->input->post('apellidos');
+				$perfil['sexo']=$this->input->post('sexo');
+				$perfil['fechaNac']=$this->input->post('fechaNac');
+				$perfil['cp']=$this->input->post('cp');
+				$perfil['cochePropio']=$this->input->post('cochePropio')=='si'?true:false;
+	
+				$this->load->model("Usuario_Model");
+				$usuario=$this->Usuario_Model->editarPerfil($perfil,$this->session->userdata('email'));//CREAMOS EN EL MODELO
+				//TODO
+				if ($usuario!=null)//ENCUENTRA USUARIO
+				{
+					$usuario_data = array(
+							'id' => $usuario->id,
+							'nombre' => $usuario->nombre,
+							'apellidos' => $usuario->apellidos,
+							'email' => $usuario->email,
+							'sexo' => $usuario->sexo,
+							'fechanac' => $usuario->fechanac,
+							'cp' => $usuario->cp,
+							'cochepropio' => $usuario->cochepropio,
+							'logueado' => TRUE
+					);
+					$this->session->set_userdata($usuario_data);
+				}
+				
+				$datos["mensaje"]="Validación correcta";//TODO
+	
+			}else{
+				$datos["mensaje"]="Validación incorrectaa";//TODO
+			}
+	
+			//$this->load->view("usuario/registrarUsuarioPost",$datos);
+			enmarcar($this, "usuario/registrarUsuarioPost",$datos);//TODO
+				
+		}
+	
+	
+	}
 	
 	//=========LOGIN=================
 	
@@ -150,6 +232,10 @@ class Usuario extends CI_Controller
 						'nombre' => $usuario->nombre,
 						'apellidos' => $usuario->apellidos,
 						'email' => $usuario->email,
+						'sexo' => $usuario->sexo,
+						'fechanac' => $usuario->fechanac,
+						'cp' => $usuario->cp,
+						'cochepropio' => $usuario->cochepropio,
 						'logueado' => TRUE
 				);
 				$this->session->set_userdata($usuario_data);
@@ -198,8 +284,8 @@ class Usuario extends CI_Controller
 		{
 			//reglas de validacion
 			
-			$this->form_validation->set_rules('password', 'contraseña', 'required|min_length[8]|max_length[20]|trim');
-			$this->form_validation->set_rules('passwordRepetido', 'repetir contraseña', 'required|min_length[8]|max_length[20]|trim|matches[password]');
+			$this->form_validation->set_rules('passwd', 'contraseña', 'required|min_length[8]|max_length[20]|trim');
+			$this->form_validation->set_rules('passwordRepetido', 'repetir contraseña', 'required|min_length[8]|max_length[20]|trim|matches[passwd]');
 			$this->form_validation->set_rules('passwordAntiguo', 'contraseña', 'required|min_length[8]|max_length[20]|trim');
 			
 		
@@ -213,7 +299,7 @@ class Usuario extends CI_Controller
 			if($this->form_validation->run()!=false)//Si la validación es correcta
 			{
 				//RECOGIDA DATOS
-				$cambioPassword['password']=$this->input->post('password');
+				$cambioPassword['passwd']=$this->input->post('passwd');
 				$cambioPassword['passwordAntiguo']=$this->input->post('passwordAntiguo');
 				$cambioPassword['email']=$this->session->userdata('logueado')?$this->session->userdata('email'):null;
 		

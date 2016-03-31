@@ -20,39 +20,50 @@ class Usuario_Model extends RedBean_SimpleModel //CI_Model//
 	{	
 		$usuario=R::dispense('usuario');
 		$usuario->email=$registro['email'];
-		$usuario->password=sha1($registro['password']);		
+		$usuario->password=sha1($registro['passwd']);		
 		$usuario->nombre=$registro['nombre'];
 		$usuario->apellidos=$registro['apellidos'];
 		$usuario->sexo=$registro['sexo'];
-		$usuario->fechaNac=$registro['fechaNac'];
+		$usuario->fechanac=$registro['fechaNac'];
 		$usuario->cp=$registro['cp'];
-		$usuario->cochePropio=$registro['cochePropio'];
+		$usuario->cochepropio=$registro['cochePropio'];
 		$usuario->activo=false;
 		
-		$id=R::store($usuario);
+		$id=R::store($usuario);			
+	}
+	
+	public function editarPerfil($perfil,$email)
+	{
 		
-		//$this->enviarEmail($registro['email']);
 		
-		//DEBUG var_dump($id);
+		
+		$usuario=R::findOne("usuario","email=?",array($email));
+		
+		if($usuario!=null)
+		{
+			$usuario->nombre=$perfil['nombre'];
+			$usuario->apellidos=$perfil['apellidos'];
+			$usuario->sexo=$perfil['sexo'];
+			$usuario->fechanac=$perfil['fechaNac'];
+			$usuario->cp=$perfil['cp'];
+			$usuario->cochepropio=$perfil['cochePropio'];
+			$id=R::store($usuario);
+		}
+		return $usuario;
+		
 	}
 	
 	public function cambiarPassword($cambioPassword)
 	{
-		echo $cambioPassword['email'];
-		echo $cambioPassword['passwordAntiguo'];
+		
 		$usuario=R::findOne("usuario","email=? AND password=?",array($cambioPassword['email'],sha1($cambioPassword['passwordAntiguo'])));
 		
 		
 		if($usuario!=null)
 		{
-			$usuario->password=sha1($cambioPassword['password']);
+			$usuario->password=sha1($cambioPassword['passwd']);
 			R::store($usuario);
-		}
-		else
-		{
-			echo "null";
-		}
-		//sha1($cambioPassword['passwordAntiguo'])=?
+		}		
 	}
 	
 	function enviarEmail()//NO FUNCIONA
