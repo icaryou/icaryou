@@ -187,11 +187,19 @@ class Usuario extends CI_Controller
 			}
 	
 			//$this->load->view("usuario/registrarUsuarioPost",$datos);
-			enmarcar($this, "usuario/registrarUsuarioPost",$datos);//TODO
+			enmarcar($this, "usuario/registrarUsuarioPost.php",$datos);//TODO
 				
 		}
 	
 	
+	}
+	
+	public function listarTrayectosPropios()
+	{
+		$this->load->Model('Trayecto_Model');
+		$datos['trayectosPropiosEncontrados']=$this->Trayecto_Model->listarTrayectosPropios($this->session->userdata('id'));
+		
+		enmarcar($this,'usuario/listarTrayectosPropios.php',$datos);
 	}
 	
 	//=========LOGIN=================

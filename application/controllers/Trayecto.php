@@ -61,24 +61,21 @@ class Trayecto extends CI_Controller
 				$trayecto['dias[]']=$this->input->post('dias[]');	
 	
 				$this->load->Model('Trayecto_Model');
-				$usuario=$this->Trayecto_Model->buscarTrayectos($trayecto);
-	
-				/*
-				 $this->load->Model('Lugar_Model');
-				 $usuario=$this->Usuario_Model->obtenerUsuarioPorEmail($this->session->userdata('id'));
-				*/
-				$datos["mensaje"]="Validación correctaa";//TODO
-				$datos[]=array();//TODO
-	
+				$trayectosEncontrados=$usuario=$this->Trayecto_Model->buscarTrayectos($trayecto);
+							
+				
+				$datos['camposBusqueda']=$trayecto;
+				$datos['trayectosEncontrados']=$trayectosEncontrados;
+				$datos['mensaje']="hola";
+				enmarcar($this, "trayecto/buscarTrayectoPost",$datos);//TODO
 				
 			}
 			else
-			{
-				$datos["mensaje"]="Validación incorrectaa";//TODO
-			}
-	
-			//$this->load->view("trayecto/crearTrayectoPost",$datos);
-			enmarcar($this, "trayecto/buscarTrayectoPost",$datos);//TODO
+			{	
+				$this->session->set_flashdata('error', 'Se produjo un error, intentelo de nuevo más tarde.');
+				enmarcar($this, "trayecto/buscarTrayectoPost",$datos);//TODO
+			}			
+			
 		}
 	}
 	
