@@ -17,22 +17,23 @@ class Trayecto_Model extends RedBean_SimpleModel
 	}
 	
 	public function buscarTrayectos($trayecto)
-	{
-		//TODO creo que ya esta funcional, solo añadir  dias
-		
-		echo $this->diasToStringParaBuscar($trayecto['dias[]']);
-		
-	
-		$trayectosEncontrado=R::getAll('select * from trayecto t 
-				join lugar li on t.inicio_id=li.id
-				join lugar ld on t.destino_id=ld.id
-				where t.hora_llegada_destino>= :horaLlegadaDesde
-				AND t.hora_llegada_destino<= :horaLlegadaHasta
-				AND t.hora_retorno_destino>= :horaRetornoDesde
-				AND t.hora_retorno_destino<= :horaRetornoHasta
-				AND (li.cp= :cpOrigen OR li.poblacion like :poblacionOrigen)
-				AND (ld.cp= :cpDestino OR ld.poblacion like :poblacionDestino)
-				AND (t.dias like :dias)',
+	{		
+		$trayectosEncontrados=R::getAll('select 
+				t.dias,t.horallegadadestino,t.horaretornodestino,t.comentarios,
+				li.poblacion as poblacionOrigen,
+				ld.poblacion poblacionDestino,
+				u.nombre,u.apellidos,u.fechanac
+					from trayecto t 
+					join lugar li on t.inicio_id=li.id
+					join lugar ld on t.destino_id=ld.id
+					join usuario u on t.creador=u.id
+						where t.horallegadadestino>= :horaLlegadaDesde
+						AND t.horallegadadestino<= :horaLlegadaHasta
+						AND t.horaretornodestino>= :horaRetornoDesde
+						AND t.horaretornodestino<= :horaRetornoHasta
+						AND (li.cp= :cpOrigen OR li.poblacion like :poblacionOrigen)
+						AND (ld.cp= :cpDestino OR ld.poblacion like :poblacionDestino)
+						AND (t.dias like :dias)',
 				array(':horaLlegadaDesde'=>$trayecto['horaLlegadaDesde'],
 						':horaLlegadaHasta'=>$trayecto['horaLlegadaHasta'],
 						':horaRetornoDesde'=>$trayecto['horaRetornoDesde'],
@@ -43,49 +44,40 @@ class Trayecto_Model extends RedBean_SimpleModel
 						':poblacionDestino'=>$trayecto['poblacionDestino'],
 						':dias'=>$this->diasToStringParaBuscar($trayecto['dias[]']),
 						));
-		/*
-		$trayectosEncontrado=R::getAll('select * from trayecto t
+		
+						
+		//var_dump($trayectosEncontrado);
+		return $trayectosEncontrados;
+	}
+	
+	public function listarTrayectosPropios($id)
+	{		
+		$trayectosPropiosEncontrados['propios']=R::getAll("select 
+				t.dias,t.horallegadadestino,t.horaretornodestino,t.comentarios,t.creador,
+				li.poblacion as poblacionOrigen,
+				ld.poblacion poblacionDestino,
+				u.nombre,u.apellidos,u.fechanac
+					from trayecto t 
+					join lugar li on t.inicio_id=li.id
+					join lugar ld on t.destino_id=ld.id
+					join usuario u on t.creador=u.id
+						where t.id in(select distinct trayecto_id 
+				from usuariotrayecto where usuario_id like $id) and t.creador like $id");
+		
+		$trayectosPropiosEncontrados['ajenos']=R::getAll("select
+				t.dias,t.horallegadadestino,t.horaretornodestino,t.comentarios,t.creador,
+				li.poblacion as poblacionOrigen,
+				ld.poblacion poblacionDestino,
+				u.nombre,u.apellidos,u.fechanac
+				from trayecto t
 				join lugar li on t.inicio_id=li.id
 				join lugar ld on t.destino_id=ld.id
-				where t.hora_llegada_destino>= :horaLlegadaDesde
-				AND t.hora_llegada_destino<= :horaLlegadaHasta
-				AND t.hora_retorno_destino>= :horaRetornoDesde
-				AND t.hora_retorno_destino<= :horaRetornoHasta
-				AND (li.cp= :cpOrigen OR li.poblacion like :poblacionOrigen)
-				AND (ld.cp= :cpDestino OR ld.poblacion like :poblacionDestino)
-				AND (t.dias like \'%L%M%V%\')',
-				array(':horaLlegadaDesde'=>$trayecto['horaLlegadaDesde'],
-						':horaLlegadaHasta'=>$trayecto['horaLlegadaHasta'],
-						':horaRetornoDesde'=>$trayecto['horaRetornoDesde'],
-						':horaRetornoHasta'=>$trayecto['horaRetornoHasta'],
-						':cpOrigen'=>$trayecto['cpOrigen'],
-						':poblacionOrigen'=>$trayecto['poblacionOrigen'],
-						':cpDestino'=>$trayecto['cpDestino'],
-						':poblacionDestino'=>$trayecto['poblacionDestino'],
-						//':dias'=>$this->diasToStringParaBuscar($trayecto['dias[]']),
-				));
-		*/
-		/*
-		$trayectosEncontrado=R::getAll('select * from trayecto t
-				join lugar li on t.inicio_id=li.id
-				join lugar ld on t.destino_id=ld.id
-				where t.hora_llegada_destino>= :horaLlegadaDesde
-				AND t.hora_llegada_destino<= :horaLlegadaHasta
-				AND t.hora_retorno_destino>= :horaRetornoDesde
-				AND t.hora_retorno_destino<= :horaRetornoHasta
-				AND (li.cp= :cpOrigen OR li.poblacion like :poblacionOrigen)
-				AND (ld.cp= :cpDestino OR ld.poblacion like :poblacionDestino)',
-				array(':horaLlegadaDesde'=>$trayecto['horaLlegadaDesde'],
-						':horaLlegadaHasta'=>$trayecto['horaLlegadaHasta'],
-						':horaRetornoDesde'=>$trayecto['horaRetornoDesde'],
-						':horaRetornoHasta'=>$trayecto['horaRetornoHasta'],
-						':cpOrigen'=>$trayecto['cpOrigen'],
-						':poblacionOrigen'=>$trayecto['poblacionOrigen'],
-						':cpDestino'=>$trayecto['cpDestino'],
-						':poblacionDestino'=>$trayecto['poblacionDestino'],));
-		*/				
-		var_dump($trayectosEncontrado);
-		//return $trayecto;
+				join usuario u on t.creador=u.id
+				where t.id in(select distinct trayecto_id
+				from usuariotrayecto where usuario_id like $id) and t.creador not like $id");
+		
+		return $trayectosPropiosEncontrados;
+		
 	}
 	
 	public function crearTrayecto($trayectoInput,$usuario)
@@ -96,8 +88,8 @@ class Trayecto_Model extends RedBean_SimpleModel
 		$trayecto=R::dispense('trayecto');
 		
 		$trayecto->dias=$this->diasToStringParaGuardar($trayectoInput['dias[]']);
-		$trayecto->horaLlegadaDestino=$trayectoInput['horaLlegada'];		
-		$trayecto->horaRetornoDestino=$trayectoInput['horaRetorno'];
+		$trayecto->horallegadadestino=$trayectoInput['horaLlegada'];		
+		$trayecto->horaretornodestino=$trayectoInput['horaRetorno'];
 		$trayecto->comentarios=$trayectoInput['comentarios'];
 		$trayecto->creador=$trayectoInput['creador_id'];
 		//lugares
