@@ -12,6 +12,7 @@
 	<link href="<?= base_url();?>assets/css/bootstrap-responsive.min.css" rel="stylesheet">
 	<link href="<?= base_url();?>assets/css/style.css" rel="stylesheet">
 	<link href="<?= base_url();?>assets/css/formularios.css" rel="stylesheet">
+	<link rel="stylesheet" href="//code.jquery.com/ui/1.11.4/themes/smoothness/jquery-ui.css">
 	
 	 <!--Font-->
     <link href='http://fonts.googleapis.com/css?family=Source+Sans+Pro:200,300,400,600' rel='stylesheet' type='text/css'>
@@ -36,4 +37,7 @@
     <script src="<?= base_url();?>assets/js/bootstrap.min.js"></script>
     <script src="<?= base_url();?>assets/js/jquery-2.1.3.js"></script>
     <script src="<?= base_url();?>assets/js/jquery.validate.min.js"></script>
+    <script src="<?= base_url();?>assets/resources/municipios.js"></script>
+    <script src="//code.jquery.com/ui/1.11.4/jquery-ui.js"></script>
+
     

@@ -88,7 +88,7 @@
                     minlength: "Introduce 5 digitos.",
                     maxlength: "Introduce 5 digitos.",
                     max:"Introduce un valor válido.",
-                    remote:"El código postal no corresponde."
+                    remote:"El código postal no es correcto."
                 },
                 "poblacionOrigen": {
                     required: "Introduce tu población de origen.",
@@ -127,4 +127,26 @@
             } 
         });
 });
+	
+	 $(function() {
+
+			objetos = $.parseJSON(municipios);
+			
+			var arrayMuni=new Array();
+			
+			for (var i=0;i<objetos.length;i++){
+				arrayMuni.push(objetos[i].title);
+			}
+
+
+		    $( "#poblacionOrigen" ).autocomplete({
+		      source: arrayMuni,
+		      autoFocus: true
+		    });
+		    
+		    $( "#poblacionDestino" ).autocomplete({
+			      source: arrayMuni,
+			      autoFocus: true
+			});
+		  });
 

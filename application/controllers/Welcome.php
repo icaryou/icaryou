@@ -47,6 +47,11 @@ class Welcome extends CI_Controller {
 	{
 		$this->load->view('trayecto/filterCrearTrayecto');
 	}
+	public function autocompletar()
+	{
+		enmarcar($this,'trayecto/CopyOfcrearTrayecto.php');
+		//$this->load->view('trayecto/autocompletar');
+	}
 	
 	public function pruebajson()
 	{
