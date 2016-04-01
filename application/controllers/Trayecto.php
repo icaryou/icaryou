@@ -79,6 +79,20 @@ class Trayecto extends CI_Controller
 		}
 	}
 	
+	public function buscarTrayectosMiniPost()
+	{
+		$trayecto['poblacionOrigen']=$this->input->post('poblacionOrigen');
+		$trayecto['poblacionDestino']=$this->input->post('poblacionDestino');
+		
+		$this->load->Model('Trayecto_Model');
+		$trayectosEncontrados=$usuario=$this->Trayecto_Model->buscarTrayectosMini($trayecto);
+		
+		$datos['camposBusqueda']=$trayecto;
+		$datos['trayectosEncontrados']=$trayectosEncontrados;
+		$datos['mensaje']="hola";
+		enmarcar($this, "trayecto/buscarTrayectoPost",$datos);//TODO
+	}
+	
 	public function crearTrayecto() 
 	{		
 			
@@ -164,7 +178,7 @@ class Trayecto extends CI_Controller
 	
 	public function comprobarCP()//TODO
 	{
-		echo "false";
+		echo "true";
 		/*
 		if (isset($_REQUEST['cpOrigen'])&&$_REQUEST['cpOrigen']!='')
 		{
