@@ -56,17 +56,17 @@ class Trayecto_Model extends RedBean_SimpleModel
 				t.dias,t.horallegadadestino,t.horaretornodestino,t.comentarios,
 				li.poblacion as poblacionOrigen,
 				ld.poblacion poblacionDestino,
-				u.nombre,u.apellidos,u.fechanac
+				u.nombre,u.apellidos,u.fecha_nac
 					from trayecto t
 					join lugar li on t.inicio_id=li.id
 					join lugar ld on t.destino_id=ld.id
 					join usuario u on t.creador=u.id
-						where (li.cp= :cpOrigen OR li.poblacion like :poblacionOrigen)
-						AND (ld.cp= :cpDestino OR ld.poblacion like :poblacionDestino)',
+						where (li.poblacion like :poblacionOrigen)
+						AND (ld.poblacion like :poblacionDestino)',
 				array(':poblacionOrigen'=>$trayecto['poblacionOrigen'],
 						':poblacionDestino'=>$trayecto['poblacionDestino'],
 				));
-
+		var_dump($trayectosEncontrado);
 		return $trayectosEncontrados;
 	}
 	
