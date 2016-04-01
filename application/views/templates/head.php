@@ -8,7 +8,7 @@
   <meta name="author" content="">
 
 	
-	<link href="<?= base_url();?>assets/css/bootstrap.min.css" rel="stylesheet">
+	<link href="<?= base_url();?>assets/css/bootstrap.css" rel="stylesheet">
 	<link href="<?= base_url();?>assets/css/bootstrap-responsive.min.css" rel="stylesheet">
 	<link href="<?= base_url();?>assets/css/style.css" rel="stylesheet">
 	<link href="<?= base_url();?>assets/css/formularios.css" rel="stylesheet">

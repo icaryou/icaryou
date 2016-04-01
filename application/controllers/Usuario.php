@@ -275,7 +275,7 @@ class Usuario extends CI_Controller
 		);
 		$this->session->set_userdata($usuario_data);
 		$this->session->sess_destroy();
-		header("Location:".base_url().'trayecto/buscarTrayectos');	//TODO este y el login meten un index.php en el login
+		header("Location:".base_url());	//TODO este y el login meten un index.php en el login
 	}
 	
 	public function cambiarPassword()
