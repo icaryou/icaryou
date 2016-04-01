@@ -187,8 +187,8 @@ class Usuario extends CI_Controller
 			}
 	
 			//$this->load->view("usuario/registrarUsuarioPost",$datos);
-			enmarcar($this, "usuario/registrarUsuarioPost.php",$datos);//TODO
-				
+			//enmarcar($this, "usuario/mostrarPerfil.php",$datos);//TODO
+			header("Location:".base_url().'usuario/mostrarPerfil');	
 		}
 	
 	

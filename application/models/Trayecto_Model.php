@@ -53,7 +53,7 @@ class Trayecto_Model extends RedBean_SimpleModel
 	public function listarTrayectosPropios($id)
 	{	
 		
-		
+		/*
 		select
 		t.dias,t.horallegadadestino,t.horaretornodestino,t.comentarios,t.creador,
 		li.poblacion as poblacionOrigen,
@@ -67,7 +67,7 @@ class Trayecto_Model extends RedBean_SimpleModel
 		where ut.id in(select distinct id 
 				from usuariotrayecto where usuario_id like 2) 
 		
-		/*OLD DEBUG??
+		OLD DEBUG??
 		$trayectosPropiosEncontrados['propios']=R::getAll("select 
 				t.dias,t.horallegadadestino,t.horaretornodestino,t.comentarios,t.creador,
 				li.poblacion as poblacionOrigen,

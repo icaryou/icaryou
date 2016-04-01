@@ -16,7 +16,8 @@ body{
 }
 
 p{line-height: 24px}
-a{color:#0088cc;}
+/*a{color:#0088cc;} CAMBIADO */
+a{color:#0B9979;}
 a:hover{text-decoration: none;}
 
 
@@ -49,7 +50,8 @@ HEADER ROW STYLE
 #header-row .navbar .navbar-inner ul.nav > li > a{
 	box-shadow: none;
 	background: transparent;
-	color: #0088cc;
+	color: #F05978;
+	/*color: #0088cc; CAMBIADO */
 }
 #header-row .navbar .navbar-inner ul.nav li.active a{
 	color: #333;
@@ -254,5 +256,10 @@ display: inline-block;
 	border:solid 0px rgba(0,0,0,0);
 	background-color:rgba(0,0,0,0);
 	color:red;
+}
+
+.fondoTabla td{
+	background-color:rgba(13,189,150,0.1);
+	/*background-color:rgba(240,89,120,0.1);*/
 }
 

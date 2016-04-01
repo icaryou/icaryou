@@ -3361,7 +3361,7 @@ input[type="button"].btn-block {
   color: #ffffff;
   text-shadow: 0 -1px 0 rgba(0, 0, 0, 0.25);
   /*background-color: #006dcc; CAMBIADO */
-  background-color:#0B9979;
+  background-color:#0DBD96;
   /**background-color: #0044cc; CAMBIADO */
   *background-color:#0DBD96;
   background-image: -moz-linear-gradient(top, #0DBD96, #0B9979);
@@ -3384,8 +3384,10 @@ input[type="button"].btn-block {
 .btn-primary.disabled,
 .btn-primary[disabled] {
   color: #ffffff;
-  background-color: #0044cc;
-  *background-color: #003bb3;
+  /*background-color: #0044cc;*/
+  background-color: #0B9979;
+  /**background-color: #003bb3;*/
+  *background-color: #0B9979;
 }
 
 .btn-primary:active,
