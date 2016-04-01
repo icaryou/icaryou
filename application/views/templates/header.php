@@ -39,7 +39,7 @@
 											class="caret"></b></a>
 										<ul class="dropdown-menu">
 											<li><a href="<?php echo base_url()?>usuario/mostrarPerfil">Mi Perfil</a></li>
-											<li><a href="<?php echo base_url()?>usuario/listarTrayectos">Mis trayectos</a></li>
+											<li><a href="<?php echo base_url()?>usuario/listarTrayectosPropios">Mis trayectos</a></li>
 											<li><a href="<?php echo base_url()?>usuario/listarMensajes">Mis mensajes</a></li>
 											<li><a href="<?php echo base_url()?>usuario/logoutUsuario">Logout</a></li>
 										</ul>

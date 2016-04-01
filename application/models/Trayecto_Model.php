@@ -51,7 +51,23 @@ class Trayecto_Model extends RedBean_SimpleModel
 	}
 	
 	public function listarTrayectosPropios($id)
-	{		
+	{	
+		
+		
+		select
+		t.dias,t.horallegadadestino,t.horaretornodestino,t.comentarios,t.creador,
+		li.poblacion as poblacionOrigen,
+		ld.poblacion poblacionDestino,
+		u.id usuarioId, u.nombre,u.apellidos,u.fechanac
+		from trayecto t
+		join lugar li on t.inicio_id=li.id
+		join lugar ld on t.destino_id=ld.id
+		join usuario u on t.creador=u.id
+		join usuariotrayecto ut on t.id=ut.trayecto_id
+		where ut.id in(select distinct id 
+				from usuariotrayecto where usuario_id like 2) 
+		
+		/*OLD DEBUG??
 		$trayectosPropiosEncontrados['propios']=R::getAll("select 
 				t.dias,t.horallegadadestino,t.horaretornodestino,t.comentarios,t.creador,
 				li.poblacion as poblacionOrigen,
@@ -75,7 +91,7 @@ class Trayecto_Model extends RedBean_SimpleModel
 				join usuario u on t.creador=u.id
 				where t.id in(select distinct trayecto_id
 				from usuariotrayecto where usuario_id like $id) and t.creador not like $id");
-		
+		*/
 		return $trayectosPropiosEncontrados;
 		
 	}
