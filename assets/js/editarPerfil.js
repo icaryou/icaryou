@@ -1,9 +1,8 @@
-	$( document ).ready(function() 
+$( document ).ready(function() 
 	{
-		//DEBUG
-		//var getUrl = window.location;
-		//var baseUrl = getUrl .protocol + "//" + getUrl.host + "/" + getUrl.pathname.split('/')[1]+"/"+getUrl.pathname.split('/')[2]+"/"+getUrl.pathname.split('/')[3];
-			
+
+		var getUrl = window.location;
+		var baseUrl = getUrl .protocol + "//" + getUrl.host + "/" + getUrl.pathname.split('/')[1]+"/"+getUrl.pathname.split('/')[2]+"/"+getUrl.pathname.split('/')[3];
 		
 		//AÑADIR EXPRESIONES REGULARES
 		$.validator.addMethod("regx", function(value, element, regexpr) {          
@@ -11,7 +10,7 @@
 		}, "Introduce un dato correcto.");
 		
 		//VALIDACION FORMULARIO
-        $('#formularioTrayecto').submit(function(e) {
+        $('#formularioRegistro').submit(function(e) {
             e.preventDefault();
         }).validate({
         	submitHandler: function(form) {
@@ -25,106 +24,109 @@
           	   },
             debug: false,
             errorPlacement: function(error, element) {
-                if (element.attr("name") == "dias[]") {
-                  error.insertAfter("#dias");
-                } else {
-                  error.insertAfter(element);
+                if (element.attr("name") == "sexo") 
+                {
+                   error.insertAfter("#sexo");
+                } 
+                else if(element.attr("name") == "cochePropio")
+                {
+                   error.insertAfter("#cochePropio");
+                }
+                else 
+                {
+                   error.insertAfter(element);
                 }
               },
             rules: {
                 
-            	"cpOrigen": {
-                    required:true,
-                    number:true,
-                    minlength: 5,
-                    maxlength: 5,
-                    max:52999,
+                "nombre": {
+                    required: true,
+                    //PARA AÑADIR ESPRESION REGULAR PERSONAL    regx:/^[AB]{3}$/
+                },
+                "apellidos": {
+                    required: true
+                },
+                "email": {
+                    required: true,
+                    email: true,
                     remote : {
-                        url: "comprobarCP",
+                        url: "comprobarEmail",
                         type: "post",
                         dataType: 'json'
                      }
                 },
-                "poblacionOrigen": {
+                "passwd": {
                     required: true,
-                    //PARA AÑADIR ESPRESION REGULAR PERSONAL    regx:/^[AB]{3}$/
+                    minlength: 8,
+                    maxlength: 20                    
                 },
-                "cpDestino": {
+                "passwordRepetido": {
+                    required: true,
+                    minlength: 8,
+                    maxlength: 20,
+                    equalTo:"#passwd"
+                },
+                "fechaNac": {
+                    required: true,
+                    regx:/^(((0[1-9]|[12]\d|3[01])\/(0[13578]|1[02])\/((19|[2-9]\d)\d{2}))|((0[1-9]|[12]\d|30)\/(0[13456789]|1[012])\/((19|[2-9]\d)\d{2}))|((0[1-9]|1\d|2[0-8])\/02\/((19|[2-9]\d)\d{2}))|(29\/02\/((1[6-9]|[2-9]\d)(0[48]|[2468][048]|[13579][26])|((16|[2468][048]|[3579][26])00))))$/
+                },
+                "cp": {
                     required: true,
                     number:true,
                     minlength: 5,
                     maxlength: 5,
                     max:52999
                 },
-                "poblacionDestino": {
+                "sexo": {
                     required: true
-                    //PARA AÑADIR ESPRESION REGULAR PERSONAL    regx:/^[AB]{3}$/
                 },
-                "horaLlegada": {
-                    required: true,
-                    regx:/^([01]\d|2[0-3]):([0-5]\d)$/ //TODO    PROBAR
+                "cochePropio": {
+                    required: true
                 },
-                "horaRetorno": {
-                    required: true,
-                    regx:/^([01]\d|2[0-3]):?([0-5]\d)$/ //TODO    PROBAR
-                },
-                "comentarios": {
-                	maxlength: 140                    
-                },
-                "dias[]": {
-                    required: true                    
-                },
-                "plazas": {
-                    required:true,
-                    number:true,
-                    min: 2                    
-                },              
+                               
                 
             },
             messages: {
-            	"cpOrigen": {
-            		required: "Introduce tu código postal de origen.",
-                    number:"Introduce un número válido.",
-                    minlength: "Introduce 5 digitos.",
-                    maxlength: "Introduce 5 digitos.",
-                    max:"Introduce un valor válido.",
-                    remote:"El código postal no corresponde."
+                "nombre": {
+                    required: "Introduce tu nombre."
                 },
-                "poblacionOrigen": {
-                    required: "Introduce tu población de origen.",
-                    //PARA AÑADIR ESPRESION REGULAR PERSONAL    regx:/^[AB]{3}$/
+                "apellidos": {
+                    required: "Introduce tus apellidos."
                 },
-                "cpDestino": {
-                	required: "Introduce tu código postal de destino.",
-                    number:"Introduce un número válido.",
-                    minlength: "Introduce 5 digitos.",
-                    maxlength: "Introduce 5 digitos.",
+                "email": {
+                    required: "Introduce tu email.",
+                    email: "Introduce un email válido.",
+                    remote: "Email existente."
+                },
+                "passwd": {
+                    required: "Introduce tu contraseña",
+                    minlength:"Introduce al menos 8 caracteres.",
+                    maxlength: "Introduce como máximo 20 caracteres."                    
+                },
+                "passwordRepetido": {
+                    required: "Introduce tu contraseña de nuevo",
+                    minlength: "Introduce al menos 8 caracteres.",
+                    maxlength: "Introduce como máximo 20 caracteres.",
+                    equalTo:"La contraseña no se corresponde con la anterior"
+                },
+                "fechaNac": {
+                    required: "Fecha nacimiento obligatoria.",
+                    regx:"Formato fecha inválido(Formato requerido:dd/mm/yyyy)"
+                },                
+                "cp": {
+                    required: "Introduce tu código postal.",
+                    number: "Introduce un código postal válido.",
+                    maxlength: "Debe contener 5 dígitos.",
+                    minlength: "Debe contener 5 dígitos.",
                     max:"Introduce un valor válido."
                 },
-                "poblacionDestino": {
-                	required: "Introduce tu población de destino.",
-                    //PARA AÑADIR ESPRESION REGULAR PERSONAL    regx:/^[AB]{3}$/
-                },
-                "horaLlegada": {
-                    required: "Introduce una hora de llegada al trabajo",
-                    regx:"Introduce un formato de hora válido"
-                },
-                "horaRetorno": {
-                	required: "Introduce una hora de retorno del trabajo",
-                    regx:"Introduce un formato de hora válido"
-                },
-                "comentarios": {
-                    maxlength: "Máximo 140 caracteres"                    
-                },   
-                "dias[]": {
-                    required:"Elige por lo menos un día",//"Selecciona por lo menos un día",
-                },
-                "plazas": {
-                	required: "Introduce un numero de plazas máximas(incluido tu)",
-                    number:"Introduce un número correcto",
-                    min: "Número mínimo 2"
-                },                 
+
+                "sexo": {
+                    required: "Introduce tu sexo."
+                }, 
+                "cochePropio": {
+                    required: "Introduce si dispones o no de coche propio."
+                },                
             } 
         });
 });
-

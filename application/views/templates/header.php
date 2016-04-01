@@ -25,15 +25,16 @@
 							<div class="nav-collapse collapse navbar-responsive-collapse">
 								<ul class="nav">
 									<li class="active"><a href="<?= base_url();?>">Home</a></li>
-									<li class="active"><a href="<?= base_url();?>usuario/registrarUsuario">Registrarse</a></li>
+									
 									
 									<!-- NO LOGUEADO -->
 									<?php if(!$this->session->userdata('logueado')):?>
+										<li class="active"><a href="<?= base_url();?>usuario/registrarUsuario">Registrarse</a></li>
 										<li class="login"><a data-toggle="modal" href="#loginForm">Iniciar sesi&oacute;n</a></li>
 									<?php endif;?>
 									<!--LOGUEADO -->
 									<?php if($this->session->userdata('logueado')):?>
-										<li class="dropdown"><a href="about.html"
+										<li class="dropdown"><a href=""
 										class="dropdown-toggle" data-toggle="dropdown"><?php echo $this->session->userdata('nombre')." ".$this->session->userdata('apellidos') ?> <b
 											class="caret"></b></a>
 										<ul class="dropdown-menu">

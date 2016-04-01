@@ -67,6 +67,7 @@ class Trayecto_Model extends RedBean_SimpleModel
 		order by ut.trayecto_id, ut.id
 		*/
 		
+
 		
 		$trayectosPropiosEncontrados['propios']=R::getAll("select u.id usuarioId, u.nombre,u.apellidos,u.fechanac,
 		t.dias,t.horallegadadestino,t.horaretornodestino,t.comentarios,t.creador,
