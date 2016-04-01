@@ -50,6 +50,26 @@ class Trayecto_Model extends RedBean_SimpleModel
 		return $trayectosEncontrados;
 	}
 	
+	public function buscarTrayectosMini($trayecto)
+	{
+		$trayectosEncontrados=R::getAll('select
+				t.dias,t.horallegadadestino,t.horaretornodestino,t.comentarios,
+				li.poblacion as poblacionOrigen,
+				ld.poblacion poblacionDestino,
+				u.nombre,u.apellidos,u.fecha_nac
+					from trayecto t
+					join lugar li on t.inicio_id=li.id
+					join lugar ld on t.destino_id=ld.id
+					join usuario u on t.creador=u.id
+						where (li.poblacion like :poblacionOrigen)
+						AND (ld.poblacion like :poblacionDestino)',
+				array(':poblacionOrigen'=>$trayecto['poblacionOrigen'],
+						':poblacionDestino'=>$trayecto['poblacionDestino'],
+				));
+		var_dump($trayectosEncontrado);
+		return $trayectosEncontrados;
+	}
+	
 	public function listarTrayectosPropios($id)
 	{	
 		/*funcionando
