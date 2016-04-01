@@ -208,7 +208,7 @@ class Usuario extends CI_Controller
 	{
 		
 		//RECOGEMOS DOS VARIABLES POR SI RETORNAMOS DE UN INTENTO DE LOGIN FALLIDO(LOGINUSUARIOPOST)
-		$datos['error']=$this->session->flashdata('error');
+		$datos['errorLogin']=$this->session->flashdata('errorLogin');
 		$datos['email']=$this->session->flashdata('email');
 		enmarcar($this,'usuario/loginUsuario.php',$datos);
 		//$this->load->view('usuario/loginUsuario.php');
@@ -255,12 +255,12 @@ class Usuario extends CI_Controller
 			else//NO ENCUENTRA
 			{
 				//GUARDAMOS DOS DATOS EN SESIONES TEMPORALES Y RETORNAMOS A LOGIN
-				$this->session->set_flashdata('error', 'El usuario o la contraseña son incorrectos.');
+				$this->session->set_flashdata('errorLogin', 'El usuario o la contraseña son incorrectos.');
 				$this->session->set_flashdata('email', $login['email']);
-				header("Location:".base_url().'usuario/loginUsuario');
+				//header("Location:".base_url().'usuario/loginUsuario');
+				header("Location:".base_url().'trayecto/buscarTrayectos');
 				
-				
-				/*
+
 				$urlPartida=explode("/",$_REQUEST['urlOrigen']);
 				
 				
@@ -273,7 +273,7 @@ class Usuario extends CI_Controller
 				{
 					header("Location:".base_url().$urlPartida[sizeof($urlPartida)-2]."/".$urlPartida[sizeof($urlPartida)-1]);
 				}
-				*/
+				
 				
 				//header("Location:".base_url().$_SERVER['PHP_SELF']);
 			}
