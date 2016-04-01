@@ -1,3 +1,50 @@
+<script type="text/javascript">
+
+$( document ).ready(function() 
+		{		
+			//VALIDACION FORMULARIO
+	        $('#formularioLogin').submit(function(e) {
+	            e.preventDefault();
+	        }).validate({
+	        	submitHandler: function(form) {
+	        	    // do other things for a valid form
+	        	    form.submit();},
+	        	error: function(label) {
+	        	     $(this).addClass("error");
+	        	   },
+	        	   valid: function(label) {
+	            	     $(this).addClass("valid");          	     
+	               },
+	            debug: false,
+	            rules: {
+	                
+	                "email": {
+	                    required: true,
+	                    email: true
+	                },
+	                "passwd": {
+	                    required: true,
+	                    minlength: 8,
+	                    maxlength: 20 
+	                },            
+	             
+	            },
+	            messages: {
+	                "email": {
+	                    required: "Introduce tu email",
+	                    email: "Introduce un email válido.",
+	                },
+	                "passwd": {
+	                    required: "Introduce tu contraseña",
+	                    minlength:"Introduce al menos 8 caracteres.",
+	                    maxlength: "Introduce como máximo 20 caracteres." 
+	                },           
+	            } 
+	        });
+	});
+
+</script>
+
 <!--  Login form -->
 <div class="modal hide fade in" id="loginForm" aria-hidden="false">
 	<div class="modal-header">
@@ -22,8 +69,8 @@
 			
 			<input type="hidden" name="urlOrigen" value="<?php echo $_SERVER['PHP_SELF']?>"/>															
 				
-			<?php if(isset($error)):?>
-					<p class="error col-lg-8"><?=$error?></p>
+			<?php if(isset($errorLogin)):?>
+					<p id="errorLogin" class="error col-lg-8"><?=$errorLogin?></p>
 			<?php endif;?>
 				
 				<?php if(isset($redireccion)):?>
@@ -49,9 +96,5 @@
 	<!--/Modal Body-->
 </div>
 
-<?php if(isset($error)):?>
-					
 
-
-<?php endif;?>
 

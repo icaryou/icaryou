@@ -37,8 +37,8 @@
 								class="form-control" id="passwd" value="">
 						</div>										
 				
-				<?php if(isset($error)):?>
-					<p class="error col-lg-8"><?=$error?></p>
+				<?php if(isset($errorLogin)):?>
+					<p class="error col-lg-8"><?=$errorLogin?></p>
 				<?php endif;?>
 				
 				<?php if(isset($redireccion)):?>

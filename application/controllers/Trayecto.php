@@ -2,7 +2,9 @@
 
 class Trayecto extends CI_Controller
 {
+	
 	public function __construct() {
+		
 		parent::__construct();
 		 
 		//Cargamos la librería de validación (todos las librerias, helpers, etc pueden ser cargados en los controladores o autocargarlos indicándolo en los ficheros de configuración)
@@ -11,7 +13,9 @@ class Trayecto extends CI_Controller
 	
 	public function buscarTrayectos()
 	{
-		enmarcar($this,'trayecto/buscarTrayectos.php');
+		$datos['errorLogin']=$this->session->flashdata('errorLogin');
+		$datos['email']=$this->session->flashdata('email');
+		enmarcar($this,'trayecto/buscarTrayectos.php',$datos);//CAMBIADO POR LOGIN
 		//$this->load->view('trayecto/crearTrayecto.php');	
 	}
 	

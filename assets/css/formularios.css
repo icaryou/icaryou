@@ -3,7 +3,14 @@ input.error
     	color: red;
     	border:solid 1px red;
 	}
-	
+p.error 
+	{
+    	color: red;
+	}
+#errorLogin
+{
+	color: red;	
+}	
 	input.valid 
 	{
     	border:solid 1px green;

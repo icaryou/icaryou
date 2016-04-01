@@ -1,5 +1,5 @@
 
-<?php if(isset($error)):?>					
+<?php if(isset($errorLogin)):?>					
 					<script type='text/javascript'>
 						$(document).ready(function(){
 							document.getElementById('botonLogin').click();
