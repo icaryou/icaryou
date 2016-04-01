@@ -55,7 +55,6 @@ class Usuario_Model extends RedBean_SimpleModel //CI_Model//
 	
 	public function cambiarPassword($cambioPassword)
 	{
-		
 		$usuario=R::findOne("usuario","email=? AND password=?",array($cambioPassword['email'],sha1($cambioPassword['passwordAntiguo'])));
 		
 		
@@ -63,7 +62,8 @@ class Usuario_Model extends RedBean_SimpleModel //CI_Model//
 		{
 			$usuario->password=sha1($cambioPassword['passwd']);
 			R::store($usuario);
-		}		
+		}	
+		return $usuario;
 	}
 	
 	function enviarEmail()//NO FUNCIONA

@@ -10,7 +10,7 @@
 		}, "Introduce un dato correcto.");
 		
 		//VALIDACION FORMULARIO
-        $('#formularioRegistro').submit(function(e) {
+        $('#formularioCambioPassword').submit(function(e) {
             e.preventDefault();
         }).validate({
         	submitHandler: function(form) {
@@ -40,7 +40,7 @@
             rules: {
                 
                 
-                "passwd": {
+                "pass": {
                     required: true,
                     minlength: 8,
                     maxlength: 20                    
@@ -49,7 +49,7 @@
                     required: true,
                     minlength: 8,
                     maxlength: 20,
-                    equalTo:"#passwd",
+                    equalTo:"#pass",
                 },
                 "passwordAntiguo": {
                     required: true,
@@ -59,7 +59,7 @@
                 
             },
             messages: {                
-                "passwd": {
+                "pass": {
                     required: "Introduce tu contraseña",
                     minlength:"Introduce al menos 8 caracteres.",
                     maxlength: "Introduce como máximo 20 caracteres."                    

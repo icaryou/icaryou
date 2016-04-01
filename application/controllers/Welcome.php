@@ -20,7 +20,11 @@ class Welcome extends CI_Controller {
 	 */
 	public function index()
 	{
-		enmarcar($this,'index.php');
+		$datos['errorLogin']=$this->session->flashdata('errorLogin');
+		$datos['email']=$this->session->flashdata('email');
+		enmarcar($this,'index.php',$datos);
+		
+		//enmarcar($this,'index.php');//DEBUG
 	}
 	
 	public function plantilla()

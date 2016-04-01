@@ -112,12 +112,38 @@ class Usuario extends CI_Controller
 	
 	public function mostrarPerfil()
 	{
-		enmarcar($this, 'usuario/mostrarPerfil.php');
+		//VALIDAMOS SI HAY USUARIO ACTIVO
+		if($this->session->userdata('logueado'))
+		{
+			enmarcar($this, 'usuario/mostrarPerfil.php');
+		}
+		else//SI NO ESTA LOGUEADO LE MANDAMOS AL LOGIN CON UN CAMPO REDIRECCION PARA QUE LUEGO LE LLEVE A LA PAGINA QUE QUERIA
+		{
+			$datos['redireccion']='usuario/mostrarPerfil';
+			$datos['errorLogin']='Por favor inicia sesion';
+			enmarcar($this,'index.php',$datos);				
+		}
+		
+		
+		
+		//enmarcar($this, 'usuario/mostrarPerfil.php');    DEBUG
 	}
 	
 	public function editarPerfil()
 	{
-		enmarcar($this, 'usuario/editarPerfil.php');
+		//VALIDAMOS SI HAY USUARIO ACTIVO
+		if($this->session->userdata('logueado'))
+		{
+			enmarcar($this, 'usuario/editarPerfil.php');
+		}
+		else//SI NO ESTA LOGUEADO LE MANDAMOS AL LOGIN CON UN CAMPO REDIRECCION PARA QUE LUEGO LE LLEVE A LA PAGINA QUE QUERIA
+		{
+			$datos['redireccion']='usuario/editarPerfil';
+			$datos['errorLogin']='Por favor inicia sesion';
+			enmarcar($this,'index.php',$datos);
+		}
+		
+		//enmarcar($this, 'usuario/editarPerfil.php');    DEBUG
 	}
 	
 	public function editarPerfilPost()
@@ -196,10 +222,26 @@ class Usuario extends CI_Controller
 	
 	public function listarTrayectosPropios()
 	{
+		//VALIDAMOS SI HAY USUARIO ACTIVO
+		if($this->session->userdata('logueado'))
+		{
+			$this->load->Model('Trayecto_Model');
+			$datos['trayectosPropiosEncontrados']=$this->Trayecto_Model->listarTrayectosPropios($this->session->userdata('id'));
+			
+			enmarcar($this,'usuario/listarTrayectosPropios.php',$datos);
+		}
+		else//SI NO ESTA LOGUEADO LE MANDAMOS AL LOGIN CON UN CAMPO REDIRECCION PARA QUE LUEGO LE LLEVE A LA PAGINA QUE QUERIA
+		{
+			$datos['redireccion']='usuario/listarTrayectosPropios';
+			$datos['errorLogin']='Por favor inicia sesion';
+			enmarcar($this,'index.php',$datos);
+		}
+		/*
 		$this->load->Model('Trayecto_Model');
 		$datos['trayectosPropiosEncontrados']=$this->Trayecto_Model->listarTrayectosPropios($this->session->userdata('id'));
 		
 		enmarcar($this,'usuario/listarTrayectosPropios.php',$datos);
+		*/
 	}
 	
 	//=========LOGIN=================
@@ -298,9 +340,24 @@ class Usuario extends CI_Controller
 	
 	public function cambiarPassword()
 	{
+		//VALIDAMOS SI HAY USUARIO ACTIVO
+		if($this->session->userdata('logueado'))
+		{
+			$datos['errorPassword']=$this->session->flashdata('error');
+			enmarcar($this,'usuario/cambiarPassword.php',$datos);
+		}
+		else//SI NO ESTA LOGUEADO LE MANDAMOS AL LOGIN CON UN CAMPO REDIRECCION PARA QUE LUEGO LE LLEVE A LA PAGINA QUE QUERIA
+		{
+			$datos['redireccion']='usuario/cambiarPassword';
+			$datos['errorLogin']='Por favor inicia sesion';
+			enmarcar($this,'index.php',$datos);
+		}
+		
 		//RECOGEMOS DOS VARIABLES POR SI RETORNAMOS DE UN INTENTO DE LOGIN FALLIDO(LOGINUSUARIOPOST)
+		/*
 		$datos['error']=$this->session->flashdata('error');
 		enmarcar($this,'usuario/cambiarPassword.php',$datos);
+		*/
 	}
 	
 	public function cambiarPasswordPost()
@@ -308,11 +365,11 @@ class Usuario extends CI_Controller
 		//VALIDACION
 		if($this->input->post())
 		{
-			//reglas de validacion
+			//reglas de validacion	
 			
-			$this->form_validation->set_rules('passwd', 'contraseña', 'required|min_length[8]|max_length[20]|trim');
-			$this->form_validation->set_rules('passwordRepetido', 'repetir contraseña', 'required|min_length[8]|max_length[20]|trim|matches[passwd]');
-			$this->form_validation->set_rules('passwordAntiguo', 'contraseña', 'required|min_length[8]|max_length[20]|trim');
+			$this->form_validation->set_rules('pass', 'contraseña', 'required|min_length[8]|max_length[20]|trim');
+			$this->form_validation->set_rules('passwordRepetido', 'repetir contraseña', 'required|min_length[8]|max_length[20]|trim|matches[pass]');
+			$this->form_validation->set_rules('passwordAntiguo', 'contraseña antigua', 'required|min_length[8]|max_length[20]|trim');
 			
 		
 			//Mensajes
@@ -325,24 +382,39 @@ class Usuario extends CI_Controller
 			if($this->form_validation->run()!=false)//Si la validación es correcta
 			{
 				//RECOGIDA DATOS
-				$cambioPassword['passwd']=$this->input->post('passwd');
+				$cambioPassword['passwd']=$this->input->post('pass');
 				$cambioPassword['passwordAntiguo']=$this->input->post('passwordAntiguo');
 				$cambioPassword['email']=$this->session->userdata('logueado')?$this->session->userdata('email'):null;
 		
 				$this->load->model("Usuario_Model");
 				$resultado=$this->Usuario_Model->cambiarPassword($cambioPassword);
-			}	
-				/*
+				
 				$datos["mensaje"]="Validación correcta";//TODO
-		
-			}else{
+				
+				
+				
+				if ($resultado!=null)//cambio contraseña
+				{
+					enmarcar($this, "usuario/cambiarPasswordPost",$datos);
+				}
+				else//no cambia porque no encuentra
+				{
+					$this->session->set_flashdata('error', 'Contraseña antigua erronea.');
+					//header("Location:".base_url().'usuario/loginUsuario');
+					header("Location:".base_url().'usuario/cambiarPassword');
+				}
+				
+				
+			}	
+			else{
 				$datos["mensaje"]="Validación incorrectaa";//TODO
 			}
 		
-			//$this->load->view("usuario/registrarUsuarioPost",$datos);
-			enmarcar($this, "usuario/registrarUsuarioPost",$datos);//TODO
-			*/	
-		}		
+			$this->load->view("usuario/registrarUsuarioPost",$datos);
+			//enmarcar($this, "usuario/registrarUsuarioPost",$datos);//TODO
+				
+				
+	}
 	}
 	
 	//FUNCIONES PERSONALIZADAS VALIDACION ---  SE PUEDEN AGREGAR EN LIBRARIES/FORM_VALIDATION.PHP
