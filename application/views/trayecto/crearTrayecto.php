@@ -44,7 +44,7 @@
 
 					<div class="form-group top-buffer">
 						<label>Poblaci&oacute;n destino</label> <input type="text"
-							name="poblacionDestino" class="form-control"
+							name="poblacionDestino" class="form-control isstate"
 							id="poblacionDestino" value="">
 					</div>
 

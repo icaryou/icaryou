@@ -31,7 +31,7 @@ class Municipios_Model extends RedBean_SimpleModel {
 			$sol .= '"}, ';				
 			
 		}
-		$sol = substr($sol, 0, -1); 
+		$sol = substr($sol, 0, -2); 
 		$sol .=']\'';
 		
 		return $sol;
