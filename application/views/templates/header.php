@@ -30,7 +30,7 @@
 									<!-- NO LOGUEADO -->
 									<?php if(!$this->session->userdata('logueado')):?>
 										<li class="active"><a href="<?= base_url();?>usuario/registrarUsuario">Registrarse</a></li>
-										<li class="login"><a data-toggle="modal" href="#loginForm">Iniciar sesi&oacute;n</a></li>
+										<li class="login"><a id="botonLogin" data-toggle="modal" href="#loginForm">Iniciar sesi&oacute;n</a></li>
 									<?php endif;?>
 									<!--LOGUEADO -->
 									<?php if($this->session->userdata('logueado')):?>

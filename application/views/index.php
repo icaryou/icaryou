@@ -139,5 +139,17 @@
     
 </div>
 
+<?php if(isset($error)):?>
+					
+					<script type='text/javascript'>
+					$(document).ready(function(){
+						alert("---index");
+					//$('#loginForm').show();
+					//$('#loginForm').modal('show');
+					});
+					</script>
+
+			<?php endif;?>
+
 
 <!-- /.Row View -->

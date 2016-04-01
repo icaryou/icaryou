@@ -1,4 +1,12 @@
 
+<?php if(isset($error)):?>					
+					<script type='text/javascript'>
+						$(document).ready(function(){
+							document.getElementById('botonLogin').click();
+						});
+					</script>
+			<?php endif;?>
+
 <!--Footer
 ==========================-->
 

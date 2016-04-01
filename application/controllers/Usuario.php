@@ -217,10 +217,11 @@ class Usuario extends CI_Controller
 	}	
 	public function loginUsuarioPost()
 	{
+		
 		if($this->input->post())
 		{
 			$this->form_validation->set_rules('email', 'email', 'required');
-			$this->form_validation->set_rules('password', 'contraseña', 'required');
+			$this->form_validation->set_rules('passwd', 'contraseña', 'required');
 			
 			$this->form_validation->set_message('required','El campo %s es obligatorio');
 		}
@@ -228,7 +229,7 @@ class Usuario extends CI_Controller
 		{
 			//RECOGIDA DATOS
 			$login['email']=$this->input->post('email');
-			$login['password']=$this->input->post('password');
+			$login['password']=$this->input->post('passwd');
 			
 			$this->load->model("Usuario_Model");
 			$usuario=$this->Usuario_Model->loguearUsuario($login);//COMPROBAMOS EN EL MODELO
@@ -256,10 +257,27 @@ class Usuario extends CI_Controller
 				//GUARDAMOS DOS DATOS EN SESIONES TEMPORALES Y RETORNAMOS A LOGIN
 				$this->session->set_flashdata('error', 'El usuario o la contraseña son incorrectos.');
 				$this->session->set_flashdata('email', $login['email']);
-				redirect('usuario/loginUsuario');
+				header("Location:".base_url().'usuario/loginUsuario');
+				
+				
+				
+				$urlPartida=explode("/",$_REQUEST['urlOrigen']);
+				
+				
+				if(sizeof($urlPartida)<=3)
+				{
+					header("Location:".base_url());
+					//header("Location:".base_url().'usuario/loginUsuario');
+				}
+				else
+				{
+					header("Location:".base_url().$urlPartida[sizeof($urlPartida)-2]."/".$urlPartida[sizeof($urlPartida)-1]);
+				}
+				
+				
+				//header("Location:".base_url().$_SERVER['PHP_SELF']);
 			}
 		}
-		
 		
 		
 		//enmarcar($this,'usuario/registrarUsuario.php');

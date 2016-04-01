@@ -16,7 +16,7 @@ class Municipios extends CI_Controller {
 		}
 		else
 		{
-			echo 'File written!';
+			echo $datos;
 		}
 	
 	}
