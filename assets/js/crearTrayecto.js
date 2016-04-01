@@ -152,23 +152,15 @@
 		  });
 	 
 	 /************************* VALIDAR MUNICIPIO **********************************************/
-	 
-	    function search(nameKey, myString){
-        	if (myString.indexOf(nameKey)) {
-            	alert(nameKey);
-                return -1;
-            }
-	    	
-	    	/*
-	    	var sinCorchetes = myString.substring(1,myString.length-1);
-	    	var arrayFinal= sinCorchetes.split(", ");
-	    	console.log(arrayFinal.length);
-	        for (var i=0; i < arrayFinal.length; i++) {
-	        	if (arrayFinal[i].poblacion === nameKey) {
+	 /*
+	    function search(nameKey, myArray){
+
+	        for (var i=0; i < myArray.length; i++) {
+	        	if (myArray[i].poblacion === nameKey) {
 	            	alert(nameKey);
-	                return -1;
+	                return 1;
 	            }
-	        }*/
+	        }
 	    }
 	 
 	 jQuery.validator.addMethod("isstate", function(value) {
@@ -195,4 +187,4 @@
 		 
 	 });
 
-
+*/
