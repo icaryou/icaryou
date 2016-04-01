@@ -33,8 +33,8 @@
 								value="<?php echo isset($email)?$email:''?>">
 						</div>
 						<div class="form-group top-buffer">
-							<label>Contrase&ntilde;a</label> <input type="password" name="password"
-								class="form-control" id="password" value="">
+							<label>Contrase&ntilde;a</label> <input type="password" name="passwd"
+								class="form-control" id="passwd" value="">
 						</div>										
 				
 				<?php if(isset($error)):?>

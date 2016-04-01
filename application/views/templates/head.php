@@ -37,7 +37,8 @@
     <script src="<?= base_url();?>assets/js/bootstrap.min.js"></script>
     <script src="<?= base_url();?>assets/js/jquery-2.1.3.js"></script>
     <script src="<?= base_url();?>assets/js/jquery.validate.min.js"></script>
-    <script src="<?= base_url();?>assets/resources/municipios.js"></script>
+    <!-- <script src="<?= base_url();?>assets/resources/municipios.js"></script> -->
+    <script src="<?= base_url();?>municipios/cargarMunicipios"></script>
     <script src="<?= base_url();?>assets/js/jquery-ui.js"></script>
 
     

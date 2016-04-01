@@ -37,16 +37,17 @@
 						<label>Fecha nacimiento</label> <input type="text"
 							placeholder="dd/mm/aaaa" name="fechaNac" class="form-control"
 							id="fechaNac" value="<?php echo $this->session->userdata('fechanac')?>">
+					</div>
+										<div class="form-group top-buffer">
+						<label>C&oacute;digo Postal</label> <input type="text" name="cp"
+							class="form-control" id="cp" value="<?php echo $this->session->userdata('cp')?>"> <span
+							class="field-validation-valid help-block"></span>
 					</div>					
 				</div>
 				
 				
-				<div class="span3">
-					<div class="form-group">
-						<label>C&oacute;digo Postal</label> <input type="text" name="cp"
-							class="form-control" id="cp" value="<?php echo $this->session->userdata('cp')?>"> <span
-							class="field-validation-valid help-block"></span>
-					</div>
+				<div class="span2">
+
 
 					<!-- RADIOS -->
 					<div class="form-group top-buffer">
@@ -72,7 +73,7 @@
 						</div>
 					</div>
 
-					<div class="col-xs-12 col-lg-3 top-buffer">
+					<div class="col-xs-12 col-lg-3 top-buffer bottomaligned">
 						<input type="submit" value="Guardar cambios"
 							class="btn btn-primary btn-lg btn-block" tabindex="7">
 					</div>
