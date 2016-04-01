@@ -48,10 +48,3 @@
 	</div>
 	<!--/Modal Body-->
 </div>
-
-<?php if(isset($error)):?>
-					
-
-
-<?php endif;?>
-

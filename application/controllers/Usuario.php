@@ -260,7 +260,7 @@ class Usuario extends CI_Controller
 				header("Location:".base_url().'usuario/loginUsuario');
 				
 				
-				
+				/*
 				$urlPartida=explode("/",$_REQUEST['urlOrigen']);
 				
 				
@@ -273,7 +273,7 @@ class Usuario extends CI_Controller
 				{
 					header("Location:".base_url().$urlPartida[sizeof($urlPartida)-2]."/".$urlPartida[sizeof($urlPartida)-1]);
 				}
-				
+				*/
 				
 				//header("Location:".base_url().$_SERVER['PHP_SELF']);
 			}
