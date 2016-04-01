@@ -52,20 +52,36 @@ class Trayecto_Model extends RedBean_SimpleModel
 	
 	public function listarTrayectosPropios($id)
 	{	
-		
-		
-		select
+		/*funcionando
+		select u.id usuarioId, u.nombre,u.apellidos,u.fechanac,
 		t.dias,t.horallegadadestino,t.horaretornodestino,t.comentarios,t.creador,
 		li.poblacion as poblacionOrigen,
 		ld.poblacion poblacionDestino,
-		u.id usuarioId, u.nombre,u.apellidos,u.fechanac
-		from trayecto t
+		ut.trayecto_id
+		from usuariotrayecto ut
+		join usuario u on ut.usuario_id=u.id
+		join trayecto t on ut.trayecto_id=t.id
 		join lugar li on t.inicio_id=li.id
 		join lugar ld on t.destino_id=ld.id
-		join usuario u on t.creador=u.id
-		join usuariotrayecto ut on t.id=ut.trayecto_id
-		where ut.id in(select distinct id 
-				from usuariotrayecto where usuario_id like 2) 
+		where t.id in (select ut.trayecto_id from usuariotrayecto ut where ut.usuario_id=2) 
+		order by ut.trayecto_id, ut.id
+		*/
+		
+		
+		$trayectosPropiosEncontrados['propios']=R::getAll("select u.id usuarioId, u.nombre,u.apellidos,u.fechanac,
+		t.dias,t.horallegadadestino,t.horaretornodestino,t.comentarios,t.creador,
+		li.poblacion as poblacionOrigen,
+		ld.poblacion poblacionDestino,
+		ut.trayecto_id
+		from usuariotrayecto ut
+		join usuario u on ut.usuario_id=u.id
+		join trayecto t on ut.trayecto_id=t.id
+		join lugar li on t.inicio_id=li.id
+		join lugar ld on t.destino_id=ld.id
+		where t.id in (select ut.trayecto_id from usuariotrayecto ut where ut.usuario_id=2) 
+		order by ut.trayecto_id, ut.id");
+		
+		
 		
 		/*OLD DEBUG??
 		$trayectosPropiosEncontrados['propios']=R::getAll("select 
