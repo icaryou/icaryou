@@ -128,12 +128,12 @@
         });
 });
 	
-	/*************** DESPLEGABLE DE MUNICIPIOS ************/
+	/************************************* DESPLEGABLE DE MUNICIPIOS *************************************************************/
 	 $(function() {
 
-			objetos = $.parseJSON(municipios);
+			var objetos = $.parseJSON(municipios);
 			
-			var arrayMuni=new Array();
+			arrayMuni=new Array();
 			
 			for (var i=0;i<objetos.length;i++){
 				arrayMuni.push(objetos[i].poblacion);
@@ -152,39 +152,14 @@
 		  });
 	 
 	 /************************* VALIDAR MUNICIPIO **********************************************/
-	 /*
-	    function search(nameKey, myArray){
-
-	        for (var i=0; i < myArray.length; i++) {
-	        	if (myArray[i].poblacion === nameKey) {
-	            	alert(nameKey);
-	                return 1;
-	            }
-	        }
-	    }
-	 
+ 
 	 jQuery.validator.addMethod("isstate", function(value) {
-		    var states = [
-		        "AL", "AK", "AZ", "AR", "CA", "CO", "CT", "DE", "FL", "GA",
-		        "HI", "ID", "IL", "IN", "IA", "KS", "KY", "LA", "ME", "MD",
-		        "MA", "MI", "MN", "MS", "MO", "MT", "NE", "NV", "NH", "NJ",
-		        "NM", "NY", "NC", "ND", "OH", "OK", "OR", "PA", "RI", "SC",
-		        "SD", "TN", "TX", "UT", "VT", "VA", "WA", "WV", "WI", "WY",
-		        "AS", "DC", "FM", "GU", "MH", "MP", "PR", "PW", "VI"
-		    ];
-		    
-		    //var resultObject = search("string 1", municipios);
-		    
-		    //return $.inArray(value, municipios) != -1;
-		    //console.log(municipios);
-		    var existe = search(value, municipios);
-		    //alert("existe: "+existe);
-		    return existe != -1;
+
+		    return $.inArray(value, arrayMuni) != -1;
 		}, "El dato introducido no es correcto");
-	 
+	/*
 	 $( "#poblacionOrigen" ).on('blur', function(){
 		 $("#poblacionOrigen").validate();
 		 
 	 });
-
 */

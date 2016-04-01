@@ -9,7 +9,9 @@ class Municipios extends CI_Controller {
 		$datos="var municipios=";
 		$datos.=$this->Municipios_Model->leerTodos();
 		$datos.=";";
-	
+		
+		echo $datos;
+	/*
 		if ( ! write_file('./assets/resources/municipios.js', $datos, 'w+'))
 		{
 			echo 'Unable to write the file';
@@ -18,6 +20,7 @@ class Municipios extends CI_Controller {
 		{
 			echo $datos;
 		}
+	*/
 	
 	}
 	

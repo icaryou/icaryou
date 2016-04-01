@@ -19,6 +19,7 @@
 
 		<div class="container">
 			<div class="row">
+			
 
 				<form id="formularioLogin"
 					action="<?=base_url('usuario/loginUsuarioPost')?>" method="post"
