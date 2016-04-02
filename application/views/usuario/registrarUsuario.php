@@ -42,7 +42,7 @@
 
 					<div class="form-group col-lg-12">
 					<label>Contraseña</label>
-					<input type="password" name="passwd" class="form-control" id="passwd" value="">
+					<input type="password" name="passwdNormal" class="form-control" id="passwdNormal" value="">
 				</div>
 				
 				<div class="form-group col-lg-12">

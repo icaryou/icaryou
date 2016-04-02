@@ -94,8 +94,9 @@ class Trayecto extends CI_Controller
 		$datos['camposBusqueda']=$trayecto;
 		$datos['trayectosEncontrados']=$trayectosEncontrados;
 		$datos['mensaje']="hola";
-		enmarcar($this, "trayecto/buscarTrayectoPost",$datos);//TODO
+		enmarcar($this, "trayecto/buscarTrayectoMiniPost",$datos);//TODO
 	}
+	
 	
 	public function crearTrayecto() 
 	{		

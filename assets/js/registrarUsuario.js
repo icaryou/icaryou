@@ -1,6 +1,5 @@
 $( document ).ready(function() 
 	{
-
 		var getUrl = window.location;
 		var baseUrl = getUrl .protocol + "//" + getUrl.host + "/" + getUrl.pathname.split('/')[1]+"/"+getUrl.pathname.split('/')[2]+"/"+getUrl.pathname.split('/')[3];
 		
@@ -55,7 +54,7 @@ $( document ).ready(function()
                         dataType: 'json'
                      }
                 },
-                "passwd": {
+                "passwdNormal": {
                     required: true,
                     minlength: 8,
                     maxlength: 20                    
@@ -64,7 +63,7 @@ $( document ).ready(function()
                     required: true,
                     minlength: 8,
                     maxlength: 20,
-                    equalTo:"#passwd"
+                    equalTo:"#passwdNormal"
                 },
                 "fechaNac": {
                     required: true,
@@ -98,7 +97,7 @@ $( document ).ready(function()
                     email: "Introduce un email válido.",
                     remote: "Email existente."
                 },
-                "passwd": {
+                "passwdNormal": {
                     required: "Introduce tu contraseña",
                     minlength:"Introduce al menos 8 caracteres.",
                     maxlength: "Introduce como máximo 20 caracteres."                    

@@ -57,8 +57,8 @@ class Usuario extends CI_Controller
 			$this->form_validation->set_rules('nombre', 'nombre', 'required|trim');
 			$this->form_validation->set_rules('apellidos', 'apellidos', 'required|trim');
 			$this->form_validation->set_rules('email', 'email', 'required|valid_email|trim');
-			$this->form_validation->set_rules('passwd', 'contraseña', 'required|min_length[8]|max_length[20]|trim');
-			$this->form_validation->set_rules('passwordRepetido', 'repetir contraseña', 'required|min_length[8]|max_length[20]|trim|matches[passwd]');
+			$this->form_validation->set_rules('passwdNormal', 'contraseña', 'required|min_length[8]|max_length[20]|trim');
+			$this->form_validation->set_rules('passwordRepetido', 'repetir contraseña', 'required|min_length[8]|max_length[20]|trim|matches[passwdNormal]');
 			$this->form_validation->set_rules('fechaNac', 'fecha de nacimiento', 'required|trim|callback__fechaRegex');
 			$this->form_validation->set_rules('cp', 'código postal', 'required|exact_length[5]|is_natural|less_than[53000]|trim');
 			$this->form_validation->set_rules('sexo', 'sexo', 'required');
@@ -85,7 +85,7 @@ class Usuario extends CI_Controller
 			{ 
 				//RECOGIDA DATOS			
 				$registro['email']=$this->input->post('email');
-				$registro['passwd']=$this->input->post('passwd');
+				$registro['passwd']=$this->input->post('passwdNormal');
 				$registro['nombre']=$this->input->post('nombre');
 				$registro['apellidos']=$this->input->post('apellidos');
 				$registro['sexo']=$this->input->post('sexo');				
