@@ -1,12 +1,6 @@
 <!--  /Login form -->
 
 
-
-
-
-
-
-
 <div class="container">
 
 	<!--Carousel
@@ -43,31 +37,6 @@
 			</div>
 			<?php endif;?>
 			
-			<div class="item">
-				<div class="container">
-					<div class="row">
-						<div class="span6">
-
-							<div class="carousel-caption">
-								<h1>Example headline</h1>
-								<p class="lead">Cras justo odio, dapibus ac facilisis in,
-									egestas eget quam. Donec id elit non mi porta gravida at eget
-									metus. Nullam id dolor id nibh ultricies vehicula ut id elit.</p>
-								<a class="btn btn-large btn-primary" href="#">Sign up today</a>
-							</div>
-
-						</div>
-
-						<div class="span6">
-							<img src="<?= base_url();?>assets/img/slide/slide2.jpg">
-						</div>
-
-					</div>
-				</div>
-
-			</div>
-
-
 
 			<?php echo ($this->session->userdata('logueado'))?"<div class=\"active item\">":"<div class=\"item\">"?>
 
@@ -77,30 +46,30 @@
 						<div class="span12">
 
 							<div class="carousel-caption">
-<div class="center-block">
-<div class="topaligned">
-								<!-- <h1>Encuentra tu trayecto</h1>  -->
-								<img src="<?= base_url();?>assets/img/slide/busca.png">
-	</div>
-								<form id="formularioLogin"
-									action="<?=base_url('trayecto/buscarTrayectosMiniPost')?>"
-									method="post" class="form-inline loginForm">
-
-										<label for="poblacionOrigen"><h3>Desde</h3></label> <input
-											type="text" name="poblacionOrigen"
-											class="form-control isstate left-buffer inputGrande" id="poblacionOrigen" value="">
-
-										 <input type="text"
-											name="poblacionDestino" class="form-control isstate left-buffer inputGrande"
-											id="poblacionDestino" value=""><label class="left-buffer"><h3>Hasta</h3></label>
-			
-<div>
-									<input type="submit" value="Buscar"
-										class="btn btn-large btn-primary bottomaligned span2" tabindex="7">
-</div>
-
-								</form>
-</div>
+								<div class="center-block">
+									<div class="topaligned">
+											<!-- <h1>Encuentra tu trayecto</h1>  -->
+											<img src="<?= base_url();?>assets/img/slide/busca.png">
+									</div>
+									<form id="formularioBuscar"
+										action="<?=base_url('trayecto/buscarTrayectosMiniPost')?>"
+										method="post" class="form-inline loginForm">
+	
+											<label for="poblacionOrigen"><h3>Desde</h3></label> <input
+												type="text" name="poblacionOrigen"
+												class="form-control validarBuscar left-buffer inputGrande" id="poblacionOrigen" value="">
+	
+											 <input type="text"
+												name="poblacionDestino" class="form-control validarBuscar left-buffer inputGrande"
+												id="poblacionDestino" value=""><label class="left-buffer"><h3>Hasta</h3></label>
+				
+											<div>
+												<input type="submit" value="Buscar"
+													class="btn btn-large btn-primary bottomaligned span2" tabindex="7">
+											</div>
+	
+									</form>
+								</div>
 
 
 							</div>
@@ -109,12 +78,34 @@
 
 					</div>
 				</div>
+				
+				<div class="item">
+					<div class="container">
+						<div class="row">
+							<div class="span6">
+	
+								<div class="carousel-caption">
+									<h1>Example headline</h1>
+									<p class="lead">Cras justo odio, dapibus ac facilisis in,
+										egestas eget quam. Donec id elit non mi porta gravida at eget
+										metus. Nullam id dolor id nibh ultricies vehicula ut id elit.</p>
+									<a class="btn btn-large btn-primary" href="#">Sign up today</a>
+								</div>
+	
+							</div>
+	
+							<div class="span6">
+								<img src="<?= base_url();?>assets/img/slide/slide2.jpg">
+							</div>
+	
+						</div>
+					</div>
+	
+				</div>
+				
+				
 
 			</div>
-
-
-
-
 
 		</div>
 		<!-- Carousel nav -->
