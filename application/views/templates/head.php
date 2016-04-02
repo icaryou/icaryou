@@ -15,7 +15,8 @@
 	<link href="<?= base_url();?>assets/css/jquery-ui.css" rel="stylesheet" >
 	
 	 <!--Font-->
-    <link href='http://fonts.googleapis.com/css?family=Source+Sans+Pro:200,300,400,600' rel='stylesheet' type='text/css'>
+    <!-- <link href='http://fonts.googleapis.com/css?family=Source+Sans+Pro:200,300,400,600' rel='stylesheet' type='text/css'> -->
+    <link href="<?= base_url();?>assets/css/googleFonts.css" rel="stylesheet" >
 
   <!-- HTML5 shim, for IE6-8 support of HTML5 elements -->
   <!--[if lt IE 9]>

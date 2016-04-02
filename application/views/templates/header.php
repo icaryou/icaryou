@@ -24,7 +24,7 @@
 								class="icon-bar"></span></a>
 							<div class="nav-collapse collapse navbar-responsive-collapse">
 								<ul class="nav">
-									<li class="active"><a href="<?= base_url();?>">Home</a></li>
+									<li class="active"><a href="<?= base_url();?>">Inicio</a></li>
 									
 									
 									<!-- NO LOGUEADO -->

@@ -14,15 +14,16 @@
 
 	<div id="myCarousel" class="carousel slide">
 		<div class="carousel-inner">
-
+			<?php if(!$this->session->userdata('logueado')):?>
 			<div class="active item">
+			
 				<div class="container">
 					<div class="row">
 
 						<div class="span6">
 
 							<div class="carousel-caption">
-								<h1>Encuentra tu trayecto</h1>
+								<h1>Comparte viajes diarios</h1>
 								<p class="lead">Crea o encuentra el trayecto que mejor se adapte
 									a tus necesidades diarias. Reg&iacute;strate y encuentra a tu
 									compa&ntilde;ero de viaje.</p>
@@ -39,17 +40,12 @@
 
 					</div>
 				</div>
-
-
-
-
 			</div>
-
+			<?php endif;?>
+			
 			<div class="item">
-
 				<div class="container">
 					<div class="row">
-
 						<div class="span6">
 
 							<div class="carousel-caption">
@@ -73,7 +69,7 @@
 
 
 
-			<div class="item">
+			<?php echo ($this->session->userdata('logueado'))?"<div class=\"active item\">":"<div class=\"item\">"?>
 
 				<div class="container">
 					<div class="row">
@@ -83,7 +79,8 @@
 							<div class="carousel-caption">
 <div class="center-block">
 <div class="topaligned">
-								<h1>Encuentra tu trayecto</h1>
+								<!-- <h1>Encuentra tu trayecto</h1>  -->
+								<img src="<?= base_url();?>assets/img/slide/busca.png">
 	</div>
 								<form id="formularioLogin"
 									action="<?=base_url('trayecto/buscarTrayectosMiniPost')?>"
