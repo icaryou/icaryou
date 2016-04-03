@@ -34,6 +34,15 @@
 									<?php endif;?>
 									<!--LOGUEADO -->
 									<?php if($this->session->userdata('logueado')):?>
+									<li class="dropdown"><a href=""
+										class="dropdown-toggle letraNegra" data-toggle="dropdown">Nuevo trayecto<b
+											class="caret"></b></a>
+										<ul class="dropdown-menu">
+											<li><a href="<?php echo base_url()?>trayecto/crearTrayecto">Crear trayecto</a></li>
+											<li><a href="<?php echo base_url()?>trayecto/buscarTrayectos">Buscar trayecto</a></li>
+										</ul>
+										</li>
+									
 										<li class="dropdown"><a href=""
 										class="dropdown-toggle" data-toggle="dropdown"><?php echo $this->session->userdata('nombre')." ".$this->session->userdata('apellidos') ?> <b
 											class="caret"></b></a>
