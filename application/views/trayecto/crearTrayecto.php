@@ -1,3 +1,15 @@
+<?php if(isset($redireccion)):?>
+					<script type='text/javascript'>
+						$(document).ready(function(){
+							$('#loginForm').show();
+							$('#submitOk').click(false);
+							$('#loginForm').modal({backdrop: 'static', keyboard: false});
+						});
+						
+					</script>
+					
+<?php endif;?>	
+
 
 <div class="container">
 	<!--PAGE TITLE-->
@@ -106,7 +118,7 @@
 
 
 					<div class="col-xs-12 col-lg-3 top-buffer">
-						<input type="submit" name="submitOk" value="Registrarse"
+						<input type="submit" id="submitOk" name="submitOk" value="Registrarse"
 							class="btn btn-primary btn-block btn-lg" tabindex="7">
 					</div>
 				</div>

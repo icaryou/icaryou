@@ -288,6 +288,8 @@ display: inline-block;
   bottom:100px;
 }
 
-
+.tooltip {
+    opacity: 1;
+}
 
 

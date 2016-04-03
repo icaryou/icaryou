@@ -49,10 +49,11 @@ class Usuario extends CI_Controller
 	
 	public function registrarUsuarioPost()
 	{
-				
+		
 		//VALIDACION
 		if($this->input->post())
 		{
+			
 			//reglas de validacion
 			$this->form_validation->set_rules('nombre', 'nombre', 'required|trim');
 			$this->form_validation->set_rules('apellidos', 'apellidos', 'required|trim');
@@ -105,7 +106,7 @@ class Usuario extends CI_Controller
 			//$this->load->view("usuario/registrarUsuarioPost",$datos);
 			enmarcar($this, "usuario/registrarUsuarioPost",$datos);//TODO
 			
-		}		
+		}	
 		
 		
 	}	//FIN REGISTRARUSUARIOPOST
@@ -259,6 +260,7 @@ class Usuario extends CI_Controller
 	}	
 	public function loginUsuarioPost()
 	{
+		$response;
 		
 		if($this->input->post())
 		{
@@ -292,10 +294,14 @@ class Usuario extends CI_Controller
 				$this->session->set_userdata($usuario_data);
 				//SI SE HUBIERA FORZADO EL LOGIN POR INTENTAR ACCEDER A UN SITIO SIN PERMISO LE MANSDAMOS AL MISMO				
 				//$this->session->userdata('redireccion')!=null?header("Location:".base_url().$this->session->userdata('redireccion')):header("Location:".base_url().'trayecto/buscarTrayectos');
-				isset($_REQUEST['redireccion'])?header("Location:".base_url().$this->input->post('redireccion')):header("Location:".base_url().'trayecto/buscarTrayectos');
+				//isset($_REQUEST['redireccion'])?header("Location:".base_url().$this->input->post('redireccion')):header("Location:".base_url().'trayecto/buscarTrayectos');
+				//$response = isset($_REQUEST['redireccion'])?$this->input->post('redireccion'):true;
+				$response = true;
 			}
 			else//NO ENCUENTRA
 			{
+				$response = false;
+				/*
 				//GUARDAMOS DOS DATOS EN SESIONES TEMPORALES Y RETORNAMOS A LOGIN
 				$this->session->set_flashdata('errorLogin', 'El usuario o la contraseña son incorrectos.');
 				$this->session->set_flashdata('email', $login['email']);
@@ -318,12 +324,15 @@ class Usuario extends CI_Controller
 				
 				
 				//header("Location:".base_url().$_SERVER['PHP_SELF']);
+				 * 
+				 */
 			}
 		}
-		
+		echo $response;
 		
 		//enmarcar($this,'usuario/registrarUsuario.php');
 		//$this->load->view('usuario/registrarUsuario.php');
+		 
 	}
 	
 	
