@@ -117,6 +117,14 @@
 	top: 0;
 	left: 0;
 	cursor: default;
+	/* CAMBIADO */
+	max-width: 240px;
+	max-height: 200px;
+	overflow-y: auto;
+	border-radius: 10px;
+	/* prevent horizontal scrollbar */
+	overflow-x: hidden;
+	
 }
 .ui-button {
 	display: inline-block;
@@ -462,6 +470,9 @@ button.ui-button::-moz-focus-inner {
 	position: absolute;
 }
 .ui-menu .ui-menu-item {
+	/* CAMBIADO*/
+	background: #fff;
+	
 	position: relative;
 	margin: 0;
 	padding: 3px 1em 3px .4em;
@@ -470,6 +481,15 @@ button.ui-button::-moz-focus-inner {
 	/* support: IE10, see #8844 */
 	list-style-image: url("data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7");
 }
+/* INVENTADO */
+.ui-autocomplete .ui-menu-item:hover,
+.ui-autocomplete .ui-menu-item.ui-state-focus{
+    background-color:  rgb(13,189,150) !important;
+    background-image: none;
+    color: #fff;
+    border: none;
+}
+
 .ui-menu .ui-menu-divider {
 	margin: 5px 0;
 	height: 0;
@@ -1223,3 +1243,4 @@ body .ui-tooltip {
 	filter: Alpha(Opacity=20); /* support: IE8 */
 	border-radius: 5px;
 }
+
