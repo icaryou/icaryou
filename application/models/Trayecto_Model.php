@@ -72,7 +72,7 @@ class Trayecto_Model extends RedBean_SimpleModel
 	
 	public function listarTrayectosPropios($id)
 	{	
-		/*funcionando
+		/*funcionando solo seleccionado usuarios sin separar
 		select u.id usuarioId, u.nombre,u.apellidos,u.fechanac,
 		t.dias,t.horallegadadestino,t.horaretornodestino,t.comentarios,t.creador,
 		li.poblacion as poblacionOrigen,
@@ -87,8 +87,33 @@ class Trayecto_Model extends RedBean_SimpleModel
 		order by ut.trayecto_id, ut.id
 		*/
 		
-
+		$idTrayectosPropiosEncontrados=R::getAll("select ut.trayecto_id from usuariotrayecto ut where ut.usuario_id=2");
 		
+		
+		$trayectosPropiosEncontrados=array();
+		
+		
+		
+		
+		foreach ($idTrayectosPropiosEncontrados as $id)
+		{
+			array_push($trayectosPropiosEncontrados, R::getAll("select u.id usuarioId, u.nombre,u.apellidos,u.fechanac,
+			t.dias,t.horallegadadestino,t.horaretornodestino,t.comentarios,t.creador,
+			li.poblacion as poblacionOrigen,
+			ld.poblacion poblacionDestino,
+			ut.trayecto_id
+			from usuariotrayecto ut
+			join usuario u on ut.usuario_id=u.id
+			join trayecto t on ut.trayecto_id=t.id
+			join lugar li on t.inicio_id=li.id
+			join lugar ld on t.destino_id=ld.id
+			where t.id = {$id['trayecto_id']} 
+			order by ut.trayecto_id, ut.id"));
+		}
+		
+		
+		
+		/*   BUENO
 		$trayectosPropiosEncontrados['propios']=R::getAll("select u.id usuarioId, u.nombre,u.apellidos,u.fechanac,
 		t.dias,t.horallegadadestino,t.horaretornodestino,t.comentarios,t.creador,
 		li.poblacion as poblacionOrigen,
@@ -101,34 +126,9 @@ class Trayecto_Model extends RedBean_SimpleModel
 		join lugar ld on t.destino_id=ld.id
 		where t.id in (select ut.trayecto_id from usuariotrayecto ut where ut.usuario_id=2) 
 		order by ut.trayecto_id, ut.id");
-		
-		
-		
-		/*OLD DEBUG??
-		$trayectosPropiosEncontrados['propios']=R::getAll("select 
-				t.dias,t.horallegadadestino,t.horaretornodestino,t.comentarios,t.creador,
-				li.poblacion as poblacionOrigen,
-				ld.poblacion poblacionDestino,
-				u.nombre,u.apellidos,u.fechanac
-					from trayecto t 
-					join lugar li on t.inicio_id=li.id
-					join lugar ld on t.destino_id=ld.id
-					join usuario u on t.creador=u.id
-						where t.id in(select distinct trayecto_id 
-				from usuariotrayecto where usuario_id like $id) and t.creador like $id");
-		
-		$trayectosPropiosEncontrados['ajenos']=R::getAll("select
-				t.dias,t.horallegadadestino,t.horaretornodestino,t.comentarios,t.creador,
-				li.poblacion as poblacionOrigen,
-				ld.poblacion poblacionDestino,
-				u.nombre,u.apellidos,u.fechanac
-				from trayecto t
-				join lugar li on t.inicio_id=li.id
-				join lugar ld on t.destino_id=ld.id
-				join usuario u on t.creador=u.id
-				where t.id in(select distinct trayecto_id
-				from usuariotrayecto where usuario_id like $id) and t.creador not like $id");
 		*/
+		
+		
 		return $trayectosPropiosEncontrados;
 		
 	}
