@@ -2,6 +2,23 @@
 
 $( document ).ready(function() 
 	{		
+	
+	$('.tooltip').tooltipster({
+	    theme: 'tooltipster-light'
+	});	
+
+	$('#formularioLogin input[type="text"]').tooltipster({ 
+        trigger: 'custom', // default is 'hover' which is no good here
+        onlyOne: false,    // allow multiple tips to be open at a time
+        position: 'bottom'  // display the tips to the right of the element
+    });
+	
+	$('#formularioLogin input[type="password"]').tooltipster({ 
+        trigger: 'custom', // default is 'hover' which is no good here
+        onlyOne: false,    // allow multiple tips to be open at a time
+        position: 'bottom'  // display the tips to the right of the element
+    });
+	
 		//VALIDACION FORMULARIO
         $('#formularioLogin').submit(function(e) {
             e.preventDefault();
@@ -16,6 +33,13 @@ $( document ).ready(function()
             	     $(this).addClass("valid");          	     
                },
             debug: false,
+            errorPlacement: function(error, element) {
+           	 $(element).tooltipster('update', $(error).text());
+                $(element).tooltipster('show');
+             },
+             success: function (label, element) {
+                 $(element).tooltipster('hide');
+             },
             rules: {
                 
                 "email": {

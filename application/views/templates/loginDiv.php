@@ -1,7 +1,15 @@
-<script type="text/javascript">
+<!-- <script type="text/javascript">
 
 $( document ).ready(function() 
 		{		
+
+	$('#formularioLogin input[type="text"]').tooltipster({ 
+        trigger: 'custom', // default is 'hover' which is no good here
+        onlyOne: false,    // allow multiple tips to be open at a time
+        position: 'right'  // display the tips to the right of the element
+    });
+
+	
 			//VALIDACION FORMULARIO
 	        $('#formularioLogin').submit(function(e) {
 	            e.preventDefault();
@@ -16,6 +24,10 @@ $( document ).ready(function()
 	            	     $(this).addClass("valid");          	     
 	               },
 	            debug: false,
+	            errorPlacement: function(error, element) {
+	            	 $(element).tooltipster('update', $(error).text());
+	                 $(element).tooltipster('show');
+	              },
 	            rules: {
 	                
 	                "email": {
@@ -44,7 +56,7 @@ $( document ).ready(function()
 	});
 
 </script>
-
+ -->
 <!--  Login form -->
 <div class="modal hide fade in" id="loginForm" aria-hidden="false">
 	<div class="modal-header">
@@ -63,9 +75,9 @@ $( document ).ready(function()
 
 			<label>Email</label> <input type="text" name="email" id="email"
 				value="<?php echo isset($email)?$email:''?>"
-				class="input-login left-buffer"> <label class="left-buffer">Contrase&ntilde;a</label>
+				class="input-login left-buffer tooltipster"> <label class="left-buffer">Contrase&ntilde;a</label>
 			<input type="password" name="passwd" id="passwd" value=""
-				class="input-login left-buffer">
+				class="input-login left-buffer tooltipster">
 			
 			<input type="hidden" name="urlOrigen" value="<?php echo $_SERVER['PHP_SELF']?>"/>															
 				

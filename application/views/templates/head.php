@@ -7,12 +7,16 @@
   <meta name="description" content="">
   <meta name="author" content="">
 
+
+    <!-- CSS 
+    ============================================================-->  
 	
 	<link href="<?= base_url();?>assets/css/bootstrap.css" rel="stylesheet">
 	<link href="<?= base_url();?>assets/css/bootstrap-responsive.min.css" rel="stylesheet">
 	<link href="<?= base_url();?>assets/css/style.css" rel="stylesheet">
 	<link href="<?= base_url();?>assets/css/formularios.css" rel="stylesheet">
 	<link href="<?= base_url();?>assets/css/jquery-ui.css" rel="stylesheet" >
+	<link href="<?= base_url();?>assets/css/tooltipster.css" rel="stylesheet" >
 	
 	 <!--Font-->
     <!-- <link href='http://fonts.googleapis.com/css?family=Source+Sans+Pro:200,300,400,600' rel='stylesheet' type='text/css'> -->
@@ -41,5 +45,7 @@
     <!-- <script src="<?= base_url();?>assets/resources/municipios.js"></script> -->
     <script src="<?= base_url();?>municipios/cargarMunicipios"></script>
     <script src="<?= base_url();?>assets/js/jquery-ui.js"></script>
+    <script src="<?= base_url();?>assets/js/jquery.tooltipster.min.js"></script>
+    
 
     
