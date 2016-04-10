@@ -18,87 +18,102 @@ class Trayecto_Model extends RedBean_SimpleModel
 	
 	public function buscarTrayectos($trayecto)
 	{		
-		$trayectosEncontrados=R::getAll('select 
-				t.dias,t.horallegadadestino,t.horaretornodestino,t.comentarios,
-				li.poblacion as poblacionOrigen,
-				ld.poblacion poblacionDestino,
-				u.nombre,u.apellidos,u.fechanac
-					from trayecto t 
+		
+		$idTrayectosEncontrados=R::getAll("select distinct ut.trayecto_id from usuariotrayecto ut
+										join trayecto t on ut.trayecto_id=t.id
+										join lugar li on t.inicio_id=li.id
+										join lugar ld on t.destino_id=ld.id
+										join usuario u on ut.usuario_id=u.id
+										where t.horallegadadestino>= :horaLlegadaDesde
+										AND t.horallegadadestino<= :horaLlegadaHasta
+										AND t.horaretornodestino>= :horaRetornoDesde
+										AND t.horaretornodestino<= :horaRetornoHasta
+										AND (li.cp= :cpOrigen OR li.poblacion like :poblacionOrigen)
+										AND (ld.cp= :cpDestino OR ld.poblacion like :poblacionDestino)
+										AND (t.dias like :dias)",array(':horaLlegadaDesde'=>$trayecto['horaLlegadaDesde'],
+										':horaLlegadaHasta'=>$trayecto['horaLlegadaHasta'],
+										':horaRetornoDesde'=>$trayecto['horaRetornoDesde'],
+										':horaRetornoHasta'=>$trayecto['horaRetornoHasta'],
+										':cpOrigen'=>$trayecto['cpOrigen'],
+										':poblacionOrigen'=>$trayecto['poblacionOrigen'],
+										':cpDestino'=>$trayecto['cpDestino'],
+										':poblacionDestino'=>$trayecto['poblacionDestino'],
+										':dias'=>$this->diasToStringParaBuscar($trayecto['dias[]']),
+										));//TODO cmabiar por $id
+		
+		$trayectosEncontrados=array();
+		
+		foreach ($idTrayectosEncontrados as $id)
+		{
+			//CADA ITERACION BUSCA POR UN ID DE USUARIO DEVOLVIENDO TANTAS FILAS COMO USUARIOS TENGA ESE ID DE TRAYECTO
+			array_push($trayectosEncontrados, R::getAll("select u.id usuarioId, u.nombre,u.apellidos,u.fechanac,
+					t.id trayecto_id,t.dias,t.horallegadadestino,t.horaretornodestino,t.comentarios,t.creador,t.plazas,
+					li.poblacion as poblacionOrigen,
+					ld.poblacion poblacionDestino,
+					ut.trayecto_id
+					from usuariotrayecto ut
+					join usuario u on ut.usuario_id=u.id
+					join trayecto t on ut.trayecto_id=t.id
 					join lugar li on t.inicio_id=li.id
 					join lugar ld on t.destino_id=ld.id
-					join usuario u on t.creador=u.id
-						where t.horallegadadestino>= :horaLlegadaDesde
-						AND t.horallegadadestino<= :horaLlegadaHasta
-						AND t.horaretornodestino>= :horaRetornoDesde
-						AND t.horaretornodestino<= :horaRetornoHasta
-						AND (li.cp= :cpOrigen OR li.poblacion like :poblacionOrigen)
-						AND (ld.cp= :cpDestino OR ld.poblacion like :poblacionDestino)
-						AND (t.dias like :dias)',
-				array(':horaLlegadaDesde'=>$trayecto['horaLlegadaDesde'],
-						':horaLlegadaHasta'=>$trayecto['horaLlegadaHasta'],
-						':horaRetornoDesde'=>$trayecto['horaRetornoDesde'],
-						':horaRetornoHasta'=>$trayecto['horaRetornoHasta'],
-						':cpOrigen'=>$trayecto['cpOrigen'],
-						':poblacionOrigen'=>$trayecto['poblacionOrigen'],
-						':cpDestino'=>$trayecto['cpDestino'],
-						':poblacionDestino'=>$trayecto['poblacionDestino'],
-						':dias'=>$this->diasToStringParaBuscar($trayecto['dias[]']),
-						));
+					where t.id = {$id['trayecto_id']}
+			order by ut.trayecto_id, ut.id"));
+		}
 		
-						
+		
 		//var_dump($trayectosEncontrado);
 		return $trayectosEncontrados;
 	}
 	
 	public function buscarTrayectosMini($trayecto)
 	{
-		$trayectosEncontrados=R::getAll('select
-				t.dias,t.horallegadadestino,t.horaretornodestino,t.comentarios,
-				li.poblacion as poblacionOrigen,
-				ld.poblacion poblacionDestino,
-				u.nombre,u.apellidos,u.fechanac
-					from trayecto t
+		$idTrayectosEncontrados=R::getAll("select distinct ut.trayecto_id from usuariotrayecto ut
+										join trayecto t on ut.trayecto_id=t.id
+										join lugar li on t.inicio_id=li.id
+										join lugar ld on t.destino_id=ld.id
+										join usuario u on ut.usuario_id=u.id										
+										WHERE li.poblacion like :poblacionOrigen
+										AND ld.poblacion like :poblacionDestino",array(
+										':poblacionOrigen'=>$trayecto['poblacionOrigen'],
+										':poblacionDestino'=>$trayecto['poblacionDestino'],
+										));//TODO cmabiar por $id
+		
+		$trayectosEncontrados=array();
+		
+		foreach ($idTrayectosEncontrados as $id)
+		{
+			//CADA ITERACION BUSCA POR UN ID DE USUARIO DEVOLVIENDO TANTAS FILAS COMO USUARIOS TENGA ESE ID DE TRAYECTO
+			array_push($trayectosEncontrados, R::getAll("select u.id usuarioId, u.nombre,u.apellidos,u.fechanac,
+					t.id trayecto_id,t.dias,t.horallegadadestino,t.horaretornodestino,t.comentarios,t.creador,t.plazas,
+					li.poblacion as poblacionOrigen,
+					ld.poblacion poblacionDestino,
+					ut.trayecto_id
+					from usuariotrayecto ut
+					join usuario u on ut.usuario_id=u.id
+					join trayecto t on ut.trayecto_id=t.id
 					join lugar li on t.inicio_id=li.id
 					join lugar ld on t.destino_id=ld.id
-					join usuario u on t.creador=u.id
-						where li.poblacion like :poblacionOrigen
-						AND ld.poblacion like :poblacionDestino',
-				array(	':poblacionOrigen'=>$trayecto['poblacionOrigen'],
-						':poblacionDestino'=>$trayecto['poblacionDestino'])
-				);		
-		//var_dump($trayectosEncontrados);  DEBUG
+					where t.id = {$id['trayecto_id']}
+			order by ut.trayecto_id, ut.id"));
+		}
+		
 		return $trayectosEncontrados;
 	}
 	
 	public function listarTrayectosPropios($id)
 	{	
-		/*funcionando solo seleccionado usuarios sin separar
-		select u.id usuarioId, u.nombre,u.apellidos,u.fechanac,
-		t.dias,t.horallegadadestino,t.horaretornodestino,t.comentarios,t.creador,
-		li.poblacion as poblacionOrigen,
-		ld.poblacion poblacionDestino,
-		ut.trayecto_id
-		from usuariotrayecto ut
-		join usuario u on ut.usuario_id=u.id
-		join trayecto t on ut.trayecto_id=t.id
-		join lugar li on t.inicio_id=li.id
-		join lugar ld on t.destino_id=ld.id
-		where t.id in (select ut.trayecto_id from usuariotrayecto ut where ut.usuario_id=2) 
-		order by ut.trayecto_id, ut.id
-		*/
-		
-		$idTrayectosPropiosEncontrados=R::getAll("select ut.trayecto_id from usuariotrayecto ut where ut.usuario_id=2");
 		
 		
-		$trayectosPropiosEncontrados=array();
-		
-		
-		
+		//SELECCIONAMOS LOS IDS DE SUS TRAYECTOS
+		$idTrayectosPropiosEncontrados=R::getAll("select ut.trayecto_id from usuariotrayecto ut where ut.usuario_id=$id");//TODO cmabiar por $id
+				
+		$trayectosPropiosEncontrados=array();	
 		
 		foreach ($idTrayectosPropiosEncontrados as $id)
 		{
+			//CADA ITERACION BUSCA POR UN ID DE USUARIO DEVOLVIENDO TANTAS FILAS COMO USUARIOS TENGA ESE ID DE TRAYECTO
 			array_push($trayectosPropiosEncontrados, R::getAll("select u.id usuarioId, u.nombre,u.apellidos,u.fechanac,
-			t.dias,t.horallegadadestino,t.horaretornodestino,t.comentarios,t.creador,
+			t.id trayecto_id,t.dias,t.horallegadadestino,t.horaretornodestino,t.comentarios,t.creador,t.plazas,
 			li.poblacion as poblacionOrigen,
 			ld.poblacion poblacionDestino,
 			ut.trayecto_id
@@ -109,24 +124,7 @@ class Trayecto_Model extends RedBean_SimpleModel
 			join lugar ld on t.destino_id=ld.id
 			where t.id = {$id['trayecto_id']} 
 			order by ut.trayecto_id, ut.id"));
-		}
-		
-		
-		
-		/*   BUENO
-		$trayectosPropiosEncontrados['propios']=R::getAll("select u.id usuarioId, u.nombre,u.apellidos,u.fechanac,
-		t.dias,t.horallegadadestino,t.horaretornodestino,t.comentarios,t.creador,
-		li.poblacion as poblacionOrigen,
-		ld.poblacion poblacionDestino,
-		ut.trayecto_id
-		from usuariotrayecto ut
-		join usuario u on ut.usuario_id=u.id
-		join trayecto t on ut.trayecto_id=t.id
-		join lugar li on t.inicio_id=li.id
-		join lugar ld on t.destino_id=ld.id
-		where t.id in (select ut.trayecto_id from usuariotrayecto ut where ut.usuario_id=2) 
-		order by ut.trayecto_id, ut.id");
-		*/
+		}	
 		
 		
 		return $trayectosPropiosEncontrados;
@@ -145,6 +143,7 @@ class Trayecto_Model extends RedBean_SimpleModel
 		$trayecto->horaretornodestino=$trayectoInput['horaRetorno'];
 		$trayecto->comentarios=$trayectoInput['comentarios'];
 		$trayecto->creador=$trayectoInput['creador_id'];
+		$trayecto->plazas=$trayectoInput['plazas'];
 		//lugares
 		$inicio=R::dispense('lugar');
 		$inicio->cp=$trayectoInput['cpOrigen'];

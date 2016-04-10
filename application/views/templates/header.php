@@ -47,7 +47,7 @@
 										class="dropdown-toggle" data-toggle="dropdown"><?php echo $this->session->userdata('nombre')." ".$this->session->userdata('apellidos') ?> <b
 											class="caret"></b></a>
 										<ul class="dropdown-menu">
-											<li><a href="<?php echo base_url()?>usuario/mostrarPerfil">Mi Perfil</a></li>
+											<li><a href="<?php echo base_url()?>usuario/mostrarPerfilPropio">Mi Perfil</a></li>
 											<li><a href="<?php echo base_url()?>usuario/listarTrayectosPropios">Mis trayectos</a></li>
 											<li><a href="<?php echo base_url()?>usuario/listarMensajes">Mis mensajes</a></li>
 											<li><a href="<?php echo base_url()?>usuario/logoutUsuario">Logout</a></li>

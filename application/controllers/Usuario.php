@@ -7,6 +7,8 @@ class Usuario extends CI_Controller
 	
 	public function __construct() {
 		parent::__construct();
+		
+		
 			
 		//Cargamos la librería de validación (todos las librerias, helpers, etc pueden ser cargados en los controladores o auto cargarlos indicándolo en los ficheros de configuración)
 		//$this->load->library('email');
@@ -111,12 +113,12 @@ class Usuario extends CI_Controller
 		
 	}	//FIN REGISTRARUSUARIOPOST
 	
-	public function mostrarPerfil()
+	public function mostrarPerfilPropio()
 	{
 		//VALIDAMOS SI HAY USUARIO ACTIVO
 		if($this->session->userdata('logueado'))
 		{
-			enmarcar($this, 'usuario/mostrarPerfil.php');
+			enmarcar($this, 'usuario/mostrarPerfilPropio.php');
 		}
 		else//SI NO ESTA LOGUEADO LE MANDAMOS AL LOGIN CON UN CAMPO REDIRECCION PARA QUE LUEGO LE LLEVE A LA PAGINA QUE QUERIA
 		{
@@ -127,6 +129,27 @@ class Usuario extends CI_Controller
 		
 		
 		
+		//enmarcar($this, 'usuario/mostrarPerfil.php');    DEBUG
+	}
+	
+	public function mostrarPerfilUsuario($id_usuario)
+	{
+		//VALIDAMOS SI HAY USUARIO ACTIVO
+		if($this->session->userdata('logueado'))
+		{
+			$this->load->model("Usuario_Model");
+			$datos['usuario']=$this->Usuario_Model->cargarDatosUsuario($id_usuario);
+			enmarcar($this, 'usuario/mostrarPerfilUsuario.php',$datos);
+		}
+		else//SI NO ESTA LOGUEADO LE MANDAMOS AL LOGIN CON UN CAMPO REDIRECCION PARA QUE LUEGO LE LLEVE A LA PAGINA QUE QUERIA
+		{
+			$datos['redireccion']='usuario/mostrarPerfil';
+			$datos['errorLogin']='Por favor inicia sesion';
+			enmarcar($this,'index.php',$datos);
+		}
+	
+	
+	
 		//enmarcar($this, 'usuario/mostrarPerfil.php');    DEBUG
 	}
 	
@@ -243,6 +266,29 @@ class Usuario extends CI_Controller
 		
 		enmarcar($this,'usuario/listarTrayectosPropios.php',$datos);
 		*/
+	}
+	
+	public function ver_trayectos($id_usuario)//TODO???
+	{
+		//VALIDAMOS SI HAY USUARIO ACTIVO
+		if($this->session->userdata('logueado'))
+		{
+			$this->load->Model('Trayecto_Model');
+			$datos['trayectosEncontrados']=$this->Trayecto_Model->listar_trayectos($id_usuario);				
+			enmarcar($this,'usuario/listarTrayectos.php',$datos);
+		}
+		else//SI NO ESTA LOGUEADO LE MANDAMOS AL LOGIN CON UN CAMPO REDIRECCION PARA QUE LUEGO LE LLEVE A LA PAGINA QUE QUERIA
+		{
+			$datos['redireccion']='usuario/listarTrayectosPropios';
+			$datos['errorLogin']='Por favor inicia sesion';
+			enmarcar($this,'index.php',$datos);
+		}
+		/*
+			$this->load->Model('Trayecto_Model');
+			$datos['trayectosPropiosEncontrados']=$this->Trayecto_Model->listarTrayectosPropios($this->session->userdata('id'));
+	
+			enmarcar($this,'usuario/listarTrayectosPropios.php',$datos);
+			*/
 	}
 	
 	//=========LOGIN=================

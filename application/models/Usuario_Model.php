@@ -53,6 +53,13 @@ class Usuario_Model extends RedBean_SimpleModel //CI_Model//
 		
 	}
 	
+	public function cargarDatosUsuario($id)
+	{
+		$usuario=R::findOne("usuario","id=?",array($id));
+		
+		return $usuario;
+	}
+	
 	public function cambiarPassword($cambioPassword)
 	{
 		$usuario=R::findOne("usuario","email=? AND password=?",array($cambioPassword['email'],sha1($cambioPassword['passwordAntiguo'])));
