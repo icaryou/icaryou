@@ -268,18 +268,20 @@ class Usuario extends CI_Controller
 		*/
 	}
 	
-	public function ver_trayectos($id_usuario)//TODO???
+	public function ver_trayectos_usuario($id_usuario)//TODO???
 	{
 		//VALIDAMOS SI HAY USUARIO ACTIVO
 		if($this->session->userdata('logueado'))
 		{
+			$this->load->Model('Usuario_Model');
+			$datos['usuario_buscado']=$this->Usuario_Model->obtenerUsuarioPorId($id_usuario);
+			
 			$this->load->Model('Trayecto_Model');
-			$datos['trayectosEncontrados']=$this->Trayecto_Model->listar_trayectos($id_usuario);				
-			enmarcar($this,'usuario/listarTrayectos.php',$datos);
+			$datos['trayectosEncontrados']=$this->Trayecto_Model->listar_trayectos_usuario($id_usuario);				
+			enmarcar($this,'usuario/listarTrayectosUsuario.php',$datos);
 		}
 		else//SI NO ESTA LOGUEADO LE MANDAMOS AL LOGIN CON UN CAMPO REDIRECCION PARA QUE LUEGO LE LLEVE A LA PAGINA QUE QUERIA
-		{
-			$datos['redireccion']='usuario/listarTrayectosPropios';
+		{			
 			$datos['errorLogin']='Por favor inicia sesion';
 			enmarcar($this,'index.php',$datos);
 		}
@@ -289,6 +291,43 @@ class Usuario extends CI_Controller
 	
 			enmarcar($this,'usuario/listarTrayectosPropios.php',$datos);
 			*/
+	}
+	
+	public function unirse_trayecto($id_trayecto)//TODO???
+	{
+		
+		
+		if($this->session->userdata('logueado'))
+		{
+			$id_usuario=$this->session->userdata('id');
+			$this->load->Model('Usuario_Model');
+			$datos['usuario_buscado']=$this->Usuario_Model->unirse_trayecto($id_usuario,$id_trayecto);
+				
+			//enmarcar($this,'usuario/listarTrayectosUsuario.php',$datos); TODO Elegir donde le mandamos
+		}
+		else//SI NO ESTA LOGUEADO LE MANDAMOS AL LOGIN CON UN CAMPO REDIRECCION PARA QUE LUEGO LE LLEVE A LA PAGINA QUE QUERIA
+		{
+			$datos['errorLogin']='Por favor inicia sesion';
+			enmarcar($this,'index.php',$datos);
+		}
+		
+	}
+	
+	public function abandonar_trayecto($id_trayecto)//TODO???
+	{
+		if($this->session->userdata('logueado'))
+		{
+			$id_usuario=$this->session->userdata('id');
+			$this->load->Model('Usuario_Model');
+			$datos['usuario_buscado']=$this->Usuario_Model->abandonar_trayecto($id_usuario,$id_trayecto);
+			
+			//enmarcar($this,'usuario/listarTrayectosUsuario.php',$datos); TODO Elegir donde le mandamos
+		}
+		else//SI NO ESTA LOGUEADO LE MANDAMOS AL LOGIN CON UN CAMPO REDIRECCION PARA QUE LUEGO LE LLEVE A LA PAGINA QUE QUERIA
+		{
+			$datos['errorLogin']='Por favor inicia sesion';
+			enmarcar($this,'index.php',$datos);
+		}		
 	}
 	
 	//=========LOGIN=================
@@ -343,6 +382,7 @@ class Usuario extends CI_Controller
 				//isset($_REQUEST['redireccion'])?header("Location:".base_url().$this->input->post('redireccion')):header("Location:".base_url().'trayecto/buscarTrayectos');
 				//$response = isset($_REQUEST['redireccion'])?$this->input->post('redireccion'):true;
 				$response = true;
+				//$this->session->set_userdata('nombre', 'blasa'); PARA CAMBIAR SOLO UN VALOR
 			}
 			else//NO ENCUENTRA
 			{

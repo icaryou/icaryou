@@ -57,7 +57,7 @@
 				</div>
 				<div class="col-xs-12 col-lg-3 top-buffer span2">
 					<button id="cambiarPassword"
-						onclick='location.href="<?php echo base_url('usuario/ver_trayectos/'.$usuario['id'])?>"'
+						onclick='location.href="<?php echo base_url('usuario/ver_trayectos_usuario/'.$usuario['id'])?>"'
 						class="btn btn-primary btn-lg btn-block" tabindex="7">Ver trayectos</button>
 				</div>
 			</div>

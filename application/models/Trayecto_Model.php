@@ -131,6 +131,37 @@ class Trayecto_Model extends RedBean_SimpleModel
 		
 	}
 	
+	public function listar_trayectos_usuario($id)
+	{
+	
+	
+		//SELECCIONAMOS LOS IDS DE SUS TRAYECTOS
+		$id_trayectos_encontrados=R::getAll("select ut.trayecto_id from usuariotrayecto ut where ut.usuario_id=$id");//TODO cmabiar por $id
+	
+		$trayectos_encontrados=array();
+	
+		foreach ($id_trayectos_encontrados as $id)
+		{
+			//CADA ITERACION BUSCA POR UN ID DE USUARIO DEVOLVIENDO TANTAS FILAS COMO USUARIOS TENGA ESE ID DE TRAYECTO
+			array_push($trayectos_encontrados, R::getAll("select u.id usuarioId, u.nombre,u.apellidos,u.fechanac,
+					t.id trayecto_id,t.dias,t.horallegadadestino,t.horaretornodestino,t.comentarios,t.creador,t.plazas,
+					li.poblacion as poblacionOrigen,
+					ld.poblacion poblacionDestino,
+					ut.trayecto_id
+					from usuariotrayecto ut
+					join usuario u on ut.usuario_id=u.id
+					join trayecto t on ut.trayecto_id=t.id
+					join lugar li on t.inicio_id=li.id
+					join lugar ld on t.destino_id=ld.id
+					where t.id = {$id['trayecto_id']}
+			order by ut.trayecto_id, ut.id"));
+		}
+	
+	
+		return $trayectos_encontrados;
+	
+	}
+	
 	public function crearTrayecto($trayectoInput,$usuario)
 	{	
 		
