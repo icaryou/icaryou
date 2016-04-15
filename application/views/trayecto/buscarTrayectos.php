@@ -32,8 +32,8 @@
 					</div>
 
 					<div class="form-group top-buffer">
-						<label>Población origen</label> <input type="text"
-							name="poblacionOrigen" class="form-control" id="poblacionOrigen"
+						<label for="poblacionOrigen">Poblaci&oacute;n origen</label> <input type="text"
+							name="poblacionOrigen" class="form-control isstate" id="poblacionOrigen"
 							value="">
 					</div>
 
@@ -43,8 +43,8 @@
 					</div>
 
 					<div class="form-group top-buffer">
-						<label>Población destino</label> <input type="text"
-							name="poblacionDestino" class="form-control"
+						<label>Poblaci&oacute;n destino</label> <input type="text"
+							name="poblacionDestino" class="form-control isstate"
 							id="poblacionDestino" value="">
 					</div>
 					<h4 class="top-buffer">Hora de llegada al trabajo</h4>
