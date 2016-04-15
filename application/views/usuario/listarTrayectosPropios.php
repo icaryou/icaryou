@@ -22,7 +22,7 @@
 			<tr><td class="bigCity"><?php echo $trayectoAgrupado[0]['horallegadadestino']?></td><td></td><td class="bigCity"><?php echo $trayectoAgrupado[0]['horaretornodestino']?></td></tr>
 			<tr><td colspan="3"><?php echo $trayectoAgrupado[0]['dias']?></td></tr>
 			<tr><td colspan="3"><p><strong>Comentarios:</strong></p><?php echo $trayectoAgrupado[0]['comentarios']?></td></tr>
-			<tr><td colspan="3"><?php echo $trayectoAgrupado[0]['plazas']?></td></tr>
+			<tr><td colspan="3"><div class="numberCircle"><?php echo $trayectoAgrupado[0]['plazas']?></div></td></tr>
 			<tr><td colspan="3"><?php foreach ($trayectoAgrupado as $usu):?>
 					<p><a href="<?php echo base_url('usuario/mostrarPerfilUsuario/'.$usu["usuarioId"])?>"><?php echo $usu["nombre"]." ".$usu["apellidos"]?></a></p>
 					<?php if($usu["usuarioId"]==$this->session->userdata('id')):?>
