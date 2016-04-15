@@ -29,13 +29,13 @@
 									
 									<!-- NO LOGUEADO -->
 									<?php if(!$this->session->userdata('logueado')):?>
-										<li class="active"><a href="<?= base_url();?>usuario/registrarUsuario">Registrarse</a></li>
-										<li class="login"><a id="botonLogin" data-toggle="modal" href="#loginForm">Iniciar sesi&oacute;n</a></li>
+										<li class="active"><a href="<?= base_url();?>usuario/registrarUsuario">Regístrate</a></li>
+										<li class="login"><a id="botonLogin" data-toggle="modal" href="#loginForm">Inicia sesi&oacute;n</a></li>
 									<?php endif;?>
 									<!--LOGUEADO -->
 									<?php if($this->session->userdata('logueado')):?>
 									<li class="dropdown"><a href=""
-										class="dropdown-toggle letraNegra" data-toggle="dropdown">Nuevo trayecto<b
+										class="dropdown-toggle letraNegra" data-toggle="dropdown">Trayectos<b
 											class="caret"></b></a>
 										<ul class="dropdown-menu">
 											<li><a href="<?php echo base_url()?>trayecto/crearTrayecto">Crear trayecto</a></li>

@@ -243,6 +243,7 @@ margin-top:40px;
 /* EXTRAS */
 .top-buffer { margin-top:20px; }
 .left-buffer { margin-left:20px; }
+.bottom-buffer { margin-bottom:-50px; }
 .loginForm {overflow-x: hidden;
 display: inline-block;
     margin-bottom: 0;
@@ -314,6 +315,9 @@ display: inline-block;
   background-repeat: repeat-x;
   filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#ff0088cc', endColorstr='#ff0077b3', GradientType=0);
 }
-
-
+/*tabla sin bordes en mostrar trayectos*/
+.borderless {
+    border: none;
+}
+button:focus {outline:0;}
 

@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
   <meta charset="utf-8">
-  <title>ShapeBootstrap Clean Template</title>
+  <title>I Car You - Encuentra tu trayecto</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta name="description" content="">
   <meta name="author" content="">
@@ -17,6 +17,8 @@
 	<link href="<?= base_url();?>assets/css/formularios.css" rel="stylesheet">
 	<link href="<?= base_url();?>assets/css/jquery-ui.css" rel="stylesheet" >
 	<link href="<?= base_url();?>assets/css/tooltipster.css" rel="stylesheet" >
+	<link href="<?= base_url();?>assets/css/paginator.css" rel="stylesheet" >
+	
 	
 	 <!--Font-->
     <!-- <link href='http://fonts.googleapis.com/css?family=Source+Sans+Pro:200,300,400,600' rel='stylesheet' type='text/css'> -->
@@ -47,6 +49,7 @@
     <script src="<?= base_url();?>assets/js/jquery-ui.js"></script>
     <script src="<?= base_url();?>assets/js/jquery.tooltipster.min.js"></script>
     <script src="<?= base_url();?>assets/js/loginDiv.js"></script>
+    
     
 
     
