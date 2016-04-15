@@ -73,7 +73,7 @@ a.swShowPage.active{
 	padding:20px;
 	float:left;
 	width:400px;
-	height:400px;
+	height:450px;
 
 	/* Regular CSS3 box shadows (not inset): */
 
@@ -96,7 +96,7 @@ a.swShowPage.active{
 	font-weight: 400;
 }
 #holder li td{
-	padding:5px;
+	padding-bottom:5px;
 	font-family:'Source Sans Pro', sans-serif ;
 	font-smoothing: antialiased;
 	text-align:center;
