@@ -48,5 +48,7 @@
     <script src="<?= base_url();?>assets/js/jquery.tooltipster.min.js"></script>
     <script src="<?= base_url();?>assets/js/loginDiv.js"></script>
     
-
+	<script>
+    var BASE_URL = "<?php echo base_url(); ?>";
+	</script>
     

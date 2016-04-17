@@ -56,10 +56,10 @@ class Trayecto_Model extends RedBean_SimpleModel
 					join trayecto t on ut.trayecto_id=t.id
 					join lugar li on t.inicio_id=li.id
 					join lugar ld on t.destino_id=ld.id
-					where t.id = {$id['trayecto_id']}
+					where t.id = {$id['trayecto_id']} AND aceptado=1
 			order by ut.trayecto_id, ut.id"));
 		}
-		
+		//CAMBIO   AGREGADO ACEPTADO=1
 		
 		//var_dump($trayectosEncontrado);
 		return $trayectosEncontrados;
@@ -93,7 +93,7 @@ class Trayecto_Model extends RedBean_SimpleModel
 					join trayecto t on ut.trayecto_id=t.id
 					join lugar li on t.inicio_id=li.id
 					join lugar ld on t.destino_id=ld.id
-					where t.id = {$id['trayecto_id']}
+					where t.id = {$id['trayecto_id']}  AND aceptado=1
 			order by ut.trayecto_id, ut.id"));
 		}
 		
@@ -105,7 +105,7 @@ class Trayecto_Model extends RedBean_SimpleModel
 		
 		
 		//SELECCIONAMOS LOS IDS DE SUS TRAYECTOS
-		$idTrayectosPropiosEncontrados=R::getAll("select ut.trayecto_id from usuariotrayecto ut where ut.usuario_id=$id");//TODO cmabiar por $id
+		$idTrayectosPropiosEncontrados=R::getAll("select ut.trayecto_id from usuariotrayecto ut where ut.usuario_id=$id AND aceptado=1 ");//TODO cmabiar por $id
 				
 		$trayectosPropiosEncontrados=array();	
 		
@@ -122,7 +122,7 @@ class Trayecto_Model extends RedBean_SimpleModel
 			join trayecto t on ut.trayecto_id=t.id
 			join lugar li on t.inicio_id=li.id
 			join lugar ld on t.destino_id=ld.id
-			where t.id = {$id['trayecto_id']} 
+			where t.id = {$id['trayecto_id']}
 			order by ut.trayecto_id, ut.id"));
 		}	
 		

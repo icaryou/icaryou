@@ -27,7 +27,8 @@ class Usuario_Model extends RedBean_SimpleModel //CI_Model//
 		$usuario->fechanac=$registro['fechaNac'];
 		$usuario->cp=$registro['cp'];
 		$usuario->cochepropio=$registro['cochePropio'];
-		$usuario->activo=false;
+		$usuario->sw_activo=false;
+		$usuario->sw_mensajes_nuevos=false;
 		
 		$id=R::store($usuario);			
 	}
@@ -123,7 +124,7 @@ class Usuario_Model extends RedBean_SimpleModel //CI_Model//
 	function verificarEmail($key)
 	{
 		$usuario=R::findOne("usuario","md5(email)=?",array($key));
-		$usuario->activo=1;
+		$usuario->sw_activo=1;
 		R::store($usuario);
 		/*
 		$data = array('activo' => 1);
