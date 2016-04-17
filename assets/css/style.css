@@ -243,6 +243,7 @@ margin-top:40px;
 /* EXTRAS */
 .top-buffer { margin-top:20px; }
 .left-buffer { margin-left:20px; }
+.bottom-buffer { margin-bottom:-50px; }
 .loginForm {overflow-x: hidden;
 display: inline-block;
     margin-bottom: 0;
@@ -314,6 +315,24 @@ display: inline-block;
   background-repeat: repeat-x;
   filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#ff0088cc', endColorstr='#ff0077b3', GradientType=0);
 }
+/*tabla sin bordes en mostrar trayectos*/
+.borderless {
+    border: none;
+}
+button:focus {outline:0;}
+.numberCircle{
+	margin:0 auto;
+	 border-radius: 50%;
+    behavior: url(PIE.htc); /* remove if you don't care about IE8 */
 
+    width: 36px;
+    height: 36px;
+    padding: 8px;
 
+    background: #fff;
+    border: 2px solid #666;
+    color: #666;
+    text-align: center;
 
+    font: 32px Arial, sans-serif;
+}
