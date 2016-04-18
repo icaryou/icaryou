@@ -1,0 +1,101 @@
+  #usuarios{
+      width: 200px;
+      height: 200px;
+      display:inline-block;
+      float:left;
+  }
+  #contenedor{
+      width: 900px;
+      height: 200px;
+      display:inline-block;
+      float:left;
+  }
+
+  .flotando{
+    position: relative;
+    height: 98%;
+    float:left;
+    display: inline-block;
+
+  }
+  #izquierda{
+    width: 50%;
+        overflow: hidden;
+  }
+  #centro{
+    width: 30%;
+  }
+  #derecha{
+    width: 18%;
+  }
+  .alignDerecha{
+    text-align: right;
+  }
+  .alignIzquierda
+  {
+    text-align: left;
+  }
+  .alignCentro{
+    text-align: center;
+    margin: 20% auto;
+
+  }
+
+  .dias{
+    display: block;
+    height: 20%;
+    width: 98%;
+    text-align: center;
+    margin-top:20px;
+    font-family:'Source Sans Pro', sans-serif;
+    font-weight: 400;
+    font-size:22px;
+  }
+  .flotandoPeq{
+    height: 78%;
+    float:left;
+    display: inline-block;
+  }
+  .bloque{
+    display: block;
+    margin-bottom:20px;
+  }
+  .horas{
+    text-align: right;
+    width: 30%;
+	margin-left:-80px;
+  }
+  .ciudades{
+    text-align: left;
+    width: 68%;
+    font-family:'Source Sans Pro', sans-serif;
+    font-weight: 400;
+    font-size:22px;
+    margin-left:20px;
+  }
+  .comentarios{
+    margin: 40px 30px 10px 30px;
+  }
+  .plazas{
+    margin: 50px 60px;
+  }
+  .numberCircle {
+    border-radius: 50%;
+    behavior: url(PIE.htc); /* remove if you don't care about IE8 */
+
+    width: 36px;
+    height: 36px;
+    padding: 8px;
+
+    background: #fff;
+    border: 2px solid #666;
+    color: #666;
+    text-align: center;
+
+    font: 32px Arial, sans-serif;
+}
+
+.divider{
+    border-right:1px solid #aaa;
+    height:70%;
+}

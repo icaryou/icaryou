@@ -97,6 +97,10 @@ class Trayecto extends CI_Controller
 		enmarcar($this, "trayecto/buscarTrayectoMiniPost",$datos);//TODO
 	}
 	
+	public function filtrarTrayectoPost()
+	{
+		
+	}
 	
 	public function crearTrayecto() 
 	{		

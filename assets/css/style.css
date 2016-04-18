@@ -242,6 +242,7 @@ margin-top:40px;
 
 /* EXTRAS */
 .top-buffer { margin-top:20px; }
+.top-buffer10 { margin-top:10px; }
 .left-buffer { margin-left:20px; }
 .bottom-buffer { margin-bottom:-50px; }
 .loginForm {overflow-x: hidden;
@@ -336,3 +337,5 @@ button:focus {outline:0;}
 
     font: 32px Arial, sans-serif;
 }
+
+

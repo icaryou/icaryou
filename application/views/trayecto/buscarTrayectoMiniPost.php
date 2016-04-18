@@ -1,4 +1,97 @@
-<!-- variable que necesitaremos para pintar los botones de unirse o no -->
+<div class="container">
+<div class="row">
+		<div class="span2">
+		<h2>Filtrar</h2>
+		
+		<form id="formularioFiltro"
+				action="<?=base_url('trayecto/filtrarTrayectoPost')?>" method="post"
+				class="form-horizontal formularioGenerico">
+				
+		<input type="hidden" name="poblacionOrigen" id="poblacionOrigen" value="<?php echo "{$camposBusqueda['poblacionOrigen']}"?>"/>
+		<input type="hidden" name="poblacionDestino" id="poblacionDestino" value="<?php echo "{$camposBusqueda['poblacionDestino']}"?>"/>
+		
+		
+		
+		<script>
+			  $(function() {
+			    $( "#slider-range1" ).slider({
+			      range: true,
+			      min: 0,
+			      max: 23,
+			      values: [ 9, 18 ],
+			      slide: function( event, ui ) {
+			        $( "#horaSalidaRango" ).val( ui.values[ 0 ] + "h - " + ui.values[ 1 ] +"h" );
+			      }
+			    });
+			    $( "#horaSalidaRango" ).val( $( "#slider-range1" ).slider( "values", 0 ) +
+			      "h - " + $( "#slider-range1" ).slider( "values", 1 )+"h" );
+			  });
+
+			  $(function() {
+				    $( "#slider-range2" ).slider({
+				      range: true,
+				      min: 0,
+				      max: 23,
+				      values: [ 9, 18 ],
+				      slide: function( event, ui ) {
+				        $( "#horaRegresoRango" ).val( ui.values[ 0 ] + "h - " + ui.values[ 1 ] +"h" );
+				      }
+				    });
+				    $( "#horaRegresoRango" ).val( $( "#slider-range2" ).slider( "values", 0 ) +
+				      "h - " + $( "#slider-range2" ).slider( "values", 1 )+"h" );
+				  });
+
+  		</script>	
+
+
+  	<label for="horaSalidaRango" class="labelFilter">Hora de salida:</label>
+  
+  	<input type="text" id="horaSalidaRango" class="top-buffer10" readonly style="border:0; color:#777; font-weight:bold; width:60px;">
+	<div id="slider-range1" class="top-buffer"></div>
+	
+	
+	<label for="horaRegresoRango" class="labelFilter">Hora de regreso:</label>
+  
+  	<input type="text" id="horaRegresoRango" class="top-buffer10" readonly style="border:0; color:#777; font-weight:bold; width:60px;">
+	<div id="slider-range2" class="top-buffer"></div>
+		
+		
+		<p class="labelFilter">Días:</p>
+		<div class="diasFilter" >
+			<input type="checkbox" name="dias[]" id="L" value="L" /> 
+			<label for="L">L</label>
+		</div>
+		<div class="diasFilter" >
+			<input type="checkbox" name="dias[]" id="M" value="M"> 
+			<label for="M">M</label>
+		</div>
+		<div class="diasFilter" >
+			<input type="checkbox" name="dias[]" id="X" value="X">  
+			<label for="X">X</label>
+		</div>
+		<div class="diasFilter" >
+			<input type="checkbox" name="dias[]" id="J" value="J">   
+			<label for="J">J</label>
+		</div>
+		<div class="diasFilter" >
+			<input type="checkbox" name="dias[]" id="V" value="V">   
+			<label for="V">V</label>
+		</div>
+		<div class="diasFilter" >
+			<input type="checkbox" name="dias[]" id="S" value="S"> 
+			<label for="S">S</label>
+		</div>
+		<div class="diasFilter" >
+			<input type="checkbox" name="dias[]" id="D" value="D">   
+			<label for="D">D</label>
+		</div>
+		
+		<input type="submit" value="Filtrar búsqueda" class="btn btn-primary btn-block btn-lg top-buffer" />
+		
+		</form>
+		</div>
+		<div class="span10">
+		<!-- variable que necesitaremos para pintar los botones de unirse o no -->
 <?php $pintarAbandonar=FALSE?>	
 	
 <?php if(sizeof($trayectosEncontrados)==0):?><!-- NO ENCUENTRA TRAYECTOS -->
@@ -82,3 +175,23 @@
 <?php endif;?>
 <p><?=validation_errors();?></p>
 <input TYPE="button" VALUE="Back" onClick="history.go(-1);">
+		</div>
+</div>
+
+</div>
+<script>
+$(document).ready(function () {
+	$('#horaSalida').on('input', function(){
+		$('#horaSalidaOut').val($('#horaSalida').val());
+	});
+	$('#horaRegreso').on('input', function(){
+		$('#horaRegresoOut').val($('#horaRegreso').val());
+	});
+	$('#horaSalidaOut').on('input', function(){
+		$('#horaSalida').val($('#horaSalidaOut').val());
+	});
+	$('#horaRegresoOut').on('change', function(){
+		$('#horaRegreso').val($('#horaRegresoOut').val());
+	});
+});
+</script>

@@ -10,14 +10,15 @@
 
     <!-- CSS 
     ============================================================-->  
-	
 	<link href="<?= base_url();?>assets/css/bootstrap.css" rel="stylesheet">
 	<link href="<?= base_url();?>assets/css/bootstrap-responsive.min.css" rel="stylesheet">
 	<link href="<?= base_url();?>assets/css/style.css" rel="stylesheet">
 	<link href="<?= base_url();?>assets/css/formularios.css" rel="stylesheet">
 	<link href="<?= base_url();?>assets/css/jquery-ui.css" rel="stylesheet" >
 	<link href="<?= base_url();?>assets/css/tooltipster.css" rel="stylesheet" >
-	<link href="<?= base_url();?>assets/css/paginator.css" rel="stylesheet" >
+	<link href="<?= base_url();?>assets/css/simplePagination.css" rel="stylesheet" >
+	<link href="<?= base_url();?>assets/css/listadoTrayectos.css" rel="stylesheet" >
+	<link href="<?= base_url();?>assets/css/buscarTrayectoMiniPost.css" rel="stylesheet" >
 	
 	
 	 <!--Font-->
@@ -49,7 +50,7 @@
     <script src="<?= base_url();?>assets/js/jquery-ui.js"></script>
     <script src="<?= base_url();?>assets/js/jquery.tooltipster.min.js"></script>
     <script src="<?= base_url();?>assets/js/loginDiv.js"></script>
-    
+    <script src="<?= base_url();?>assets/js/bootstrap-paginator.js"></script>
     
 
     
