@@ -8,8 +8,8 @@
   <meta name="author" content="">
 
 
-    <!-- CSS 
-    ============================================================-->  
+    <!-- CSS
+    ============================================================-->
 	<link href="<?= base_url();?>assets/css/bootstrap.css" rel="stylesheet">
 	<link href="<?= base_url();?>assets/css/bootstrap-responsive.min.css" rel="stylesheet">
 	<link href="<?= base_url();?>assets/css/style.css" rel="stylesheet">
@@ -19,8 +19,8 @@
 	<link href="<?= base_url();?>assets/css/simplePagination.css" rel="stylesheet" >
 	<link href="<?= base_url();?>assets/css/listadoTrayectos.css" rel="stylesheet" >
 	<link href="<?= base_url();?>assets/css/buscarTrayectoMiniPost.css" rel="stylesheet" >
-	
-	
+
+
 	 <!--Font-->
     <!-- <link href='http://fonts.googleapis.com/css?family=Source+Sans+Pro:200,300,400,600' rel='stylesheet' type='text/css'> -->
     <link href="<?= base_url();?>assets/css/googleFonts.css" rel="stylesheet" >
@@ -36,11 +36,11 @@
   <link rel="apple-touch-icon-precomposed" sizes="72x72" href="img/apple-touch-icon-72-precomposed.png">
   <link rel="apple-touch-icon-precomposed" href="img/apple-touch-icon-57-precomposed.png">
   <link rel="shortcut icon" href="img/favicon.png">
-  
 
 
-    <!-- SCRIPT 
-    ============================================================-->  
+
+    <!-- SCRIPT
+    ============================================================-->
     <!-- <script src="http://code.jquery.com/jquery.js"></script> -->
     <script src="<?= base_url();?>assets/js/jquery-2.1.3.js"></script>
     <script src="<?= base_url();?>assets/js/bootstrap.min.js"></script>
@@ -51,6 +51,7 @@
     <script src="<?= base_url();?>assets/js/jquery.tooltipster.min.js"></script>
     <script src="<?= base_url();?>assets/js/loginDiv.js"></script>
     <script src="<?= base_url();?>assets/js/bootstrap-paginator.js"></script>
-    
 
-    
+	<script>
+    var BASE_URL = "<?php echo base_url(); ?>";
+	</script>
