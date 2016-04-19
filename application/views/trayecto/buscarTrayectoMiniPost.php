@@ -7,11 +7,29 @@
 			      max: 23,
 			      values: [ 9, 18 ],
 			      slide: function( event, ui ) {
-			        $( "#horaSalidaRango" ).val( ui.values[ 0 ] + "h - " + ui.values[ 1 ] +"h" );
+				    //El formato que devuelve es 9h y debo pasarlo a 09h asiq miro la longitud del numero
+				    $hora1="";
+				    if(((ui.values[ 0 ]).toString()).length == 1){
+				    	$hora1="0" + ui.values[ 0 ] + ":00";
+					}else{
+						$hora1=ui.values[ 0 ] + ":00";
+					}
+				    $hora2="";
+				    if(((ui.values[ 1 ]).toString()).length == 1){
+				    	$hora2="0" + ui.values[ 1 ] + ":00";
+					}else{
+						$hora2=ui.values[ 1 ] + ":00";
+					}
+
+			        $( "#horaSalidaRango" ).val( $hora1 + " - " + $hora2 );
 			      }
 			    });
+			    //Pongo la hora a mano porque con la funcion de abajo no me pone el 0 delante del 9
+			    $( "#horaSalidaRango" ).val("09:00 - 18:00");
+			    /*
 			    $( "#horaSalidaRango" ).val( $( "#slider-range1" ).slider( "values", 0 ) +
-			      "h - " + $( "#slider-range1" ).slider( "values", 1 )+"h" );
+			      ":00 - " + $( "#slider-range1" ).slider( "values", 1 )+":00");
+			      */
 			  });
 
 			  $(function() {
@@ -21,12 +39,28 @@
 				      max: 23,
 				      values: [ 9, 18 ],
 				      slide: function( event, ui ) {
-				        $( "#horaRegresoRango" ).val( ui.values[ 0 ] + "h - " + ui.values[ 1 ] +"h" );
+				    	  $hora1="";
+						    if(((ui.values[ 0 ]).toString()).length == 1){
+						    	$hora1="0" + ui.values[ 0 ] + ":00";
+							}else{
+								$hora1=ui.values[ 0 ] + ":00";
+							}
+						    $hora2="";
+						    if(((ui.values[ 1 ]).toString()).length == 1){
+						    	$hora2="0" + ui.values[ 1 ] + ":00";
+							}else{
+								$hora2=ui.values[ 1 ] + ":00";
+							}
+
+						$( "#horaRegresoRango" ).val( $hora1 + " - " + $hora2 );  
 				      }
 				    });
+				    $( "#horaRegresoRango" ).val("09:00 - 18:00");
+				    /*
 				    $( "#horaRegresoRango" ).val( $( "#slider-range2" ).slider( "values", 0 ) +
-				      "h - " + $( "#slider-range2" ).slider( "values", 1 )+"h" );
+				      ":00 - " + $( "#slider-range2" ).slider( "values", 1 )+":00" );
 				  });
+					  */
 
   		</script>	
 
@@ -35,20 +69,18 @@
 		<div class="span2">
 		<h2>Filtrar</h2>
 		<div class="separadorHori"></div>
-		<form id="formularioFiltro" action="<?=base_url('trayecto/filtrarTrayectoPost')?>" method="post"
+		<form id="formularioFiltro" action="<?php echo base_url()?>trayecto/filtrarTrayectoPost" method="post"
 				class="form-horizontal formularioGenerico">
-				
-
 
   	<label for="horaSalidaRango" class="labelFilter">Hora de salida:</label>
   
-  	<input type="text" id="horaSalidaRango" class="top-buffer10" readonly style="border:0; color:#777; font-weight:bold; width:60px;">
+  	<input type="text" id="horaSalidaRango" name="horaSalidaRango" class="top-buffer10" readonly style="border:0; color:#777; font-weight:bold; width:90px;">
 	<div id="slider-range1" class="top-buffer"></div>
 	
 	
 	<label for="horaRegresoRango" class="labelFilter top-buffer">Hora de regreso:</label>
   
-  	<input type="text" id="horaRegresoRango" class="top-buffer10" readonly style="border:0; color:#777; font-weight:bold; width:60px;">
+  	<input type="text" id="horaRegresoRango" name="horaRegresoRango" class="top-buffer10" readonly style="border:0; color:#777; font-weight:bold; width:90px;">
 	<div id="slider-range2" class="top-buffer"></div>
 		
 		
@@ -92,7 +124,7 @@
 			<input type="text" name="poblacionDestinoFil" class="form-control inputPeque isstate" id="poblacionDestinoFil" value="<?php echo "{$camposBusqueda['poblacionDestino']}"?>">
 		</div>
 		
-		<input type="submit" value="Filtrar búsqueda" class="btn btn-primary btn-block btn-lg top-buffer" />
+		<input type="button" id="filtrar" value="Filtrar búsqueda" class="btn btn-primary btn-block btn-lg top-buffer" />
 		
 		</form>
 		</div>
@@ -186,18 +218,30 @@
 
 </div>
 <script>
-$(document).ready(function () {
-	$('#horaSalida').on('input', function(){
-		$('#horaSalidaOut').val($('#horaSalida').val());
-	});
-	$('#horaRegreso').on('input', function(){
-		$('#horaRegresoOut').val($('#horaRegreso').val());
-	});
-	$('#horaSalidaOut').on('input', function(){
-		$('#horaSalida').val($('#horaSalidaOut').val());
-	});
-	$('#horaRegresoOut').on('change', function(){
-		$('#horaRegreso').val($('#horaRegresoOut').val());
-	});
+
+$(document).ready(function(){
+    $("#filtrar").click(function(){
+    	$.ajax({
+  		  method: "POST",
+  		  url: "<?php echo base_url()?>trayecto/filtrarTrayectoPost",
+  		  data: $('#formularioFiltro').serialize()
+  		})
+  		  .done(function(res) {
+  		    console.log(res);
+  		 });
+        
+    	/*
+    	$.ajax({
+    		  method: "POST",
+    		  url: "<?php echo base_url()?>trayecto/filtrarTrayectoPost",
+    		  data: $('#formularioFiltro').serialize(),
+    		  dataType: 'json'
+    		})
+    		  .done(function(res) {
+    		    alert( );
+    		 });
+		 */
+    });
 });
 </script>
+

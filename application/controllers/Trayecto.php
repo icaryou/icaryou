@@ -98,8 +98,31 @@ class Trayecto extends CI_Controller
 	}
 	
 	public function filtrarTrayectoPost()
-	{
+	{	
+		$horaSalidaRango=explode(" - ",$this->input->post('horaSalidaRango'));
+		$trayecto['horaLlegadaDesde']=$horaSalidaRango[0];
+		$trayecto['horaLlegadaHasta']=$horaSalidaRango[1];
+		$horaRegresoRango=explode(" - ",$this->input->post('horaRegresoRango'));
+		$trayecto['horaRetornoDesde']=$horaRegresoRango[0];
+		$trayecto['horaRetornoHasta']=$horaRegresoRango[1];
+
+		if(null !=$this->input->post('poblacionOrigenFil')){
+			$trayecto['poblacionOrigen']=$this->input->post('poblacionOrigenFil');
+		}
+		if(null !=$this->input->post('poblacionDestinoFil')){
+			$trayecto['poblacionDestino']=$this->input->post('poblacionDestinoFil');			
+		}
 		
+		$trayecto['dias[]']=$this->input->post('dias[]');
+		/*
+		$trayecto['cpOrigen'];
+		$trayecto['cpDestino'];
+		*/
+		$this->load->Model('Trayecto_Model');
+		$trayectosEncontrados=$usuario=$this->Trayecto_Model->filtrarTrayecto($trayecto);
+		//echo $trayecto['horaRetornoDesde'];
+		echo sizeof($trayectosEncontrados);
+		//echo $trayectosEncontrados;
 	}
 	
 	public function crearTrayecto() 
