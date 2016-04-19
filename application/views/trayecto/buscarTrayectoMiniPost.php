@@ -1,17 +1,4 @@
-<div class="container">
-<div class="row">
-		<div class="span2">
-		<h2>Filtrar</h2>
-		
-		<form id="formularioFiltro"
-				action="<?=base_url('trayecto/filtrarTrayectoPost')?>" method="post"
-				class="form-horizontal formularioGenerico">
-				
-		<input type="hidden" name="poblacionOrigen" id="poblacionOrigen" value="<?php echo "{$camposBusqueda['poblacionOrigen']}"?>"/>
-		<input type="hidden" name="poblacionDestino" id="poblacionDestino" value="<?php echo "{$camposBusqueda['poblacionDestino']}"?>"/>
-		
-		
-		
+
 		<script>
 			  $(function() {
 			    $( "#slider-range1" ).slider({
@@ -43,6 +30,15 @@
 
   		</script>	
 
+<div class="container">
+<div class="row">
+		<div class="span2">
+		<h2>Filtrar</h2>
+		<div class="separadorHori"></div>
+		<form id="formularioFiltro" action="<?=base_url('trayecto/filtrarTrayectoPost')?>" method="post"
+				class="form-horizontal formularioGenerico">
+				
+
 
   	<label for="horaSalidaRango" class="labelFilter">Hora de salida:</label>
   
@@ -50,13 +46,13 @@
 	<div id="slider-range1" class="top-buffer"></div>
 	
 	
-	<label for="horaRegresoRango" class="labelFilter">Hora de regreso:</label>
+	<label for="horaRegresoRango" class="labelFilter top-buffer">Hora de regreso:</label>
   
   	<input type="text" id="horaRegresoRango" class="top-buffer10" readonly style="border:0; color:#777; font-weight:bold; width:60px;">
 	<div id="slider-range2" class="top-buffer"></div>
 		
 		
-		<p class="labelFilter">Días:</p>
+		<p class="labelFilter top-buffer">Días:</p>
 		<div class="diasFilter" >
 			<input type="checkbox" name="dias[]" id="L" value="L" /> 
 			<label for="L">L</label>
@@ -84,6 +80,16 @@
 		<div class="diasFilter" >
 			<input type="checkbox" name="dias[]" id="D" value="D">   
 			<label for="D">D</label>
+		</div>
+		
+		<div class="form-group top-buffer">
+			<label for="poblacionOrigenFil" class="labelFilter top-buffer">Poblaci&oacute;n origen:</label> 
+			<input type="text" name="poblacionOrigenFil" class="form-control inputPeque isstate" id="poblacionOrigenFil" value="<?php echo "{$camposBusqueda['poblacionOrigen']}"?>">
+		</div>
+		
+		<div class="form-group top-buffer">
+			<label for="poblacionDestinoFil" class="labelFilter top-buffer">Poblaci&oacute;n destino:</label> 
+			<input type="text" name="poblacionDestinoFil" class="form-control inputPeque isstate" id="poblacionDestinoFil" value="<?php echo "{$camposBusqueda['poblacionDestino']}"?>">
 		</div>
 		
 		<input type="submit" value="Filtrar búsqueda" class="btn btn-primary btn-block btn-lg top-buffer" />

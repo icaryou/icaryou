@@ -41,3 +41,18 @@ input[type=checkbox]:checked + label {
 
 .ui-slider { background-color: #0DBD96 !important; }
 .ui-widget-header { border: 1px solid #aaaaaa; background: #fff; }
+
+.separadorHori{
+	border-top:1px solid #ccc;
+	margin-top:-25px;
+	margin-bottom:20px;
+}
+
+.inputPeque{
+	width:90%;
+}
+
+.ui-autocomplete {
+	max-width: 180px;
+	max-height: 150px;
+}
