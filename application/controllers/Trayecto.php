@@ -108,9 +108,13 @@ class Trayecto extends CI_Controller
 
 		if(null !=$this->input->post('poblacionOrigenFil')){
 			$trayecto['poblacionOrigen']=$this->input->post('poblacionOrigenFil');
+		}else{
+			$trayecto['poblacionOrigen']=$this->input->post('busquedaOrigen');
 		}
 		if(null !=$this->input->post('poblacionDestinoFil')){
 			$trayecto['poblacionDestino']=$this->input->post('poblacionDestinoFil');			
+		}else{
+			$trayecto['poblacionDestino']=$this->input->post('busquedaDestino');
 		}
 		
 		$trayecto['dias[]']=$this->input->post('dias[]');
@@ -119,9 +123,11 @@ class Trayecto extends CI_Controller
 		$trayecto['cpDestino'];
 		*/
 		$this->load->Model('Trayecto_Model');
-		$trayectosEncontrados=$usuario=$this->Trayecto_Model->filtrarTrayecto($trayecto);
+		$trayectosEncontrados['trayectosEncontrados']=$this->Trayecto_Model->filtrarTrayecto($trayecto);
+		$trayectosEncontrados['camposBusqueda']=$trayecto;
+		$resultadoParaDiv=$this->load->view("trayecto/resultadoParaDiv", $trayectosEncontrados, true);
 		//echo $trayecto['horaRetornoDesde'];
-		echo sizeof($trayectosEncontrados);
+		echo $resultadoParaDiv;
 		//echo $trayectosEncontrados;
 	}
 	
