@@ -117,11 +117,15 @@ class Trayecto extends CI_Controller
 			$trayecto['poblacionDestino']=$this->input->post('busquedaDestino');
 		}
 		
+		if(null !=$this->input->post('cpOrigen')){
+			$trayecto['cpOrigen']=$this->input->post('cpOrigen');
+		}
+		if(null !=$this->input->post('cpDestino')){
+			$trayecto['cpDestino']=$this->input->post('cpDestino');
+		}
+		
 		$trayecto['dias[]']=$this->input->post('dias[]');
-		/*
-		$trayecto['cpOrigen'];
-		$trayecto['cpDestino'];
-		*/
+		
 		$this->load->Model('Trayecto_Model');
 		$trayectosEncontrados['trayectosEncontrados']=$this->Trayecto_Model->filtrarTrayecto($trayecto);
 		$trayectosEncontrados['camposBusqueda']=$trayecto;

@@ -29,5 +29,6 @@
 
 		    return $.inArray(value, arrayMuni) != -1;
 		}, "El dato introducido no es correcto");
-	
+
 	});
+	

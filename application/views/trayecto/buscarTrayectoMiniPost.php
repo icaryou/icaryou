@@ -68,7 +68,7 @@
 
 <div class="container">
 <div class="row">
-		<div class="span2">
+		<div class="span2" id="containerFilter">
 		<h2>Filtrar</h2>
 		<div class="separadorHori"></div>
 			<form id="formularioFiltro" action="<?php echo base_url()?>trayecto/filtrarTrayectoPost" method="post"
@@ -94,7 +94,7 @@
 					<input type="checkbox" name="dias[]" id="L" value="L" /> 
 					<label for="L">L</label>
 				</div>
-				<div class="diasFilter" >
+				<div class="diasFilter">
 					<input type="checkbox" name="dias[]" id="M" value="M"> 
 					<label for="M">M</label>
 				</div>
@@ -129,8 +129,18 @@
 					<input type="text" name="poblacionDestinoFil" class="form-control inputPeque isstate" id="poblacionDestinoFil" value="<?php echo "{$camposBusqueda['poblacionDestino']}"?>">
 				</div>
 				
+				<div class="form-group">
+					<label for="cpOrigen" class="labelFilter top-buffer">C&oacute;digo Postal origen:</label>
+					<input type="text" name="cpOrigen" class="form-control inputPeque" id="cpOrigen" value="">
+				</div>
+					
+				<div class="form-group top-buffer">
+					<label for="cpDestino" class="labelFilter top-buffer">C&oacute;digo Postal destino:</label>
+					<input type="text" name="cpDestino" class="form-control inputPeque" id="cpDestino" value="">
+				</div>
+				<!--  QUITO EL BOTON PORQUE SE ACTUALIZA SOLO CON AJAX
 				<input type="button" id="filtrar" value="Filtrar búsqueda" class="btn btn-primary btn-block btn-lg top-buffer" />
-			
+			-->
 			</form>
 		</div>
 		<div class="span10" id="rellenarAjax">
@@ -224,29 +234,41 @@
 </div>
 <script>
 
+/* Llamada a ajax cada vez que se aplica algun filtro*/
+
 $(document).ready(function(){
-    $("#filtrar").click(function(){
-    	$.ajax({
-  		  method: "POST",
-  		  url: "<?php echo base_url()?>trayecto/filtrarTrayectoPost",
-  		  data: $('#formularioFiltro').serialize()
-  		})
-  		  .done(function(res) {
-  		    $('#rellenarAjax').html(res);
-  		 });
-        
-    	/*
-    	$.ajax({
-    		  method: "POST",
-    		  url: "<?php echo base_url()?>trayecto/filtrarTrayectoPost",
-    		  data: $('#formularioFiltro').serialize(),
-    		  dataType: 'json'
-    		})
-    		  .done(function(res) {
-    		    alert( );
-    		 });
-		 */
+	
+	$("#poblacionOrigenFil").on( "autocompletechange", function(event,ui) {
+		llamarAjax();
+		});
+	$("#poblacionDestinoFil").on( "autocompletechange", function(event,ui) {
+		llamarAjax();
+		});
+    $('#slider-range1').on('focusout mouseup', function(){
+    	llamarAjax();
+    });
+
+    $('#slider-range2').on('focusout mouseup', function(){
+    	llamarAjax();
+    });
+    
+    $("#formularioFiltro").each(function(){
+    	$(this).on("paste change",function(){
+    		llamarAjax();
+        });
     });
 });
+
+function llamarAjax(){
+	$.ajax({
+		  method: "POST",
+		  url: "<?php echo base_url()?>trayecto/filtrarTrayectoPost",
+		  data: $('#formularioFiltro').serialize()
+		})
+		  .done(function(res) {
+	  		  //alert("cambio");
+		    $('#rellenarAjax').html(res);
+		 });
+}
 </script>
 
