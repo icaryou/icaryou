@@ -89,7 +89,7 @@ class Trayecto extends CI_Controller
 		$trayecto['poblacionDestino']=$this->input->post('poblacionDestino');
 		
 		$this->load->Model('Trayecto_Model');
-		$trayectosEncontrados=$usuario=$this->Trayecto_Model->buscarTrayectosMini($trayecto);
+		$trayectosEncontrados=$this->Trayecto_Model->filtrarTrayecto($trayecto);
 		
 		$datos['camposBusqueda']=$trayecto;
 		$datos['trayectosEncontrados']=$trayectosEncontrados;

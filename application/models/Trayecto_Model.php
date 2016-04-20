@@ -64,7 +64,7 @@ class Trayecto_Model extends RedBean_SimpleModel
 		//var_dump($trayectosEncontrado);
 		return $trayectosEncontrados;
 	}
-	
+	/* YA NO SE USA
 	public function buscarTrayectosMini($trayecto)
 	{
 		$idTrayectosEncontrados=R::getAll("select distinct ut.trayecto_id from usuariotrayecto ut
@@ -100,7 +100,8 @@ class Trayecto_Model extends RedBean_SimpleModel
 		return $trayectosEncontrados;
 	}
 	
-
+*/
+	
 	public function filtrarTrayecto($trayecto)
 	{
 		$consulta="select distinct ut.trayecto_id from usuariotrayecto ut
@@ -113,46 +114,25 @@ class Trayecto_Model extends RedBean_SimpleModel
 		$consulta.=isset($trayecto['cpOrigen'])?"li.cp=\"".$trayecto['cpOrigen']."\" AND ":"";
 		$consulta.=isset($trayecto['cpDestino'])?"ld.cp=\"".$trayecto['cpDestino']."\" AND ":"";
 		
-		$consulta.=isset($trayecto['poblacionOrigen'])?"li.poblacion like \"".$trayecto['poblacionOrigen']."\" AND ":"";
-		$consulta.=isset($trayecto['poblacionDestino'])?"ld.poblacion like \"".$trayecto['poblacionDestino']."\" AND ":"";
-		
 		$consulta.=isset($trayecto['dias[]'])?"t.dias like \"".$this->diasToStringParaBuscar($trayecto['dias[]'])."\" AND ":"";
 		
 		$consulta.=isset($trayecto['horaLlegadaDesde'])?"t.horallegadadestino>=\"".$trayecto['horaLlegadaDesde']."\" AND ":"";
 		$consulta.=isset($trayecto['horaLlegadaHasta'])?"t.horallegadadestino<=\"".$trayecto['horaLlegadaHasta']."\" AND ":"";
 		$consulta.=isset($trayecto['horaRetornoDesde'])?"t.horaretornodestino>=\"".$trayecto['horaRetornoDesde']."\" AND ":"";
-		$consulta.=isset($trayecto['horaRetornoHasta'])?"t.horaretornodestino<=\"".$trayecto['horaRetornoHasta']."\"":"";
+		$consulta.=isset($trayecto['horaRetornoHasta'])?"t.horaretornodestino<=\"".$trayecto['horaRetornoHasta']."\" AND ":"";
+		
+		$consulta.=isset($trayecto['poblacionOrigen'])?"li.poblacion like \"".$trayecto['poblacionOrigen']."\" AND ":"";
+		$consulta.=isset($trayecto['poblacionDestino'])?"ld.poblacion like \"".$trayecto['poblacionDestino']."\"":"";
 		
 		$idTrayectosEncontrados=R::getAll($consulta);
-		/*
-		$idTrayectosEncontrados=R::getAll("select distinct ut.trayecto_id from usuariotrayecto ut
-										join trayecto t on ut.trayecto_id=t.id
-										join lugar li on t.inicio_id=li.id
-										join lugar ld on t.destino_id=ld.id
-										join usuario u on ut.usuario_id=u.id
-										where t.horallegadadestino>= :horaLlegadaDesde
-										AND t.horallegadadestino<= :horaLlegadaHasta
-										AND t.horaretornodestino>= :horaRetornoDesde
-										AND t.horaretornodestino<= :horaRetornoHasta
-										AND (li.cp= :cpOrigen OR li.poblacion like :poblacionOrigen)
-										AND (ld.cp= :cpDestino OR ld.poblacion like :poblacionDestino)
-										AND (t.dias like :dias)",array(':horaLlegadaDesde'=>$trayecto['horaLlegadaDesde'],
-													':horaLlegadaHasta'=>$trayecto['horaLlegadaHasta'],
-													':horaRetornoDesde'=>$trayecto['horaRetornoDesde'],
-													':horaRetornoHasta'=>$trayecto['horaRetornoHasta'],
-													':cpOrigen'=>$trayecto['cpOrigen'],
-													':poblacionOrigen'=>$trayecto['poblacionOrigen'],
-													':cpDestino'=>$trayecto['cpDestino'],
-													':poblacionDestino'=>$trayecto['poblacionDestino'],
-													':dias'=>$this->diasToStringParaBuscar($trayecto['dias[]']),
-											));//TODO cmabiar por $id
-		*/
-											$trayectosEncontrados=array();
+
+		
+		$trayectosEncontrados=array();
 	
-											foreach ($idTrayectosEncontrados as $id)
-											{
-												//CADA ITERACION BUSCA POR UN ID DE USUARIO DEVOLVIENDO TANTAS FILAS COMO USUARIOS TENGA ESE ID DE TRAYECTO
-												array_push($trayectosEncontrados, R::getAll("select u.id usuarioId, u.nombre,u.apellidos,u.fechanac,
+		foreach ($idTrayectosEncontrados as $id)
+		{
+				//CADA ITERACION BUSCA POR UN ID DE USUARIO DEVOLVIENDO TANTAS FILAS COMO USUARIOS TENGA ESE ID DE TRAYECTO
+				array_push($trayectosEncontrados, R::getAll("select u.id usuarioId, u.nombre,u.apellidos,u.fechanac,
 														t.id trayecto_id,t.dias,t.horallegadadestino,t.horaretornodestino,t.comentarios,t.creador,t.plazas,
 														li.poblacion as poblacionOrigen,
 														ld.poblacion poblacionDestino,
@@ -164,12 +144,12 @@ class Trayecto_Model extends RedBean_SimpleModel
 														join lugar ld on t.destino_id=ld.id
 														where t.id = {$id['trayecto_id']} AND aceptado=1
 														order by ut.trayecto_id, ut.id"));
-											}
-											//CAMBIO   AGREGADO ACEPTADO=1
+		}
+		//CAMBIO   AGREGADO ACEPTADO=1
 	
-											//var_dump($trayectosEncontrado);
-											return $trayectosEncontrados;
-											//return $consulta;
+		//var_dump($trayectosEncontrado);
+		return $trayectosEncontrados;
+		//return $consulta;
 	}
 	
 	public function listarTrayectosPropios($id)
