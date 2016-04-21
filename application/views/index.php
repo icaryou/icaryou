@@ -93,6 +93,7 @@
 											class="btn btn-large btn-primary bottomaligned span2"
 											tabindex="7">
 									</div>
+								<div id="errorSubmit" class="tooltip center-block " title="El usuario o la contraseña son incorrectos."></div>
 
 								</form>
 							</div>

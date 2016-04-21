@@ -24,6 +24,7 @@
           	     $(this).addClass("valid");          	     
           	   },
             debug: false,
+            focusCleanup: true,
             errorPlacement: function(error, element) {
                 if (element.attr("name") == "dias[]") {
                   error.insertAfter("#dias");
@@ -47,6 +48,7 @@
                 },
                 "poblacionOrigen": {
                     required: true,
+                    lettersonly: true
                     //PARA AÑADIR ESPRESION REGULAR PERSONAL    regx:/^[AB]{3}$/
                 },
                 "cpDestino": {
@@ -57,7 +59,8 @@
                     max:52999
                 },
                 "poblacionDestino": {
-                    required: true
+                    required: true,
+                    lettersonly: true
                     //PARA AÑADIR ESPRESION REGULAR PERSONAL    regx:/^[AB]{3}$/
                 },
                 "horaLlegada": {
