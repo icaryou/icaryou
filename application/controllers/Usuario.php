@@ -251,7 +251,7 @@ class Usuario extends CI_Controller
 		{
 			$this->load->Model('Trayecto_Model');
 			$datos['trayectosPropiosEncontrados']=$this->Trayecto_Model->listarTrayectosPropios($this->session->userdata('id'));
-			
+			$datos['css']="listadoTrayectos";
 			enmarcar($this,'usuario/listarTrayectosPropios.php',$datos);
 		}
 		else//SI NO ESTA LOGUEADO LE MANDAMOS AL LOGIN CON UN CAMPO REDIRECCION PARA QUE LUEGO LE LLEVE A LA PAGINA QUE QUERIA

@@ -77,7 +77,7 @@
 				<input type="hidden" id="busquedaOrigen" name="busquedaOrigen" value="<?php echo $camposBusqueda['poblacionOrigen'] ?>"/>
 				<input type="hidden" id="busquedaDestino" name="busquedaDestino" value="<?php echo $camposBusqueda['poblacionDestino'] ?>"/>
 				
-			  	<label for="horaSalidaRango" class="labelFilter">Hora de salida:</label>
+			  	<label for="horaSalidaRango" class="labelFilter">Hora de llegada:</label>
 	  
 			  	<input type="text" id="horaSalidaRango" name="horaSalidaRango" class="top-buffer10" readonly style="border:0; color:#777; font-weight:bold; width:90px;">
 				<div id="slider-range1" class="top-buffer"></div>

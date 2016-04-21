@@ -17,10 +17,8 @@
 	<link href="<?= base_url();?>assets/css/jquery-ui.css" rel="stylesheet" >
 	<link href="<?= base_url();?>assets/css/tooltipster.css" rel="stylesheet" >
 	<link href="<?= base_url();?>assets/css/simplePagination.css" rel="stylesheet" >
-	<link href="<?= base_url();?>assets/css/listadoTrayectos.css" rel="stylesheet" >
-	<link href="<?= base_url();?>assets/css/buscarTrayectoMiniPost.css" rel="stylesheet" >
-
-
+	
+	
 	 <!--Font-->
     <!-- <link href='http://fonts.googleapis.com/css?family=Source+Sans+Pro:200,300,400,600' rel='stylesheet' type='text/css'> -->
     <link href="<?= base_url();?>assets/css/googleFonts.css" rel="stylesheet" >

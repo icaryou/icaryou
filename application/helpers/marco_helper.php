@@ -15,6 +15,10 @@ function enmarcar($controlador,$vista,$datos=[]) {
 	*/
 	$controlador->load->view('templates/head');
 	
+	if(isset($datos['css'])){
+		$controlador->load->view('templates/masCSS',$datos);
+	}
+	
 	//SI HACE LA PETICION CON CONTROLADOR EN LA URL
 	
 	if(strrpos($vista, "/")){

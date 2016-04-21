@@ -1,0 +1,58 @@
+.rangeOut{
+	width:30px;
+}
+
+.labelFilter{
+	
+	font-family:'Source Sans Pro', sans-serif;
+	font-size:16px;
+	font-weight: 400;
+}
+
+.diasFilter{
+	margin-right:10px;
+	display: inline-block;
+	float:left;
+}
+
+input[type=checkbox] + label {
+  color: #aaa;
+  font-style: italic;
+} 
+input[type=checkbox]:checked + label {
+  color: #000;
+  font-style: normal;
+} 
+
+
+
+.ui-slider-handle { 
+	background-color: #fff !important; 
+}
+.ui-slider-handle:hover { 
+	border:1px solid #999;
+}
+.ui-slider-handle:active{ 
+	border:1px solid #999;
+}
+.ui-slider-handle:blur{ 
+	border:1px solid #ccc;
+}
+
+.ui-slider { background-color: #0DBD96 !important; }
+.ui-widget-header { border: 1px solid #aaaaaa; background: #fff; }
+
+.separadorHori{
+	border-top:1px solid #ccc;
+	margin-top:-25px;
+	margin-bottom:20px;
+}
+
+.inputPeque{
+	width:90%;
+}
+
+.ui-autocomplete {
+	max-width: 220px;
+	max-height: 150px;
+}

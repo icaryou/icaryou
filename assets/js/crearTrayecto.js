@@ -106,11 +106,11 @@
                     //PARA AÑADIR ESPRESION REGULAR PERSONAL    regx:/^[AB]{3}$/
                 },
                 "horaLlegada": {
-                    required: "Introduce una hora de llegada al trabajo",
+                    required: "Introduce una hora de llegada",
                     regx:"Introduce un formato de hora válido"
                 },
                 "horaRetorno": {
-                	required: "Introduce una hora de retorno del trabajo",
+                	required: "Introduce una hora de regreso",
                     regx:"Introduce un formato de hora válido"
                 },
                 "comentarios": {
@@ -120,7 +120,7 @@
                     required:"Elige por lo menos un día",//"Selecciona por lo menos un día",
                 },
                 "plazas": {
-                	required: "Introduce un numero de plazas máximas(incluido tu)",
+                	required: "Introduce un numero de plazas",
                     number:"Introduce un número correcto",
                     min: "Número mínimo 2"
                 },                 

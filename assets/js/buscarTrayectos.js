@@ -29,11 +29,11 @@
                   error.insertAfter(element);
                 }
               },
-              /*
+             
             rules: {
                 
             	"cpOrigen": {
-                    required:true,
+                    required:false,
                     number:true,
                     minlength: 5,
                     maxlength: 5,
@@ -44,7 +44,7 @@
                     //PARA AÑADIR ESPRESION REGULAR PERSONAL    regx:/^[AB]{3}$/
                 },
                 "cpDestino": {
-                    required: true,
+                    required: false,
                     number:true,
                     minlength: 5,
                     maxlength: 5,
@@ -55,35 +55,35 @@
                     //PARA AÑADIR ESPRESION REGULAR PERSONAL    regx:/^[AB]{3}$/
                 },
                 "horaLlegadaDesde": {
-                    required: true,
-                    regx:/^([01]\d|2[0-3]):([0-5]\d)$/ //TODO    PROBAR
+                    required: false,
+                    regx:/^(([01]\d|2[0-3]):([0-5]\d))|^$/ //TODO    PROBAR
                 },
                 "horaLlegadaHasta": {
-                    required: true,
-                    regx:/^([01]\d|2[0-3]):([0-5]\d)$/ //TODO    PROBAR
+                    required: false,
+                    regx:/^(([01]\d|2[0-3]):([0-5]\d))|^$/ //TODO    PROBAR
                 },
                 "horaRetornoDesde": {
-                    required: true,
-                    regx:/^([01]\d|2[0-3]):?([0-5]\d)$/ //TODO    PROBAR
+                    required: false,
+                    regx:/^(([01]\d|2[0-3]):([0-5]\d))|^$/ //TODO    PROBAR
                 },
                 "horaRetornoHasta": {
-                    required: true,
-                    regx:/^([01]\d|2[0-3]):?([0-5]\d)$/ //TODO    PROBAR
+                    required: false,
+                    regx:/^(([01]\d|2[0-3]):([0-5]\d))|^$/ //TODO    PROBAR
                 },
                 "comentarios": {
                 	maxlength: 140                    
                 },
                 "dias[]": {
-                    required: true                    
+                    required: false                    
                 },
                 "plazas": {
-                    required:true,
+                    required:false,
                     number:true,
                     min: 2                    
                 },              
                 
             },
-            */
+            
             messages: {
             	"cpOrigen": {
             		required: "Introduce tu código postal de origen.",
@@ -112,7 +112,7 @@
                     regx:"Introduce un formato de hora válido"
                 },
                 "horaLlegadaHasta": {
-                    required: "Introduce una hora",
+                    //required: "Introduce una hora",
                     regx:"Introduce un formato de hora válido"
                 },
                 "horaRetornoDesde": {

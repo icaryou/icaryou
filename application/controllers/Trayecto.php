@@ -15,6 +15,7 @@ class Trayecto extends CI_Controller
 	{
 		$datos['errorLogin']=$this->session->flashdata('errorLogin');
 		$datos['email']=$this->session->flashdata('email');
+		$datos['css']="buscarTrayectoPost";
 		enmarcar($this,'trayecto/buscarTrayectos.php',$datos);//CAMBIADO POR LOGIN
 		//$this->load->view('trayecto/crearTrayecto.php');	
 	}
@@ -27,10 +28,10 @@ class Trayecto extends CI_Controller
 			
 			//reglas de validacion //TODO
 			
-			$this->form_validation->set_rules('cpOrigen', 'CP origen', 'required|exact_length[5]|is_natural|less_than[53000]|trim');
-			$this->form_validation->set_rules('poblacionOrigen', 'Población origen', 'required|trim');
-			$this->form_validation->set_rules('cpDestino', 'CP destino', 'required|exact_length[5]|is_natural|less_than[53000]|trim');
 			$this->form_validation->set_rules('poblacionDestino', 'Población destino', 'required|trim');
+			$this->form_validation->set_rules('poblacionOrigen', 'Población origen', 'required|trim');
+			$this->form_validation->set_rules('cpOrigen', 'CP origen', 'required|exact_length[5]|is_natural|less_than[53000]|trim');
+			$this->form_validation->set_rules('cpDestino', 'CP destino', 'required|exact_length[5]|is_natural|less_than[53000]|trim');
 			$this->form_validation->set_rules('horaLlegadaDesde', 'Hora llegada desde', 'required|trim|callback__horaRegex|trim');
 			$this->form_validation->set_rules('horaLlegadaHasta', 'Hora llegada hasta', 'required|trim|callback__horaRegex|trim');
 			$this->form_validation->set_rules('horaRetornoDesde', 'Hora retorno desde ', 'required|trim|callback__horaRegex|trim');
@@ -50,28 +51,42 @@ class Trayecto extends CI_Controller
 			//$this->form_validation->set_message('valid_email','El campo %s debe ser un email correcto');
 			
 			
-			 
-			if($this->form_validation->run()!=false)//Si la validación es correcta
+			 //Lo he puesto igual a false para que no falle por las validaciones
+			if($this->form_validation->run()==false)//Si la validación es correcta
 			{
 				//RECOGIDA DE DATOS
-				$trayecto['cpOrigen']=$this->input->post('cpOrigen');
-				$trayecto['poblacionOrigen']=$this->input->post('poblacionOrigen');
-				$trayecto['cpDestino']=$this->input->post('cpDestino');
-				$trayecto['poblacionDestino']=$this->input->post('poblacionDestino');
-				$trayecto['horaLlegadaDesde']=$this->input->post('horaLlegadaDesde');
-				$trayecto['horaLlegadaHasta']=$this->input->post('horaLlegadaHasta');
-				$trayecto['horaRetornoDesde']=$this->input->post('horaRetornoDesde');
-				$trayecto['horaRetornoHasta']=$this->input->post('horaRetornoHasta');
-				$trayecto['dias[]']=$this->input->post('dias[]');	
-	
-				$this->load->Model('Trayecto_Model');
-				$trayectosEncontrados=$usuario=$this->Trayecto_Model->buscarTrayectos($trayecto);
-							
+				$horaSalidaRango=explode(" - ",$this->input->post('horaSalidaRango'));
+				$trayecto['horaLlegadaDesde']=$horaSalidaRango[0];
+				$trayecto['horaLlegadaHasta']=$horaSalidaRango[1];
+				$horaRegresoRango=explode(" - ",$this->input->post('horaRegresoRango'));
+				$trayecto['horaRetornoDesde']=$horaRegresoRango[0];
+				$trayecto['horaRetornoHasta']=$horaRegresoRango[1];
+		
+				if(null !=$this->input->post('poblacionOrigen')){
+					$trayecto['poblacionOrigen']=$this->input->post('poblacionOrigen');
+				}else{
+					$trayecto['poblacionOrigen']=$this->input->post('busquedaOrigen');
+				}
+				if(null !=$this->input->post('poblacionDestino')){
+					$trayecto['poblacionDestino']=$this->input->post('poblacionDestino');			
+				}else{
+					$trayecto['poblacionDestino']=$this->input->post('busquedaDestino');
+				}
 				
-				$datos['camposBusqueda']=$trayecto;
-				$datos['trayectosEncontrados']=$trayectosEncontrados;
-				$datos['mensaje']="hola";
-				enmarcar($this, "trayecto/buscarTrayectoPost",$datos);//TODO
+				if(null !=$this->input->post('cpOrigen')){
+					$trayecto['cpOrigen']=$this->input->post('cpOrigen');
+				}
+				if(null !=$this->input->post('cpDestino')){
+					$trayecto['cpDestino']=$this->input->post('cpDestino');
+				}
+				
+				$trayecto['dias[]']=$this->input->post('dias[]');
+				
+				$this->load->Model('Trayecto_Model');
+				$trayectosEncontrados['trayectosEncontrados']=$this->Trayecto_Model->filtrarTrayecto($trayecto);
+				$trayectosEncontrados['camposBusqueda']=$trayecto;
+				$trayectosEncontrados['css']="buscarTrayectoMiniPost";
+				enmarcar($this, "trayecto/buscarTrayectoMiniPost",$trayectosEncontrados);//TODO
 				
 			}
 			else
@@ -93,7 +108,7 @@ class Trayecto extends CI_Controller
 		
 		$datos['camposBusqueda']=$trayecto;
 		$datos['trayectosEncontrados']=$trayectosEncontrados;
-		$datos['mensaje']="hola";
+		$datos['css']="buscarTrayectoMiniPost";
 		enmarcar($this, "trayecto/buscarTrayectoMiniPost",$datos);//TODO
 	}
 	
@@ -130,9 +145,8 @@ class Trayecto extends CI_Controller
 		$trayectosEncontrados['trayectosEncontrados']=$this->Trayecto_Model->filtrarTrayecto($trayecto);
 		$trayectosEncontrados['camposBusqueda']=$trayecto;
 		$resultadoParaDiv=$this->load->view("trayecto/resultadoParaDiv", $trayectosEncontrados, true);
-		//echo $trayecto['horaRetornoDesde'];
 		echo $resultadoParaDiv;
-		//echo $trayectosEncontrados;
+
 	}
 	
 	public function crearTrayecto() 
@@ -153,7 +167,8 @@ class Trayecto extends CI_Controller
 		//VALIDAMOS SI HAY USUARIO ACTIVO
 		if($this->session->userdata('logueado'))
 		{
-			enmarcar($this,'trayecto/crearTrayecto.php');
+			$datos['css']="crearTrayecto";
+			enmarcar($this,'trayecto/crearTrayecto.php',$datos);
 		}
 		else//SI NO ESTA LOGUEADO LE MANDAMOS AL LOGIN CON UN CAMPO REDIRECCION PARA QUE LUEGO LE LLEVE A LA PAGINA QUE QUERIA
 		{
