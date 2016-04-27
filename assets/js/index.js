@@ -1,31 +1,31 @@
+/********* VALIDACION VENTANA LOGIN *************/
+
+var getUrl = window.location;
+var baseUrl = getUrl .protocol + "//" + getUrl.host + "/" + getUrl.pathname.split('/')[1]+"/"+getUrl.pathname.split('/')[2]+"/"+getUrl.pathname.split('/')[3];
+var pathname = window.location.pathname;
+
 $( document ).ready(function() 
-	{
+	{		
+	
 	
 	/* TOOLTIPSTER  OPCIONES */
-/*	
-	$('#errorSubmit').tooltipster({ 
-        trigger: 'custom', // default is 'hover' which is no good here
-        onlyOne: false,    // allow multiple tips to be open at a time
-        position: 'top',  // display the tips to the right of the element
-    });
-*/	
+	$('a').on('click', function(){
+		$('#poblacionOrigen').tooltipster('hide');
+		$('#poblacionDestino').tooltipster('hide');
+	});
+	
 	$('#poblacionOrigen').tooltipster({ 
         trigger: 'custom', // default is 'hover' which is no good here
         onlyOne: false,    // allow multiple tips to be open at a time
-        position: 'bottom'  // display the tips to the right of the element
+        position: 'bottom',  // display the tips to the right of the element
+        timer:800
     });
+	
 	$('#poblacionDestino').tooltipster({ 
         trigger: 'custom', // default is 'hover' which is no good here
         onlyOne: false,    // allow multiple tips to be open at a time
-        position: 'bottom'  // display the tips to the right of the element
-    });
-	$('#poblacionOrigen')
-    .focus(function(){
-        $(this).tooltipster('hide');
-    });
-	$('#poblacionDestino')
-    .focus(function(){
-        $(this).tooltipster('hide');
+        position: 'bottom',  // display the tips to the right of the element
+        timer:800
     });
 	
 		//VALIDACION FORMULARIO
@@ -42,7 +42,6 @@ $( document ).ready(function()
             	     $(this).addClass("valid");          	     
                },
             debug: false,
-            focusCleanup: true,
             errorPlacement: function(error, element) {
            	 	$(element).tooltipster('update', $(error).text());
            	 	$(element).tooltipster('show');
@@ -54,11 +53,9 @@ $( document ).ready(function()
                 
                 "poblacionOrigen": {
                     required: true,
-                    lettersonly: true
                 },
                 "poblacionDestino": {
                     required: true,
-                    lettersonly: true
                 },            
              
             },
@@ -68,13 +65,14 @@ $( document ).ready(function()
                     lettersonly: "Selecciona un municipio"
                 },
                 "poblacionDestino": {
-                	required: "Selecciona un municipio",
-                    lettersonly: "Selecciona un municipio"
+                    required: "Introduce tu contraseña",
+                    minlength:"Introduce al menos 8 caracteres.",
+                    maxlength: "Introduce como máximo 20 caracteres." 
                 },           
             } 
         });
-   
-	});      
+        
+	});
         
    
         /************************************* DESPLEGABLE DE MUNICIPIOS *************************************************************/

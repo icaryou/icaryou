@@ -15,14 +15,15 @@ class Mensaje extends CI_Controller
 	}
 	
 	
-	
+	//BUSCA LAS CONVERSACIONES ACTIVAS QUE TIENE EL USUARIO
 	public function mostrar_mensajes()
 	{
 		//VALIDAMOS SI HAY USUARIO ACTIVO
 		if($this->session->userdata('logueado'))
 		{
 			$usuario=$this->session->userdata('id');
-			$datos['mensajes']=$this->Mensaje_model->buscar_conversaciones(1);//TODO cambiar por $usuario		
+			$datos['mensajes']=$this->Mensaje_model->buscar_conversaciones($usuario);//TODO cambiar por $usuario
+			$datos['css']='mostrar_mensajes';
 			enmarcar($this,'mensaje/mostrar_mensajes.php',$datos);
 		}
 		else//SI NO ESTA LOGUEADO LE MANDAMOS AL LOGIN CON UN CAMPO REDIRECCION PARA QUE LUEGO LE LLEVE A LA PAGINA QUE QUERIA
@@ -37,20 +38,35 @@ class Mensaje extends CI_Controller
 	public function crear_mensaje()
 	{
 		//TODO
-		$texto="hola 1";
+		$texto=$_REQUEST['texto'];
 		$hora=Date("Y-m-d H:i:s");
-		$remitente=3;
-		$destinatario=1;
+		$remitente=$this->session->userdata('id');
+		$destinatario=$_REQUEST['id_otro_usuario_mensaje'];
+		
+		//var_dump($_REQUEST);
 		
 		$this->Mensaje_model->crear_mensaje($texto,$hora,$remitente,$destinatario);	
 	}
-	
+	//ABRE UN CHAT DETERMINADO CON UN USUARIO
 	public function abrir_chat()
 	{
 		$usuario=$this->session->userdata('id');
 		$id_otro_usuario=$_REQUEST['id_otro_usuario'];
+		
+		//var_dump($_REQUEST);
+		
 		$mensajes=$this->Mensaje_model->buscar_mensajes_chat($usuario,$id_otro_usuario);//TODO cambiar por $usuario
 		echo(json_encode($mensajes));
+	}
+	
+	public function actualizar_chat()
+	{
+		
+		$id_conversacion=$_REQUEST['id_conversacion'];
+		$id_ultimo_mensaje=$_REQUEST['id_ultimo_mensaje'];
+		$mensajes=$this->Mensaje_model->buscar_nuevos_mensajes_chat($id_conversacion,$id_ultimo_mensaje);//TODO cambiar por $usuario
+		echo(json_encode($mensajes));
+		
 	}
 	
 	//FUNCIONES PERSONALIZADAS VALIDACION ---  SE PUEDEN AGREGAR EN LIBRARIES/FORM_VALIDATION.PHP

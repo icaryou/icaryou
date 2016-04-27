@@ -2,7 +2,7 @@
 
 class Mensaje_model extends RedBean_SimpleModel //CI_Model//
 {		
-	
+	//BUSCA LAS CONVERSACIONES ACTIVAS QUE TIENE EL USUARIO
 	public function buscar_conversaciones($usuario_id)
 	{
 		//SELECCIONA LOS ID'S DE CONVERSACION EN LOS QUE ESTE EL USUARIO
@@ -22,7 +22,7 @@ class Mensaje_model extends RedBean_SimpleModel //CI_Model//
 		{
 			array_push($usuarios_buscar_conversacion, R::getAll("SELECT m.conversacion_id, CASE
 					WHEN c.USUARIO1_ID = $usuario_id then c.USUARIO2_ID
-					ELSE c.USUARIO2_ID
+					ELSE c.USUARIO1_ID
 					END usuario_chat,
 					count(m.hora) conversacion_activa
 					FROM conversacion c 
@@ -73,6 +73,15 @@ class Mensaje_model extends RedBean_SimpleModel //CI_Model//
 				FROM mensaje
 				WHERE conversacion_id={$id_conversacion['id']}");
 		
+		return $mensajes;
+	}
+	
+	public function buscar_nuevos_mensajes_chat($id_conversacion,$id_ultimo_mensaje)
+	{	
+		$mensajes=R::getAll("SELECT *
+				FROM mensaje
+				WHERE conversacion_id=$id_conversacion AND id>$id_ultimo_mensaje");
+	
 		return $mensajes;
 	}
 	

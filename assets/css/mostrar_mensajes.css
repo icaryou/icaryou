@@ -1,0 +1,32 @@
+#panel_conversaciones
+{
+	width:45%;
+	float:left;
+	/*border:1px solid green;*/
+}
+
+#panel_mensajes
+{
+	width:45%;	
+	float:left;
+	position:relative;
+	/*border:1px solid blue;*/	
+}
+.mensaje_propio
+{
+	border:1px solid blue;
+	margin-right:0;	
+}
+
+.mensaje_contrario
+{
+	border:1px solid green;
+	margin-left:0;	
+}
+
+.limpiarfloat
+{
+	width:100%;
+	clear:both;
+	overflow:auto;
+}
