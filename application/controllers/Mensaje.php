@@ -14,16 +14,51 @@ class Mensaje extends CI_Controller
 		//$this->load->library('email');
 	}
 	
+	//FUNCION ENVIAR MENSAJE DESDE PERFIL OTRO USUARIO, SI TIENE CONVERSACION ACTIVA REENVIAMOS A LAS CONVERSACIONES, SI NO ABRIMOS UNA VENTANA PARA INICIAR UN CHAT
+	public function comprobar_conversacion_mensaje_inicial($id_otro_usuario)
+	{
+		$usuario=$this->session->userdata('id');
+		$id_conversacion=$this->Mensaje_model->comprobar_conversacion($usuario,$id_otro_usuario);
+		
+		if($id_conversacion!=null)
+		{
+			$this->mostrar_mensajes($id_otro_usuario);	
+		}
+		else
+		{
+			$this->mostrar_mensajes(0,1);
+		}
+	}
+	
+	//CREAMOS UNA CONVERSACION NUEVA Y EL PRIMER MENSAJE Y LE REDIRIGIMOS A LAS CONVERSACIONES ABRIENDO ESA CONVERSACION
+	public function enviar_mensaje($id_otro_usuario)
+	{
+		$this->comprobar_conversacion_mensaje_inicial($id_otro_usuario);
+	}
 	
 	//BUSCA LAS CONVERSACIONES ACTIVAS QUE TIENE EL USUARIO
-	public function mostrar_mensajes()
+	public function mostrar_mensajes($id_usuario_abrir_conversacion=0,$abrir_emergente=0)
 	{
 		//VALIDAMOS SI HAY USUARIO ACTIVO
 		if($this->session->userdata('logueado'))
 		{
 			$usuario=$this->session->userdata('id');
 			$datos['mensajes']=$this->Mensaje_model->buscar_conversaciones($usuario);//TODO cambiar por $usuario
+			//var_dump($datos['mensajes']);
+			//die;
 			$datos['css']='mostrar_mensajes';
+			
+			if(isset($id_usuario_abrir_conversacion)&&$id_usuario_abrir_conversacion!=0)
+			{
+				$datos['activarConversacion']=$id_usuario_abrir_conversacion;
+			}
+			
+			
+			
+			if(isset($abrir_emergente)&&$abrir_emergente!=0)
+			{
+				$datos['abrirEmergente']=1;
+			}
 			enmarcar($this,'mensaje/mostrar_mensajes.php',$datos);
 		}
 		else//SI NO ESTA LOGUEADO LE MANDAMOS AL LOGIN CON UN CAMPO REDIRECCION PARA QUE LUEGO LE LLEVE A LA PAGINA QUE QUERIA
@@ -59,12 +94,30 @@ class Mensaje extends CI_Controller
 		echo(json_encode($mensajes));
 	}
 	
+	public function actualizar_conversaciones()
+	{
+		//VALIDAMOS SI HAY USUARIO ACTIVO
+		if($this->session->userdata('logueado'))
+		{
+			$usuario=$this->session->userdata('id');
+			$datos['conversaciones']=$this->Mensaje_model->buscar_conversaciones($usuario);
+			
+			echo (json_encode($datos['conversaciones']));
+		}
+		else//SI NO ESTA LOGUEADO LE MANDAMOS AL LOGIN CON UN CAMPO REDIRECCION PARA QUE LUEGO LE LLEVE A LA PAGINA QUE QUERIA
+		{
+			$datos['errorLogin']='Por favor inicia sesion';
+			enmarcar($this,'index.php',$datos);
+		}
+	}
+	
 	public function actualizar_chat()
 	{
 		
 		$id_conversacion=$_REQUEST['id_conversacion'];
+		$usuario_activo=$this->session->userdata('id');
 		$id_ultimo_mensaje=$_REQUEST['id_ultimo_mensaje'];
-		$mensajes=$this->Mensaje_model->buscar_nuevos_mensajes_chat($id_conversacion,$id_ultimo_mensaje);//TODO cambiar por $usuario
+		$mensajes=$this->Mensaje_model->buscar_nuevos_mensajes_chat($id_conversacion,$id_ultimo_mensaje,$usuario_activo);//TODO cambiar por $usuario
 		echo(json_encode($mensajes));
 		
 	}
