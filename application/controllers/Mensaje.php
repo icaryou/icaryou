@@ -20,7 +20,7 @@ class Mensaje extends CI_Controller
 		$usuario=$this->session->userdata('id');
 		$id_conversacion=$this->Mensaje_model->comprobar_conversacion($usuario,$id_otro_usuario);
 		
-		if($id_conversacion!=null)
+		if($id_conversacion!=null)//comentario para hacer push
 		{
 			$this->mostrar_mensajes($id_otro_usuario);	
 		}
