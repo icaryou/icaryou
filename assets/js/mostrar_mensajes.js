@@ -12,7 +12,13 @@ $(document).ready(function() {
 
 	
 	
+	//PARA ABRIR LA VENTANA EMERGENTE
 	
+	if($('#abrirEmergente').val()==1)
+	{
+		abrir_emergente();
+		$('#botonToogelador').click();
+	}
 	
 	//PONEMOS LA VENTANA EMERGENTE Y EL FONDO OSCURO OCULTOS POR DEFECTO
 	
@@ -23,7 +29,7 @@ $(document).ready(function() {
 	
 	if($('#abrirEmergente').val()==1)
 	{
-		alert("abrirEmergente");
+		//alert("abrirEmergente");
 		abrir_emergente();
 	}
 	

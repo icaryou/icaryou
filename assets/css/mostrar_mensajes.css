@@ -82,7 +82,7 @@
 }
 #sombra
 {
-	background-color:rgba(0,0,0,0.5);
+	background-color:rgba(0,0,0,0.7);
 	position:absolute;
 	top:0;
 	left:0;
@@ -91,11 +91,11 @@
 
 #dialog {
 background-color:#EFEFEF;
-width:30%;
-height:30%;
-top: 35%;
-left: 35%;
+width:40%;
+height:50%;
 position:absolute;
+top: 30%;
+left: 30%;
 z-index:999;
 border-radius:15px;
 /*display:none;*/
@@ -131,9 +131,11 @@ margin:5% auto;
 	height:10%;
 	margin:0 auto;	
 }
-#dialog hr {
+#texto_textarea
+{
+	resize:none;
 }
-
+/*
 #dialog input {
 	font-size: 110%;
 	-webkit-appearance: none;
@@ -149,3 +151,4 @@ margin:5% auto;
 	border-bottom: 1px solid #757575;
 	text-align:center;
 }
+*/

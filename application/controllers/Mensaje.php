@@ -20,23 +20,26 @@ class Mensaje extends CI_Controller
 		$usuario=$this->session->userdata('id');
 		$id_conversacion=$this->Mensaje_model->comprobar_conversacion($usuario,$id_otro_usuario);
 		
-		if($id_conversacion!=null)//comentario para hacer push
+		if($id_conversacion!=null)
 		{
 			$this->mostrar_mensajes($id_otro_usuario);	
 		}
 		else
 		{
-			$this->mostrar_mensajes(0,1);
+			$this->mostrar_mensajes($id_otro_usuario,1);
 		}
 	}
 	
 	//CREAMOS UNA CONVERSACION NUEVA Y EL PRIMER MENSAJE Y LE REDIRIGIMOS A LAS CONVERSACIONES ABRIENDO ESA CONVERSACION
-	public function enviar_mensaje($id_otro_usuario)
+	//DE MOMENTO NO LO USO
+	public function enviar_mensaje_inicial($id_otro_usuario)
 	{
-		$this->comprobar_conversacion_mensaje_inicial($id_otro_usuario);
+		//$this->comprobar_conversacion_mensaje_inicial($id_otro_usuario);
 	}
 	
 	//BUSCA LAS CONVERSACIONES ACTIVAS QUE TIENE EL USUARIO
+	//primer parametro id del usuario con el que queremos abrir la conversacion
+	//segundo parametro abrir ventana emergente que creara conversacion nueva y primer mensaje
 	public function mostrar_mensajes($id_usuario_abrir_conversacion=0,$abrir_emergente=0)
 	{
 		//VALIDAMOS SI HAY USUARIO ACTIVO
@@ -48,18 +51,34 @@ class Mensaje extends CI_Controller
 			//die;
 			$datos['css']='mostrar_mensajes';
 			
-			if(isset($id_usuario_abrir_conversacion)&&$id_usuario_abrir_conversacion!=0)
-			{
-				$datos['activarConversacion']=$id_usuario_abrir_conversacion;
-			}
 			
-			
-			
+			//mandamos abrir la ventana emergente para iniciar conversacion
 			if(isset($abrir_emergente)&&$abrir_emergente!=0)
 			{
 				$datos['abrirEmergente']=1;
+				$datos['id_otro_usuario_mensaje']=$id_usuario_abrir_conversacion;
+				enmarcar($this,'mensaje/mostrar_mensajes.php',$datos);
 			}
-			enmarcar($this,'mensaje/mostrar_mensajes.php',$datos);
+			
+			//abrimos el panel con una conversacion abierta
+			else if(isset($id_usuario_abrir_conversacion)&&$id_usuario_abrir_conversacion!=0)
+			{
+				$datos['abrirEmergente']=0;
+				$datos['activarConversacion']=$id_usuario_abrir_conversacion;
+				enmarcar($this,'mensaje/mostrar_mensajes.php',$datos);
+			}
+			//abrimos el panel de mensajes
+			 else if(isset($id_usuario_abrir_conversacion)&&$id_usuario_abrir_conversacion==0)
+			{
+				$datos['abrirEmergente']=0;
+				enmarcar($this,'mensaje/mostrar_mensajes.php',$datos);
+			}
+			/*
+			echo $id_usuario_abrir_conversacion;
+			echo $abrir_emergente;
+			die;
+			*/
+			//enmarcar($this,'mensaje/mostrar_mensajes.php',$datos);
 		}
 		else//SI NO ESTA LOGUEADO LE MANDAMOS AL LOGIN CON UN CAMPO REDIRECCION PARA QUE LUEGO LE LLEVE A LA PAGINA QUE QUERIA
 		{
@@ -81,6 +100,13 @@ class Mensaje extends CI_Controller
 		//var_dump($_REQUEST);
 		
 		$this->Mensaje_model->crear_mensaje($texto,$hora,$remitente,$destinatario);	
+		
+		if(isset($_REQUEST['nueva_conversacion']))
+		{
+			
+			$this->mostrar_mensajes($id_usuario_abrir_conversacion=$destinatario);
+		}
+		
 	}
 	//ABRE UN CHAT DETERMINADO CON UN USUARIO
 	public function abrir_chat()

@@ -31,7 +31,7 @@
 <?php endif;?>
 
 <!-- PINTARIAMOS UN CAMPO HIDDEN SI FUERA UN INICIO DE CONVERSACION  PARA QUE ESCRIBA EL PRIMER MENSAJE-->
-<?php if (isset($abrirEmergente)):?>
+<?php if (isset($abrirEmergente)&&$abrirEmergente==1):?>
 	<input type="hidden" id="abrirEmergente" value="1"/>
 <?php endif;?>
 
@@ -40,21 +40,60 @@
 
 
 
-<input type="button" id="botonPM" value="botonPM"/>
 
-
-<div id="dialog">
+<?php if($abrirEmergente==1):?><!-- Esto lo dejo por si acaso pero funciona lo de abajo -->
+<!--  
+	<div id="dialog">
 	<img title="Cerrar" id="imagen_cierre_popup" src="<?php echo base_url()?>assets/img/cross.png"/>
 	<p id="titulo_dialog" class="centrado titulo-mediano">Iniciar conversacion con .......</p>
-	<form action="<?php echo base_url()?>general/Gastos/generar_nueva_hoja_gastos" method="post">
+	<form action="<?php echo base_url()?>Mensaje/crear_mensaje" method="post">
 	<div id="mensaje_inicio">
-		<label class="titulo-peque">Mensaje</label>
-		<input id="mes_seleccion" name="mes_seleccion" maxlength="2" type="text">
+		<label class="titulo-mediano">Mensaje</label>
+		<textarea id="texto_mensaje" name="texto"></textarea>
 	</div>
-			
+	<input type="hidden" id="id_otro_usuario_mensaje" name="id_otro_usuario_mensaje" value="<?php echo $id_otro_usuario_mensaje?>"/>	
+	<input type="hidden" id="nueva_conversacion" name="nueva_conversacion" value="1"/>	
+	<input type="submit" id="boton_dialog" class="centrado btn btn-primary" value="Enviar"/>		
 	</form>
-	<button id="boton_dialog" class="centrado buttonGenericoPeque">Enviar</button>
+	
 </div>
 
 <div id="sombra"></div>
+-->
+<?php endif;?>
 
+
+<?php if($abrirEmergente==1):?>
+<!--  Login form -->
+<div class="modal hide fade in" id="inicio_conversacion_div" aria-hidden="false">
+	<div class="modal-header">
+		<i class="icon-remove" data-dismiss="modal" aria-hidden="true"></i>
+		
+		<h4>Iniciar conversación con ...</h4>		
+	</div>
+	<!--Modal Body-->
+	<div class="modal-body">
+
+<!-- action="<?=base_url('usuario/loginUsuarioPost')?>" method="post" -->
+
+		<form id="formularioLogin" class="form-inline loginForm" method="post" action="<?php echo base_url()?>Mensaje/crear_mensaje" >
+		
+			<label>Mensaje</label> 
+			<textarea name="texto" id="texto_textarea"
+				class="form-control" rows=5 cols=10> </textarea>												
+
+			<input type="hidden" id="id_otro_usuario_mensaje" name="id_otro_usuario_mensaje" value="<?php echo $id_otro_usuario_mensaje?>"/>	
+			<input type="hidden" id="nueva_conversacion" name="nueva_conversacion" value="1"/>				 
+			<input type="submit" value="Enviar mensaje" class="btn btn-primary left-buffer" tabindex="7">
+		</form>
+
+
+	</div>
+	<!--/Modal Body-->
+</div>
+
+
+<?php endif;?>
+
+
+<a id="botonToogelador" data-toggle="modal" href="#inicio_conversacion_div">Toogelador</a>

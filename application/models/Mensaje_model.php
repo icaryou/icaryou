@@ -147,19 +147,35 @@ class Mensaje_model extends RedBean_SimpleModel //CI_Model//
 			$conversacion->usuario2=$destinatario_bean;
 			
 			$id_buscar_conversacion['id']=R::store($conversacion);
+			
+			//======================
+			
+			$conversacion_encontrada=R::load('conversacion',$id_buscar_conversacion['id']);
+			
+			$mensaje=R::dispense('mensaje');
+			$mensaje->texto=$texto;
+			$mensaje->hora=$hora;
+			$mensaje->remitente=$remitente;
+			$mensaje->sw_no_leido=true;
+			$mensaje->conversacion=$conversacion_encontrada;
+			
+			$id=R::store($mensaje);
 				
 		}
+		else
+		{
+			$conversacion_encontrada=R::load('conversacion',$id_buscar_conversacion['id']);
+			
+			$mensaje=R::dispense('mensaje');
+			$mensaje->texto=$texto;
+			$mensaje->hora=$hora;
+			$mensaje->remitente=$remitente;
+			$mensaje->sw_no_leido=true;
+			$mensaje->conversacion=$conversacion_encontrada;
+			
+			$id=R::store($mensaje);
+		}
 		
-		$conversacion_encontrada=R::load('conversacion',$id_buscar_conversacion['id']);
-		
-		$mensaje=R::dispense('mensaje');
-		$mensaje->texto=$texto;
-		$mensaje->hora=$hora;
-		$mensaje->remitente=$remitente;
-		$mensaje->sw_no_leido=true;
-		$mensaje->conversacion=$conversacion_encontrada;//TODO cargar
-	
-		$id=R::store($mensaje);
 	}
 	
 	

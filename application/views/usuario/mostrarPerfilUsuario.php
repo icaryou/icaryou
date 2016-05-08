@@ -51,7 +51,7 @@
 				</table>
 				<div class="col-xs-12 col-lg-3 top-buffer span2">
 					<button id="editarPerfil"
-						onclick='location.href="<?php echo base_url('mensaje/enviar_mensaje/'.$usuario['id'])?>"'
+						onclick='location.href="<?php echo base_url('mensaje/comprobar_conversacion_mensaje_inicial/'.$usuario['id'])?>"'
 						class="btn btn-primary btn-lg btn-block" tabindex="7">Enviar
 						mensaje</button>
 				</div>
