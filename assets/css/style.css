@@ -338,4 +338,8 @@ button:focus {outline:0;}
     font: 32px Arial, sans-serif;
 }
 
+.imgBuscarTrayecto{
+	width:250px;
+}
+
 

@@ -132,6 +132,8 @@
 				</div>
 
 			</form>
+			<div class="span1"></div>
+			<div class="span3"><img src="<?= base_url();?>assets/img/crearTrayecto.png" class="imgBuscarTrayecto"/></div>
 		</div>
 	</div>
 </div>
