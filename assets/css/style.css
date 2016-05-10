@@ -344,9 +344,11 @@ button:focus {outline:0;}
 
 .fotoRegistro{
 	width:200px;
-	heigth: 200px;
-	padding:0px 20px 10px;
+	height: 200px;
+	margin:20px 20px 10px;
 	overflow: hidden;
+	border:1px solid black;
+	border-radius:50%;
 }
 
 

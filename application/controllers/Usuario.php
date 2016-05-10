@@ -104,7 +104,6 @@ class Usuario extends CI_Controller
 			$config['max_size']	= '2000';
 	
 			$this->load->library('upload', $config);
-			$fotoWidth="";
 			
 			if ( ! $this->upload->do_upload('userFoto'))
 			{
@@ -121,7 +120,7 @@ class Usuario extends CI_Controller
 			{
 				$configResize['source_image'] = $config['upload_path'].$this->upload->file_name;
 				$configResize['maintain_ratio'] = TRUE;
-				$configResize['width'] = 300;
+				$configResize['width'] = 400;
 				
 				$this->load->library('image_lib', $configResize);
 				$this->image_lib->resize();
@@ -134,7 +133,7 @@ class Usuario extends CI_Controller
 				
 				
 				$this->load->model("Usuario_Model");
-				//$resultado=$this->Usuario_Model->crearUsuario($registro);//CREAMOS EN EL MODELO
+				$resultado=$this->Usuario_Model->crearUsuario($registro);//CREAMOS EN EL MODELO
 				
 				$datos["mensaje"]="Validación correcta";//TODO
 				
@@ -156,16 +155,28 @@ class Usuario extends CI_Controller
 		$config['upload_path'] = './assets/img/temp/';
 		$config['allowed_types'] = 'gif|jpg|png';
 		$config['max_size']	= '2000';
+		$config['min_width']  = '400';
+		$config['min_height']  = '400';
 		
 		$this->load->library('upload', $config);
-		$this->upload->do_upload('userFoto');
+		$respuesta;
+		if ( $this->upload->do_upload('userFoto'))
+		{	
+			if(($this->upload->image_width)>=400){
+				$configResize['source_image'] = $config['upload_path'].$this->upload->file_name;
+				$configResize['maintain_ratio'] = TRUE;
+				$configResize['width'] = 400;
+				
+				$this->load->library('image_lib', $configResize);
+				$this->image_lib->resize();
+				
+				$respuesta['ruta']= "temp/".$this->upload->file_name;
+			}
+		}else{
+			$respuesta['ruta'] = "profile/avatar.png";
+		}
 		
-		$configResize['source_image'] = $config['upload_path'].$this->upload->file_name;
-		$configResize['maintain_ratio'] = TRUE;
-		$configResize['width'] = 200;
-		
-		$this->load->library('image_lib', $configResize);
-		$this->image_lib->resize();
+		echo json_encode($respuesta);
 		
 	}
 	

@@ -6,7 +6,7 @@
 		<div class="row">
 			<div class="span12">
 				<div class="page-header">
-					<h1>Registrar Usuario</h1>
+					<h1>Crea tu perfil</h1>
 				</div>
 			</div>
 		</div>
@@ -105,7 +105,7 @@
 				</div>
 				<div class="span2"></div>
 				<div class="span3">
-				<div id="avatarDiv" class="fotoRegistro"><img id="avatar" name="avatar" src="<?php echo base_url()."assets/img/team2.jpg"?>" class="fotoRegistro"/></div>
+				<div id="avatarDiv" class="fotoRegistro"><img id="avatar" name="avatar" src="<?php echo base_url()."assets/img/profile/avatar.png"?>"/></div>
 				    
 					
 			   </div>
@@ -117,21 +117,27 @@
  		// This is the simple bit of jquery to duplicate the hidden field to subfile
  		$('#userFoto').change(function(){
 			$('#subfile').val($(this).val());
-			var foto = $( "userFoto" ).val();
-			var request = $.ajax({
-			  url: "<?php echo base_url()."Usuario/mostrarFotoRegistro"?>",
-			  method: "POST",
-			  data: { userFoto : foto },
-			  dataType: "html"
-			});
-			 
-			request.done(function( msg ) {
-			  $( "#avatar" ).attr("src", msg);
-			});
-			 
-			request.fail(function( jqXHR, textStatus ) {
-			  alert( "Request failed: " + textStatus );
-			});
+			//AJAX
+
+				var fd = new FormData();
+
+	            fd.append( "userFoto", $("#userFoto")[0].files[0]);
+	            $.ajax({
+	            	url: "<?php echo base_url()."usuario/mostrarFotoRegistro"?>",
+	                type: 'POST',
+	                cache: false,
+	                data: fd,
+	                enctype: 'multipart/form-data',
+	                processData: false,
+	                contentType: false,
+	                success: function (msg) { 
+		                var respuesta =JSON.parse(msg);
+	                	$( "#avatar" ).attr("src", "<?php echo base_url()."/assets/img/"?>"+ respuesta['ruta']);
+	                },
+	                error: function () {
+	                	alert("error");
+	                }
+	            });
 		});
  	});
  	</script>
