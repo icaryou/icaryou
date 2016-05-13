@@ -69,11 +69,6 @@ $( document ).ready(function()
                     required: true,
                     regx:/^(((0[1-9]|[12]\d|3[01])\/(0[13578]|1[02])\/((19|[2-9]\d)\d{2}))|((0[1-9]|[12]\d|30)\/(0[13456789]|1[012])\/((19|[2-9]\d)\d{2}))|((0[1-9]|1\d|2[0-8])\/02\/((19|[2-9]\d)\d{2}))|(29\/02\/((1[6-9]|[2-9]\d)(0[48]|[2468][048]|[13579][26])|((16|[2468][048]|[3579][26])00))))$/
                 },
-                "userFoto": {
-                    required: false,
-                    extension: "png,gif,jpg,jpeg",
-                    accept: "image/*"
-                },
                 "cp": {
                     required: true,
                     number:true,
@@ -116,11 +111,6 @@ $( document ).ready(function()
                 "fechaNac": {
                     required: "Fecha nacimiento obligatoria.",
                     regx:"Formato fecha inválido(Formato requerido:dd/mm/yyyy)"
-                },       
-                "userFoto": {
-                	required: "Introduce una fotografia de perfil.",
-                	extension: "Introduzca una imagen gif, jpg o png.",
-                	accept: "Introduzca una imagen."
                 },
                 "cp": {
                     required: "Introduce tu código postal.",
@@ -139,3 +129,5 @@ $( document ).ready(function()
             } 
         });
 });
+
+

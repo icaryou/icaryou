@@ -56,7 +56,7 @@
 									<input type="text" id="subfile" />
 									<a class="btn" onclick="$('#userFoto').click();">Buscar</a>
 								</div>		
-								<input type="file" name="userFoto" id="userFoto" style="visibility: hidden;"/>
+								<input type="file" name="userFoto" id="userFoto" accept="image/*" style="display:none;"/>
 					</div>
 				</div>
 				
@@ -99,7 +99,7 @@
 						</div>
 					</div>
 					<div class="col-xs-12 col-lg-3 top-buffer">
-						<input type="submit" value="Registrarse"
+						<input type="submit" id="botonSubmit" value="Registrarse"
 							class="btn btn-primary btn-lg bottomaligned btn-block" tabindex="7">
 					</div>
 				</div>
@@ -132,6 +132,16 @@
 	                contentType: false,
 	                success: function (msg) { 
 		                var respuesta =JSON.parse(msg);
+		                
+						if(!respuesta['valida'])
+						{
+							$('#userFoto-error').remove();
+			                var linea=$('<label id="userFoto-error" class="error" for="userFoto">'+respuesta['error']+'</label>');
+			                linea.insertAfter($('#userFoto'));
+			                $('#userFoto').val("");
+			                //$('#subfile').val("");
+						}
+		                
 	                	$( "#avatar" ).attr("src", "<?php echo base_url()."/assets/img/"?>"+ respuesta['ruta']);
 	                },
 	                error: function () {
@@ -139,5 +149,17 @@
 	                }
 	            });
 		});
+
+
  	});
+		function isValidForm(){
+    		alert("asdasd");
+			if($('#userFoto-error').length){
+	    		alert("se ve");
+	    		$('#botonSubmit').prop('disabled', true);
+	    	}else{
+	    		alert("no se ve");
+			}
+			return false;
+	    }
  	</script>

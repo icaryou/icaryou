@@ -55,7 +55,7 @@ class Usuario extends CI_Controller
 		//VALIDACION
 		if($this->input->post())
 		{
-			/*
+			
 			//reglas de validacion
 			$this->form_validation->set_rules('nombre', 'nombre', 'required|trim');
 			$this->form_validation->set_rules('apellidos', 'apellidos', 'required|trim');
@@ -83,8 +83,8 @@ class Usuario extends CI_Controller
 			$this->form_validation->set_message('_fechaRegex','Formato de fecha inválido');
 			$this->form_validation->set_message('valid_email','El campo %s debe ser un email correcto');
 			$this->form_validation->set_message('matches','El campo %s debe coincidir con el campo %s');
-			 */
-			if($this->form_validation->run()==false)//Si la validación es correcta
+			 
+			if($this->form_validation->run()!=false)//Si la validación es correcta
 			{ 
 				//RECOGIDA DATOS			
 				$registro['email']=$this->input->post('email');
@@ -95,47 +95,25 @@ class Usuario extends CI_Controller
 				$registro['fechaNac']=$this->input->post('fechaNac');
 				$registro['cp']=$this->input->post('cp');
 				$registro['cochePropio']=$this->input->post('cochePropio')=='si'?true:false;
-				$registros['foto']=$this->input->post('userFoto');
 				
 			/* SUBIDA Y REDIMENSION IMAGEN*/	
 				
 			$config['upload_path'] = './assets/img/profile/';
 			$config['allowed_types'] = 'gif|jpg|png';
 			$config['max_size']	= '2000';
+			$config['min_width']  = '400';
+			$config['min_height']  = '400';
 	
-			$this->load->library('upload', $config);
+			$resp=$this->guardarYResizeImagenPerfil($config);
+			if(isset($resp['filename'])){
+				$registros['foto']='/assets/img/profile/'.$resp['filename'];
+			}
 			
-			if ( ! $this->upload->do_upload('userFoto'))
-			{
-				$error = array('error' => $this->upload->display_errors());
+			
+			$this->load->model("Usuario_Model");
+			//$resultado=$this->Usuario_Model->crearUsuario($registro);//CREAMOS EN EL MODELO
 				
-				if(strrpos($error['error'], "filetype")){
-					$error = array('error' => "Introduzca una imagen gif, jpg o png.");
-				}else if(strrpos($error['error'], "maximum allowed size")){
-					$error = array('error' => "La imagen no debe exceder los 2mb");
-				}
-				$this->load->view('upload_form', $error);
-			}
-			else
-			{
-				$configResize['source_image'] = $config['upload_path'].$this->upload->file_name;
-				$configResize['maintain_ratio'] = TRUE;
-				$configResize['width'] = 400;
-				
-				$this->load->library('image_lib', $configResize);
-				$this->image_lib->resize();
-				
-				$data  = array('upload_data' => $this->upload->data());
-	
-				$this->load->view('upload_form', $data);
-			}
-	
-				
-				
-				$this->load->model("Usuario_Model");
-				$resultado=$this->Usuario_Model->crearUsuario($registro);//CREAMOS EN EL MODELO
-				
-				$datos["mensaje"]="Validación correcta";//TODO
+			$datos["mensaje"]="Validación correcta";//TODO
 				
 			}else{
 				$datos["mensaje"]="Validación incorrectaa";//TODO
@@ -148,9 +126,57 @@ class Usuario extends CI_Controller
 		
 	}	//FIN REGISTRARUSUARIOPOST
 	
+	public function guardarYResizeImagenPerfil($config){
+		$this->load->library('upload', $config);
+		$respuesta;
+		if ( $this->upload->do_upload('userFoto'))
+		{
+			if(($this->upload->image_width)>400){
+		
+		
+				$respuesta['valida']=true;
+		
+				if($this->upload->image_width*0.70>=$this->upload->image_height||$this->upload->image_height*0.70>=$this->upload->image_width)
+				{
+					$respuesta['valida']=false;
+					$respuesta['error']='La imagen debe tener una proporción de 4:3 o inferior.';
+					$respuesta['ruta'] = "profile/avatar.png";
+				}
+				else
+				{
+					$configResize['source_image'] = $config['upload_path'].$this->upload->file_name;
+					$configResize['maintain_ratio'] = TRUE;
+					$configResize['width'] = 400;
+						
+					$this->load->library('image_lib', $configResize);
+					$this->image_lib->resize();
+					$respuesta['ruta']= "temp/".$this->upload->file_name;
+					$respuesta['filename']=$this->upload->file_name;
+				}
+		
+			}
+		}else{
+				
+			$respuesta['errores']=$this->upload->display_errors();
+			$error=$this->upload->display_errors();
+			if(strrpos($error, "filetype") || strrpos($error, "You did not select a file")){
+				$respuesta['error']='Introduzca una imagen gif, jpg o png.';
+			}else if(strrpos($error, "maximum allowed size")){
+				$respuesta['error']='La imagen no debe exceder los 2Mb.';
+			}else{
+				$respuesta['error']='La imagen debe superar 400px de ancho y alto.';
+			}
+		
+			$respuesta['ruta'] = "profile/avatar.png";
+			$respuesta['valida']=false;
+		}
+		return $respuesta;
+	}
+	
 	public function mostrarFotoRegistro()
 	{
 		/* SUBIDA Y REDIMENSION IMAGEN*/
+		
 		
 		$config['upload_path'] = './assets/img/temp/';
 		$config['allowed_types'] = 'gif|jpg|png';
@@ -158,23 +184,7 @@ class Usuario extends CI_Controller
 		$config['min_width']  = '400';
 		$config['min_height']  = '400';
 		
-		$this->load->library('upload', $config);
-		$respuesta;
-		if ( $this->upload->do_upload('userFoto'))
-		{	
-			if(($this->upload->image_width)>=400){
-				$configResize['source_image'] = $config['upload_path'].$this->upload->file_name;
-				$configResize['maintain_ratio'] = TRUE;
-				$configResize['width'] = 400;
-				
-				$this->load->library('image_lib', $configResize);
-				$this->image_lib->resize();
-				
-				$respuesta['ruta']= "temp/".$this->upload->file_name;
-			}
-		}else{
-			$respuesta['ruta'] = "profile/avatar.png";
-		}
+		$respuesta=$this->guardarYResizeImagenPerfil($config);
 		
 		echo json_encode($respuesta);
 		
