@@ -105,13 +105,22 @@ class Usuario extends CI_Controller
 			$config['min_height']  = '400';
 	
 			$resp=$this->guardarYResizeImagenPerfil($config);
+			$registro['foto']="";
 			if(isset($resp['filename'])){
-				$registros['foto']='/assets/img/profile/'.$resp['filename'];
+				$registro['foto']='/assets/img/profile/'.$resp['filename'];
+				//unlink("assets/img/temp/".$resp['filename']);
+				$files = glob('assets/img/temp/*'); // get all file names
+				foreach($files as $file){ // iterate files
+				  if(is_file($file))
+				    unlink($file); // delete file
+				}
+			}else{
+				$registro['foto']=null;
 			}
 			
 			
 			$this->load->model("Usuario_Model");
-			//$resultado=$this->Usuario_Model->crearUsuario($registro);//CREAMOS EN EL MODELO
+			$resultado=$this->Usuario_Model->crearUsuario($registro);//CREAMOS EN EL MODELO
 				
 			$datos["mensaje"]="Validación correcta";//TODO
 				
@@ -131,7 +140,7 @@ class Usuario extends CI_Controller
 		$respuesta;
 		if ( $this->upload->do_upload('userFoto'))
 		{
-			if(($this->upload->image_width)>400){
+			if(($this->upload->image_width)>=400){
 		
 		
 				$respuesta['valida']=true;

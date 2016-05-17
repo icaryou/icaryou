@@ -139,7 +139,7 @@
 			                var linea=$('<label id="userFoto-error" class="error" for="userFoto">'+respuesta['error']+'</label>');
 			                linea.insertAfter($('#userFoto'));
 			                $('#userFoto').val("");
-			                //$('#subfile').val("");
+			                $('#subfile').val("");
 						}
 		                
 	                	$( "#avatar" ).attr("src", "<?php echo base_url()."/assets/img/"?>"+ respuesta['ruta']);
