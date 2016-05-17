@@ -142,7 +142,7 @@
 			                $('#subfile').val("");
 						}
 		                
-	                	$( "#avatar" ).attr("src", "<?php echo base_url()."/assets/img/"?>"+ respuesta['ruta']);
+	                	$( "#avatar" ).attr("src", "<?php echo base_url();?>"+ respuesta['ruta']);
 	                },
 	                error: function () {
 	                	alert("error");
@@ -152,14 +152,5 @@
 
 
  	});
-		function isValidForm(){
-    		alert("asdasd");
-			if($('#userFoto-error').length){
-	    		alert("se ve");
-	    		$('#botonSubmit').prop('disabled', true);
-	    	}else{
-	    		alert("no se ve");
-			}
-			return false;
-	    }
+
  	</script>
