@@ -9,7 +9,19 @@ var emple={"employees":[
 */
 //HASTA QUE NO SE CARGA EL DOCUMENTO NO CARGA ESTAS FUNCIONES
 $(document).ready(function() {	
-
+		
+	//PONER ALTURA DINAMICAMENTE
+		var altura=$(document).height();		
+		
+		$('body').css('height',$(document).height()+"px")
+		$('#header-row').css('height',$(document).height()*0.10+"px");
+		
+		var altura_contenedor=altura*0.80-90;
+		
+		$('#contenedor_mensajeria').css('height',altura_contenedor+'px')
+		$('footer').css('height',$(document).height()*0.10+"px")		
+	
+	
 	
 	
 	//PARA ABRIR LA VENTANA EMERGENTE
@@ -74,6 +86,14 @@ $(document).ready(function() {
 	
 	});
 	
+	$('#panel_conversaciones').delegate('ul li','click',function(event)
+	{	
+		//MANDAMOS EL ID DEL USUARIO CON EL QUE VAMOS A ABRIR EL CHAT
+		var id_otro_usuario=$(this).find('.abrir_chat').attr('id');
+		abrir_chat(id_otro_usuario);
+	
+	});
+	
  });
 
 function abrir_emergente()
@@ -96,10 +116,17 @@ function abrir_chat(id_otro_usuario)
 		//SI HACE CLICK EN UNA CONVERSACION DIFERENTE A LA QUE TIENE ABIERTA BORRAMOS EL CHAT, CREAMOS EL INPUT Y BUSCAMOS LOS MENSAJES
 		$('#panel_mensajes ul').html('');
 		
-		$('#panel_mensajes ul').append('<li id="li_input"><input type="text" id="input_mensajes" onkeypress="return pressEnter(event)"/></li>');
+		//NEW ESTABA SIN COMENTAR
+		//$('#panel_mensajes ul').append('<li id="li_input"><input type="text" id="input_mensajes" onkeypress="return pressEnter(event)"/></li>');
 		
 		//GUARDAMOS EL ID DEL USUARIO CON EL QUE VAMOS A ABRIR EL CHAT EN LA LISTA DEL PANEL DE MENSAJES
     	$('#panel_mensajes ul').attr('id',id_otro_usuario); 
+    	
+    	
+    	
+    	$('#panel_conversaciones').find('li').css('background','transparent');
+    	
+    	$('#'+id_otro_usuario).parent().css('background','#FFF');
     	
 		//alert("abrimos"+id_otro_usuario+"--"+$('#conv_activa').val());
 		//EN DATA EL PRIMER DATO ES EL NOMBRE EN LADO SERVIDOR DE LA VARIABLE, EL SEGUNDO EN LADO CLIENTE    	
@@ -161,6 +188,25 @@ function pintar_chat(mensajes_cliente,borrar_mensajes)
 	*/
 		for(i=0;i<mensajes_cliente.length;i++)
 		{	
+			var numero_mensajes_pintados=$('#panel_mensajes ul li').length;
+			
+			var nueva_fecha;
+			
+			if(numero_mensajes_pintados==0)
+			{
+				
+				nueva_fecha=$("<li class='mensaje mensaje_fecha'>"+mensajes_cliente[i].hora.split(' ')[0]+"</li>");
+				nueva_fecha.appendTo($('#panel_mensajes ul'));
+			}
+			else
+			{
+				if($('.mensaje_fecha').last().html()!=mensajes_cliente[i].hora.split(' ')[0])
+				{
+					nueva_fecha=$("<li class='mensaje mensaje_fecha'>"+mensajes_cliente[i].hora.split(' ')[0]+"</li>");
+					nueva_fecha.appendTo($('#panel_mensajes ul'));
+				}
+			}
+			
 			var nueva_linea;
 			
 			if(mensajes_cliente[i].id!=$('#panel_mensajes ul .mensaje').last().attr('id'))
@@ -174,8 +220,15 @@ function pintar_chat(mensajes_cliente,borrar_mensajes)
 					nueva_linea=$("<li id="+mensajes_cliente[i].id+" class='mensaje mensaje_propio'>"+mensajes_cliente[i].texto+"</li>");
 				}	
 			}	
-				nueva_linea.insertBefore($('#li_input'));			
+				//nueva_linea.insertBefore($('#li_input'));//NEW era li_input		
+				nueva_linea.appendTo($('#panel_mensajes ul'));
 		}
+		if(mensajes_cliente.length>0)
+		{
+			$("#panel_mensajes").animate({ scrollTop: '1000px' }, 1);
+		}
+		
+		
 	//}
 	
 }
@@ -232,7 +285,7 @@ function actualizar_conversaciones()
 	       dataType: "json",
 	       success: function(respuesta) {
 	    	   var conversaciones_activas=respuesta;
-	    	   pintar_conversaciones(conversaciones_activas);
+	    	   //pintar_conversaciones(conversaciones_activas);
 	       }
 	    }); 
 	
@@ -286,15 +339,26 @@ function enviarMensaje()
 	//MANDAMOS EN ID DEL DESTINATARIO Y EL TEXTO
 	var id_otro_usuario_mensaje=$('#panel_mensajes ul').attr('id');
 	var texto=$('#input_mensajes').val();
-	$.ajax({        
-	       type: "POST",
-	       url: BASE_URL+"mensaje/crear_mensaje",
-	       data: { id_otro_usuario_mensaje : id_otro_usuario_mensaje,texto:texto},
-	       success: function(respuesta) {
-	    	   //alert("mensaje enviado");
-	       }
-	    }); 
-	//PONEMOS EL INPUT A 0
-	var texto=$('#input_mensajes').val('');
+	
+	if(texto.length>140)
+	{
+		alert("La longitud máxima de mensaje es 140 caracteres.");
+	}
+	
+	if(texto!=''||texto.length>140)
+	{
+		$.ajax({        
+		       type: "POST",
+		       url: BASE_URL+"mensaje/crear_mensaje",
+		       data: { id_otro_usuario_mensaje : id_otro_usuario_mensaje,texto:texto},
+		       success: function(respuesta) {
+		    	   //alert("mensaje enviado");
+		       }
+		    }); 
+		//PONEMOS EL INPUT A 0
+		var texto=$('#input_mensajes').val('');
+	}
+	
+	
 	
 }
