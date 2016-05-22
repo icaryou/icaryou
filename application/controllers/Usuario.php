@@ -96,22 +96,117 @@ class Usuario extends CI_Controller
 				$registro['cp']=$this->input->post('cp');
 				$registro['cochePropio']=$this->input->post('cochePropio')=='si'?true:false;
 				
-				$this->load->model("Usuario_Model");
-				$resultado=$this->Usuario_Model->crearUsuario($registro);//CREAMOS EN EL MODELO
+			/* SUBIDA Y REDIMENSION IMAGEN*/	
 				
-				$datos["mensaje"]="Validación correcta";//TODO
+			$config['upload_path'] = './assets/img/profile/';
+			$config['allowed_types'] = 'gif|jpg|png';
+			$config['max_size']	= '2000';
+			$config['min_width']  = '400';
+			$config['min_height']  = '400';
+	
+			$resp=$this->guardarYResizeImagenPerfil($config);
+			$registro['foto']="";
+			if(isset($resp['filename'])){
+				$registro['foto']='assets/img/profile/'.$resp['filename'];
+				//unlink("assets/img/temp/".$resp['filename']);
+				$files = glob('assets/img/temp/*'); // get all file names
+				foreach($files as $file){ // iterate files
+				  if(is_file($file))
+				    unlink($file); // delete file
+				}
+			}else{
+				$registro['foto']='assets/img/profile/avatar.png';
+			}
+			
+			
+			$this->load->model("Usuario_Model");
+			$resultado=$this->Usuario_Model->crearUsuario($registro);//CREAMOS EN EL MODELO
+				
+			$datos["mensaje"]="Validación correcta";//TODO
 				
 			}else{
 				$datos["mensaje"]="Validación incorrectaa";//TODO
 			}
 		
-			//$this->load->view("usuario/registrarUsuarioPost",$datos);
 			enmarcar($this, "usuario/registrarUsuarioPost",$datos);//TODO
 			
 		}	
 		
 		
 	}	//FIN REGISTRARUSUARIOPOST
+	
+	public function guardarYResizeImagenPerfil($config){
+		$this->load->library('upload', $config);
+		$respuesta;
+		if ( $this->upload->do_upload('userFoto'))
+		{
+			if(($this->upload->image_width)>=400){
+		
+		
+				$respuesta['valida']=true;
+		
+				if($this->upload->image_width*0.70>=$this->upload->image_height||$this->upload->image_height*0.70>=$this->upload->image_width)
+				{
+					$respuesta['valida']=false;
+					$respuesta['error']='La imagen debe tener una proporción de 4:3 o inferior.';
+					if($this->session->userdata('logueado')){
+						$respuesta['ruta'] = $this->session->userdata('foto');
+					}else{
+						$respuesta['ruta'] = "assets/img/profile/avatar.png";
+					}
+				}
+				else
+				{
+					$configResize['source_image'] = $config['upload_path'].$this->upload->file_name;
+					$configResize['maintain_ratio'] = TRUE;
+					$configResize['width'] = 400;
+						
+					$this->load->library('image_lib', $configResize);
+					$this->image_lib->resize();
+					$respuesta['ruta']= "assets/img/temp/".$this->upload->file_name;
+					$respuesta['filename']=$this->upload->file_name;
+				}
+		
+			}
+		}else{
+				
+			$respuesta['errores']=$this->upload->display_errors();
+			$error=$this->upload->display_errors();
+			if(strrpos($error, "filetype") || strrpos($error, "You did not select a file")){
+				$respuesta['error']='Introduzca una imagen gif, jpg o png.';
+			}else if(strrpos($error, "maximum allowed size")){
+				$respuesta['error']='La imagen no debe exceder los 2Mb.';
+			}else{
+				$respuesta['error']='La imagen debe superar 400px de ancho y alto.';
+			}
+		
+			if($this->session->userdata('logueado')){
+					$respuesta['ruta'] = $this->session->userdata('foto');
+			}else{
+					$respuesta['ruta'] = "assets/img/profile/avatar.png";
+			}
+			
+			$respuesta['valida']=false;
+		}
+		return $respuesta;
+	}
+	
+	public function mostrarFotoRegistro()
+	{
+		/* SUBIDA Y REDIMENSION IMAGEN*/
+		
+		
+		$config['upload_path'] = './assets/img/temp/';
+		$config['allowed_types'] = 'gif|jpg|png';
+		$config['max_size']	= '2000';
+		$config['min_width']  = '400';
+		$config['min_height']  = '400';
+		
+		$respuesta=$this->guardarYResizeImagenPerfil($config);
+		
+		echo json_encode($respuesta);
+		
+	}
 	
 	public function mostrarPerfilPropio()
 	{
@@ -210,6 +305,29 @@ class Usuario extends CI_Controller
 				$perfil['fechaNac']=$this->input->post('fechaNac');
 				$perfil['cp']=$this->input->post('cp');
 				$perfil['cochePropio']=$this->input->post('cochePropio')=='si'?true:false;
+				
+				/* SUBIDA Y REDIMENSION IMAGEN*/
+				
+				$config['upload_path'] = './assets/img/profile/';
+				$config['allowed_types'] = 'gif|jpg|png';
+				$config['max_size']	= '2000';
+				$config['min_width']  = '400';
+				$config['min_height']  = '400';
+				
+				$resp=$this->guardarYResizeImagenPerfil($config);
+				$perfil['foto']="";
+				if(isset($resp['filename'])){
+					$perfil['foto']='assets/img/profile/'.$resp['filename'];
+					//unlink("assets/img/temp/".$resp['filename']);
+					$files = glob('assets/img/temp/*'); // get all file names
+					foreach($files as $file){ // iterate files
+						if(is_file($file))
+							unlink($file); // delete file
+					}
+				}else{
+					$perfil['foto']='assets/img/profile/avatar.png';
+				}
+					
 	
 				$this->load->model("Usuario_Model");
 				$usuario=$this->Usuario_Model->editarPerfil($perfil,$this->session->userdata('email'));//CREAMOS EN EL MODELO
@@ -224,6 +342,7 @@ class Usuario extends CI_Controller
 							'sexo' => $usuario->sexo,
 							'fechanac' => $usuario->fechanac,
 							'cp' => $usuario->cp,
+							'foto' => $usuario->foto,
 							'cochepropio' => $usuario->cochepropio,
 							'logueado' => TRUE
 					);
@@ -238,7 +357,8 @@ class Usuario extends CI_Controller
 	
 			//$this->load->view("usuario/registrarUsuarioPost",$datos);
 			//enmarcar($this, "usuario/mostrarPerfil.php",$datos);//TODO
-			header("Location:".base_url().'usuario/mostrarPerfil');	
+			$this->mostrarPerfilPropio();
+			//header("Location:".base_url().'usuario/mostrarPerfil');	
 		}
 	
 	
@@ -373,6 +493,7 @@ class Usuario extends CI_Controller
 						'sexo' => $usuario->sexo,
 						'fechanac' => $usuario->fechanac,
 						'cp' => $usuario->cp,
+						'foto' => $usuario->foto,
 						'cochepropio' => $usuario->cochepropio,
 						'logueado' => TRUE
 				);

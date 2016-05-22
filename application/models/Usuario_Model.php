@@ -27,6 +27,7 @@ class Usuario_Model extends RedBean_SimpleModel //CI_Model//
 		$usuario->fechanac=$registro['fechaNac'];
 		$usuario->cp=$registro['cp'];
 		$usuario->cochepropio=$registro['cochePropio'];
+		$usuario->foto=isset($registro['foto'])?$registro['foto']:null;
 		$usuario->sw_activo=false;
 		$usuario->sw_mensajes_nuevos=false;
 		
@@ -48,6 +49,7 @@ class Usuario_Model extends RedBean_SimpleModel //CI_Model//
 			$usuario->fechanac=$perfil['fechaNac'];
 			$usuario->cp=$perfil['cp'];
 			$usuario->cochepropio=$perfil['cochePropio'];
+			$usuario->foto=$perfil['foto'];
 			$id=R::store($usuario);
 		}
 		return $usuario;

@@ -339,4 +339,17 @@ button:focus {outline:0;}
     font: 32px Arial, sans-serif;
 }
 
+.imgBuscarTrayecto{
+	width:250px;
+}
+
+.fotoRegistro{
+	width:200px;
+	height: 200px;
+	margin:20px 20px 10px;
+	overflow: hidden;
+	border:1px solid black;
+	border-radius:50%;
+}
+
 

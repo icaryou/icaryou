@@ -111,7 +111,7 @@ $( document ).ready(function()
                 "fechaNac": {
                     required: "Fecha nacimiento obligatoria.",
                     regx:"Formato fecha inválido(Formato requerido:dd/mm/yyyy)"
-                },                
+                },
                 "cp": {
                     required: "Introduce tu código postal.",
                     number: "Introduce un código postal válido.",
@@ -129,3 +129,5 @@ $( document ).ready(function()
             } 
         });
 });
+
+
