@@ -157,61 +157,58 @@
 				</h2>
 				<div class="separadorHori"></div>
 				<!--  MEJORANDO MAQUETACION -->
-	<?php foreach ($trayectosEncontrados as $trayectoAgrupado):?>
-	<table class="elementoBusqueda span8 bottom-bufferElements ">
-	<tr>
-		<td class="paddignCelda">
-			<span class="diasBusqueda"><?php echo $trayectoAgrupado[0]['dias']?></span>
-			<span class="horasBusqueda"><?php echo $trayectoAgrupado[0]['horallegadadestino']?> - 
-			<?php echo $trayectoAgrupado[0]['horaretornodestino']?></span>
-			<div><?php echo $trayectoAgrupado[0]['poblacionOrigen']?></div>
-			<div><?php echo $trayectoAgrupado[0]['poblacionDestino']?></div>
-			<div><?php echo $trayectoAgrupado[0]['comentarios']?></div>
+				<?php foreach ($trayectosEncontrados as $trayectoAgrupado):?>
+				<table class="elementoBusqueda span8 bottom-bufferElements ">
+				<tr>
+					<td class="paddignCelda">
+						<span class="diasBusqueda"><?php echo $trayectoAgrupado[0]['dias']?></span>
+						<span class="horasBusqueda"><?php echo $trayectoAgrupado[0]['horallegadadestino']?> - 
+						<?php echo $trayectoAgrupado[0]['horaretornodestino']?></span>
+						<div class="lugaresBusqueda"><img class="casitas" src="<?php echo base_url();?>/assets/img/casitaVerde.png"/><?php echo $trayectoAgrupado[0]['poblacionOrigen']?></div>
+						<div class="lugaresBusqueda"><img class="casitas" src="<?php echo base_url();?>/assets/img/casitaRosa.png"/><?php echo $trayectoAgrupado[0]['poblacionDestino']?></div>
+						<div class="comentariosBusqueda"><?php echo $trayectoAgrupado[0]['comentarios']?></div>
+						
+						<!-- PINTAMOS UNIRSE SI NO ESTA EN EL TRAYECTO Y HAY PLAZAS DISPONIBLES -->
+								<?php foreach ($trayectoAgrupado as $usu):?>
+									<?php if($usu["usuarioId"]==$this->session->userdata('id')):?>
+										<?php $pintarAbandonar=TRUE?>
+									<?php endif;?>
+								<?php endforeach;?>
+						
+						
+								<?php if(!$pintarAbandonar&&$trayectoAgrupado[0]['plazas']>sizeof($trayectoAgrupado)):?>				
+								<button class="btn btn-primary btn-lg botonBusqueda" onclick='location.href="<?php echo base_url('usuario/unirse_trayecto/'.$trayectoAgrupado[0]['trayecto_id'])?>"'
+									class="btn btn-primary btn-lg btn-block" tabindex="7">Unirse</button>				 
+								<?php endif;?>
+								
+								<!-- PINTAMOS COMPLETO SI NO ESTA EN EL TRAYECTO Y NO HAY PLAZAS DISPONIBLES -->
+								<?php if(!$pintarAbandonar&&$trayectoAgrupado[0]['plazas']==sizeof($trayectoAgrupado)):?>				
+								<p>Trayecto completo</p>				 
+								<?php endif;?>
+								
+								<!-- PINTAMOS ABANDONAR SI NO ESTA EN EL TRAYECTO Y HAY PLAZAS DISPONIBLES -->
+								<?php if(isset($pintarAbandonar)&&$pintarAbandonar):?>				
+								<button class="btn btn-primary btn-lg botonBusqueda" onclick='location.href="<?php echo base_url('usuario/abandonar_trayecto/'.$trayectoAgrupado[0]['trayecto_id'])?>"'
+									class="btn btn-primary btn-lg btn-block" tabindex="7">Abandonar</button>				 
+								<?php endif;?>
+					</td>
+					<td>
+						<h3>Usuarios</h3>
+						<?php foreach ($trayectoAgrupado as $usu):?>
+								<p><a href="<?php echo base_url('usuario/mostrarPerfilUsuario/'.$usu["usuarioId"])?>"><?php echo $usu["nombre"]." ".$usu["apellidos"]?></a></p>
 			
-			<!-- PINTAMOS UNIRSE SI NO ESTA EN EL TRAYECTO Y HAY PLAZAS DISPONIBLES -->
-					<?php if(!$pintarAbandonar&&$trayectoAgrupado[0]['plazas']>sizeof($trayectoAgrupado)):?>				
-					<button class="btn btn-primary btn-lg bottomaligned" onclick='location.href="<?php echo base_url('usuario/unirse_trayecto/'.$trayectoAgrupado[0]['trayecto_id'])?>"'
-						class="btn btn-primary btn-lg btn-block" tabindex="7">Unirse</button>				 
-					<?php endif;?>
-					
-					<!-- PINTAMOS COMPLETO SI NO ESTA EN EL TRAYECTO Y NO HAY PLAZAS DISPONIBLES -->
-					<?php if(!$pintarAbandonar&&$trayectoAgrupado[0]['plazas']==sizeof($trayectoAgrupado)):?>				
-					<p>Trayecto completo</p>				 
-					<?php endif;?>
-					
-					<!-- PINTAMOS ABANDONAR SI NO ESTA EN EL TRAYECTO Y HAY PLAZAS DISPONIBLES -->
-					<?php if(isset($pintarAbandonar)&&$pintarAbandonar):?>				
-					<button class="abandonar_trayecto" onclick='location.href="<?php echo base_url('usuario/abandonar_trayecto/'.$trayectoAgrupado[0]['trayecto_id'])?>"'
-						class="btn btn-primary btn-lg btn-block" tabindex="7">Abandonar</button>				 
-					<?php endif;?>
-		</td>
-		<td>
-			<h3>Usuarios</h3>
-			<?php foreach ($trayectoAgrupado as $usu):?>
-					<p><a href="<?php echo base_url('usuario/mostrarPerfilUsuario/'.$usu["usuarioId"])?>"><?php echo $usu["nombre"]." ".$usu["apellidos"]?></a></p>
-					<?php if($usu["usuarioId"]==$this->session->userdata('id')):?>
-						<?php $pintarAbandonar=TRUE?>
-					<?php endif;?>
-			<?php endforeach;?>
-		</td>
-	</tr>
-	</table>
-	<?php endforeach;?>
-	<!--  AQUI ACABA LA MEJORA -->
-	<br/>
-	<div class="pagination-page span3 bottom-bufferElements "></div>	
-	
-	
-	<!--  
-	<?php var_dump($camposBusqueda)?>
-	<?php echo "<br/>"?>
-	<?php echo $camposBusqueda['cpOrigen']?>
-	<?php echo "<br/>"?>
-	<?php var_dump($trayectosEncontrados)?>
-	-->
-<?php endif;?>
-<p><?=validation_errors();?></p>
-<input TYPE="button" VALUE="Back" onClick="history.go(-1);">
+						<?php endforeach;?>
+					</td>
+				</tr>
+				</table>
+				<?php endforeach;?>
+				<!--  AQUI ACABA LA MEJORA -->
+				<br/>
+				<div class="pagination-page span3 bottom-bufferElements "></div>	
+				
+			<?php endif;?>
+			<p><?=validation_errors();?></p>
+
 		</div>
 </div>
 
