@@ -1,23 +1,48 @@
-<h3 onclick="actualizar_mensajes_chat()">Mensajería</h3>
+<div id="contenedor_mensajeria">
 
+<!--  
+<h3 id="titulo_mensajes">Mensajes</h3>
+-->
 <!--aQUI PINTAMOS LAS CONVERSACIONES ACTIVAS DEL USUARIO-->
-<div id="panel_conversaciones">
-	<ul>
-		<?php foreach ($mensajes as $fila):?>
-			<li><a id="<?php echo $fila['usuario_chat']?>" class="abrir_chat"><?php echo $fila['usuario_chat_nombre']?></a></li>
-		<?php endforeach;?>
-	</ul>
-</div>
+<div id="contenedor_paneles">
 
-<!--PINTAMOS EL DIV DE LOS MENSAJES CON ID 0 Y EL CAMPO INPUT SOLO QUE ESTARA INVISIBLE DE MOMENTO-->
-<div id="panel_mensajes">
-	<ul id="0">
-		
-		<li id="li_input"><input type="text" id="input_mensajes" onkeypress="return pressEnter(event)"/></li>
-		
-	</ul>
-</div>
-<div class="limpiarfloat"></div>
+
+
+	<div id="panel_conversaciones">
+		<h2 id="titulo_conversaciones">Conversaciones</h2>
+		<ul>
+			<?php foreach ($mensajes as $fila):?>
+				<li><a id="<?php echo $fila['usuario_chat']?>" class="abrir_chat"><?php echo $fila['usuario_chat_nombre']?></a></li>
+			<?php endforeach;?>
+		</ul>
+	</div>
+
+
+
+	<!--PINTAMOS EL DIV DE LOS MENSAJES CON ID 0 Y EL CAMPO INPUT SOLO QUE ESTARA INVISIBLE DE MOMENTO-->
+	<div id="panel_mensajes">
+		<ul id="0">
+			
+			<!-- ORIGIN
+			
+			 
+			 <li id="li_input_oculto"><input type="text" id="input_mensajes" onkeypress="return pressEnter(event)"/></li>
+			 -->
+		</ul>
+	</div>
+	
+	<!-- NEW -->
+	<div id="li_input"><input maxlength="140" type="text" id="input_mensajes" onkeypress="return pressEnter(event)"/></div>
+	
+	<div class="limpiarfloat">
+	
+	</div>
+
+</div><!-- FIN CONTENEDOR PANELES -->
+
+</div><!-- FIN CONTENEDOR MENSAJERIA -->
+
+
 
 <!--CAMPO HIDDEN PARA IR GUARDANDO EL VALOR DE LA CONVERSACION ACTIVA-->
 <input type="hidden" id="conv_activa" value="0"/>
@@ -40,6 +65,8 @@
 
 
 
+
+<a id="botonToogelador" data-toggle="modal" href="#inicio_conversacion_div">Toogelador</a>
 
 <?php if($abrirEmergente==1):?><!-- Esto lo dejo por si acaso pero funciona lo de abajo -->
 <!--  
@@ -94,6 +121,3 @@
 
 
 <?php endif;?>
-
-
-<a id="botonToogelador" data-toggle="modal" href="#inicio_conversacion_div">Toogelador</a>
