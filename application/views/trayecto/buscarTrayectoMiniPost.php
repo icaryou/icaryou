@@ -6,7 +6,7 @@
 			      range: true,
 			      min: 0,
 			      max: 23,
-			      values: [ 9, 18 ],
+			      values: [ 0, 23 ],
 			      slide: function( event, ui ) {
 				    //El formato que devuelve es 9h y debo pasarlo a 09h asiq miro la longitud del numero
 				    $hora1="";
@@ -26,7 +26,7 @@
 			      }
 			    });
 			    //Pongo la hora a mano porque con la funcion de abajo no me pone el 0 delante del 9
-			    $( "#horaSalidaRango" ).val("09:00 - 18:00");
+			    $( "#horaSalidaRango" ).val("00:00 - 23:00");
 			    /*
 			    $( "#horaSalidaRango" ).val( $( "#slider-range1" ).slider( "values", 0 ) +
 			      ":00 - " + $( "#slider-range1" ).slider( "values", 1 )+":00");
@@ -38,7 +38,7 @@
 				      range: true,
 				      min: 0,
 				      max: 23,
-				      values: [ 9, 18 ],
+				      values: [ 0, 23 ],
 				      slide: function( event, ui ) {
 				    	  $hora1="";
 						    if(((ui.values[ 0 ]).toString()).length == 1){
@@ -56,7 +56,7 @@
 						$( "#horaRegresoRango" ).val( $hora1 + " - " + $hora2 );  
 				      }
 				    });
-				    $( "#horaRegresoRango" ).val("09:00 - 18:00");
+				    $( "#horaRegresoRango" ).val("00:00 - 23:00");
 				    /*
 				    $( "#horaRegresoRango" ).val( $( "#slider-range2" ).slider( "values", 0 ) +
 				      ":00 - " + $( "#slider-range2" ).slider( "values", 1 )+":00" );
@@ -152,49 +152,25 @@
 			<?php endif;?>
 			
 			<?php if(sizeof($trayectosEncontrados)!=0):?><!--ENCUENTRA TRAYECTOS -->
-				<h3>Mostrando trayectos desde <?php echo "{$camposBusqueda['poblacionOrigen']} a 
-				{$camposBusqueda['poblacionDestino']}"?>
-				</h3>
-	
-	
-	
-	
-			<?php foreach ($trayectosEncontrados as $trayectoAgrupado):?>
-		<!-- EN CADA $TRAYECTO AGRUPADO TENEMOS UN SOLO TRAYECTO PERO TANTAS FILAS COMO USUARIOS TENGA ESE TRAYECTO -->
-
-	
-		<table border="1">
-			<tr>
-				<td>Poblacion origen</td>
-				<td>Poblacion destino</td>
-				<td>Hora llegada</td>
-				<td>Hora regreso</td>				
-				<td>Dias</td>
-				<td>Comentarios</td>
-				<td>Plazas máximas</td>
-				<td>Usuarios</td>
-			</tr>
-			<tr>
-			<!-- COGEMOS LOS DATOS GENRALES DE UNA FILA, LA PRIMERA PORQUE EN TODAS SON IGUALES -->
-				<td><?php echo $trayectoAgrupado[0]['poblacionOrigen']?></td>
-				<td><?php echo $trayectoAgrupado[0]['poblacionDestino']?></td>
-				<td><?php echo $trayectoAgrupado[0]['horallegadadestino']?></td>
-				<td><?php echo $trayectoAgrupado[0]['horaretornodestino']?></td>
-				<td><?php echo $trayectoAgrupado[0]['dias']?></td>
-				<td><?php echo $trayectoAgrupado[0]['comentarios']?></td>
-				<td><?php echo $trayectoAgrupado[0]['plazas']?></td>
-				<!-- Y SOLO ITERAMOS DE NUEVO PARA PINTAR LOS USUARIOS QUE NOS HA DEVUELTO -->
-				<td><?php foreach ($trayectoAgrupado as $usu):?>
-					<p><a href="<?php echo base_url('usuario/mostrarPerfilUsuario/'.$usu["usuarioId"])?>"><?php echo $usu["nombre"]." ".$usu["apellidos"]?></a></p>
-					<?php if($usu["usuarioId"]==$this->session->userdata('id')):?>
-						<?php $pintarAbandonar=TRUE?>
-					<?php endif;?>
-					<?php endforeach;?>
-				</td>
-				<td>
-					<!-- PINTAMOS UNIRSE SI NO ESTA EN EL TRAYECTO Y HAY PLAZAS DISPONIBLES -->
+				<h2>Mostrando trayectos desde <span class="origenBusqueda"><?php echo "{$camposBusqueda['poblacionOrigen']}"?></span> a 
+				<span class="destinoBusqueda"><?php echo "{$camposBusqueda['poblacionDestino']}"?></span>
+				</h2>
+				<div class="separadorHori"></div>
+				<!--  MEJORANDO MAQUETACION -->
+	<?php foreach ($trayectosEncontrados as $trayectoAgrupado):?>
+	<table class="elementoBusqueda span8 bottom-bufferElements ">
+	<tr>
+		<td class="paddignCelda">
+			<span class="diasBusqueda"><?php echo $trayectoAgrupado[0]['dias']?></span>
+			<span class="horasBusqueda"><?php echo $trayectoAgrupado[0]['horallegadadestino']?> - 
+			<?php echo $trayectoAgrupado[0]['horaretornodestino']?></span>
+			<div><?php echo $trayectoAgrupado[0]['poblacionOrigen']?></div>
+			<div><?php echo $trayectoAgrupado[0]['poblacionDestino']?></div>
+			<div><?php echo $trayectoAgrupado[0]['comentarios']?></div>
+			
+			<!-- PINTAMOS UNIRSE SI NO ESTA EN EL TRAYECTO Y HAY PLAZAS DISPONIBLES -->
 					<?php if(!$pintarAbandonar&&$trayectoAgrupado[0]['plazas']>sizeof($trayectoAgrupado)):?>				
-					<button class="unirse_trayecto" onclick='location.href="<?php echo base_url('usuario/unirse_trayecto/'.$trayectoAgrupado[0]['trayecto_id'])?>"'
+					<button class="btn btn-primary btn-lg bottomaligned" onclick='location.href="<?php echo base_url('usuario/unirse_trayecto/'.$trayectoAgrupado[0]['trayecto_id'])?>"'
 						class="btn btn-primary btn-lg btn-block" tabindex="7">Unirse</button>				 
 					<?php endif;?>
 					
@@ -208,14 +184,22 @@
 					<button class="abandonar_trayecto" onclick='location.href="<?php echo base_url('usuario/abandonar_trayecto/'.$trayectoAgrupado[0]['trayecto_id'])?>"'
 						class="btn btn-primary btn-lg btn-block" tabindex="7">Abandonar</button>				 
 					<?php endif;?>
-				</td>
-			</tr>
-			
-			
-		</table>		
-	
-<?php endforeach;?>
-	
+		</td>
+		<td>
+			<h3>Usuarios</h3>
+			<?php foreach ($trayectoAgrupado as $usu):?>
+					<p><a href="<?php echo base_url('usuario/mostrarPerfilUsuario/'.$usu["usuarioId"])?>"><?php echo $usu["nombre"]." ".$usu["apellidos"]?></a></p>
+					<?php if($usu["usuarioId"]==$this->session->userdata('id')):?>
+						<?php $pintarAbandonar=TRUE?>
+					<?php endif;?>
+			<?php endforeach;?>
+		</td>
+	</tr>
+	</table>
+	<?php endforeach;?>
+	<!--  AQUI ACABA LA MEJORA -->
+	<br/>
+	<div class="pagination-page span3 bottom-bufferElements "></div>	
 	
 	
 	<!--  
@@ -270,5 +254,56 @@ function llamarAjax(){
 		    $('#rellenarAjax').html(res);
 		 });
 }
+</script>
+<script>
+//PAGINACION
+//mind the slight change below, personal idea of best practices
+jQuery(function($) {
+    // consider adding an id to your table,
+    // just incase a second table ever enters the picture..?
+    var items = $("table");
+
+    var numItems = items.length;
+    var perPage = 2;
+
+    // only show the first 2 (or "first per_page") items initially
+    items.slice(perPage).hide();
+
+    // now setup your pagination
+    // you need that .pagination-page div before/after your table
+    $(".pagination-page").pagination({
+        items: numItems,
+        itemsOnPage: perPage,
+        cssStyle: "light-theme",
+        onPageClick: function(pageNumber) { // this is where the magic happens
+            // someone changed page, lets hide/show trs appropriately
+            var showFrom = perPage * (pageNumber - 1);
+            var showTo = showFrom + perPage;
+
+            items.hide() // first hide everything, then show for the new page
+                 .slice(showFrom, showTo).show();
+        }
+    });
+
+
+    var checkFragment = function() {
+        // if there's no hash, make sure we go to page 1
+        var hash = window.location.hash || "#page-1";
+
+        // we'll use regex to check the hash string
+        hash = hash.match(/^#page-(\d+)$/);
+
+        if(hash)
+            // the selectPage function is described in the documentation
+            // we've captured the page number in a regex group: (\d+)
+            $("#pagination").pagination("selectPage", parseInt(hash[1]));
+    };
+
+    // we'll call this function whenever the back/forward is pressed
+    $(window).bind("popstate", checkFragment);
+
+    // and we'll also call it to check right now!
+    checkFragment();
+});
 </script>
 

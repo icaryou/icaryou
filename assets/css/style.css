@@ -245,6 +245,7 @@ margin-top:40px;
 .top-buffer10 { margin-top:10px; }
 .left-buffer { margin-left:20px; }
 .bottom-buffer { margin-bottom:-50px; }
+.bottom-bufferElements { margin-bottom:20px; }
 .loginForm {overflow-x: hidden;
 display: inline-block;
     margin-bottom: 0;
@@ -350,5 +351,28 @@ button:focus {outline:0;}
 	border:1px solid black;
 	border-radius:50%;
 }
+/* RESULTADOS BUSQUEDA */
+.origenBusqueda{
+	color:#0DBD96;
+	font-weight: bold;
+}
+.destinoBusqueda{
+	color:#F05978;
+	font-weight: bold;
+}
 
-
+.elementoBusqueda{
+	background-color:#b5ddd4;
+	border-radius:10px;
+}
+.diasBusqueda{
+	font-size:24px;
+	font-weight: bold;
+}
+.horasBusqueda{
+	font-size:20px;
+	margin-left:40px:
+}
+.paddignCelda{
+	padding: 20px 0 20px 20px;
+}
