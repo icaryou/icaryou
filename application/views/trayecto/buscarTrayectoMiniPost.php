@@ -194,9 +194,10 @@
 					</td>
 					<td>
 						<h3>Usuarios</h3>
+						<div class="imgBusqueda"><img src="<?php echo base_url()."assets/img/profile/avatar.png"?>"/></div>
 						<?php foreach ($trayectoAgrupado as $usu):?>
 								<p><a href="<?php echo base_url('usuario/mostrarPerfilUsuario/'.$usu["usuarioId"])?>"><?php echo $usu["nombre"]." ".$usu["apellidos"]?></a></p>
-			
+			 
 						<?php endforeach;?>
 					</td>
 				</tr>
