@@ -84,7 +84,7 @@ class Mensaje_model extends RedBean_SimpleModel //CI_Model//
 					FROM conversacion c join mensaje m on c.id=m.conversacion_id
 					WHERE
 					conversacion_id={$usuarios_buscar_conversacion[$i]['conversacion_id']} AND
-					m.sw_no_leido>=1")[0]['no_leidos'];
+					m.sw_no_leido>=1 AND remitente !=$usuario_id")[0]['no_leidos'];
 		}
 		//Formato fila
 		//[0]=> array(4) { ["conversacion_id"]=> string(1) "1" ["usuario_chat"]=> string(1) "2" ["conversacion_activa"]=> string(1) "3" ["no_leidos"]=> string(1) "5" 
@@ -103,11 +103,13 @@ class Mensaje_model extends RedBean_SimpleModel //CI_Model//
 		
 		
 		
-		R::exec( "UPDATE mensaje SET sw_no_leido=0 WHERE remitente=$id_otro_usuario AND conversacion_id={$id_conversacion['id']}" );
+		
 		
 		$mensajes=R::getAll("SELECT *
 				FROM mensaje
 				WHERE conversacion_id={$id_conversacion['id']}");
+		
+		R::exec( "UPDATE mensaje SET sw_no_leido=0 WHERE remitente=$id_otro_usuario AND conversacion_id={$id_conversacion['id']}" );
 		
 		return $mensajes;
 	}
@@ -116,12 +118,14 @@ class Mensaje_model extends RedBean_SimpleModel //CI_Model//
 	//(PONE COMO LEIDOS LOS QUE TENIA EL COMO DESTINATARIO)
 	public function buscar_nuevos_mensajes_chat($id_conversacion,$id_ultimo_mensaje,$usuario_activo)
 	{	
-		R::exec( "UPDATE mensaje SET sw_no_leido=0 WHERE remitente!=$usuario_activo AND conversacion_id={$id_conversacion}" );
+		
 		
 		$mensajes=R::getAll("SELECT *
 				FROM mensaje
 				WHERE conversacion_id=$id_conversacion AND id>$id_ultimo_mensaje");
 	
+		R::exec( "UPDATE mensaje SET sw_no_leido=0 WHERE remitente!=$usuario_activo AND conversacion_id={$id_conversacion}" );
+		
 		return $mensajes;
 	}
 	

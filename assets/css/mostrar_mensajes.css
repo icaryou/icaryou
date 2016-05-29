@@ -13,7 +13,12 @@ body
 	/*border:solid 1px yellow;*/
 	height:50px;
 	width:100%;
-	background-color:#222;
+	background-color:#f5f5f5;
+}
+
+.mensaje
+{
+	font-size:85%;
 }
 
 footer
@@ -29,14 +34,15 @@ footer
 
 #contenedor_mensajeria
 {
+	background-color:#FFF;
 	width:90%;	
 	margin:0;
 	height:60%;
 	max-height:80%;
 	margin:0 auto;	
-	background-color:#EFEFEF;
 	padding:0 0;			
 	/*border:solid 1px yellow;*/
+	border-radius: 10px;
 }
 
 #contenedor_paneles
@@ -52,16 +58,33 @@ footer
 	text-align:center;
 }
 
+#suplemento_conversaciones
+{
+	background-color:rgba(27,153,121,0.5);
+	height:2%;		
+	width:35%;
+	margin:0;
+	float:left;		
+	border-radius:  10px 0 0 0;
+}
+
 #panel_conversaciones
 {
+	background-color:rgba(27,153,121,0.5);
 	overflow-y:auto;
 	width:35%;
-	height:100%;
+	height:98%;
 	max-height:100%;
 	margin:0;
 	float:left;	
-	background-color:moccasin;
+	border-radius: 0 0 0 10px;
+	
 	/*border:1px solid green;*/
+}
+
+.conv_activa
+{
+	background-color:#FFF;	
 }
 
 #panel_conversaciones ul
@@ -87,12 +110,30 @@ footer
 	left:10%;
 }
 
+#panel_conversaciones ul li img
+{
+	width:8%;
+	position: absolute;
+	top:20%;
+	right:10%;
+}
+
+#suplemento_mensajes
+{
+	background-color:#FFF;
+	height:2%;	
+	width:65%;
+	margin:0;	
+	float:left;
+	border-radius: 10px;
+}
+
 #panel_mensajes
 {
 	overflow-y:auto;
 	background-color:#FFF;
 	width:65%;
-	height:85%;	
+	height:83%;	
 	margin:0;
 	max-height:100%;
 	/*overflow:scroll;*/	
@@ -100,23 +141,26 @@ footer
 	position:relative;
 	/*border:1px solid red;*/
 	direction: ltl;
+	border-radius: 0 0 10px 0;
 }
 /*NEW*/
 #li_input
 {
+	background-color:rgba(240,89,120,0.7);
 	position:absolute;
 	bottom:0;
 	right:0;
-	bottom:5px;
 	width:65%;
-	height:10%;
+	height:15%;
 	/*border-radius:5px;*/
+	border-radius: 0 0 10px 0;
 }
 
 #li_input input
 {
 	width:95%;
 	margin-left:2%;
+	margin-top:3%;
 }
 
 #panel_mensajes ul
@@ -147,6 +191,11 @@ footer
 		
 }
 
+#panel_mensajes .mensaje
+{
+	font-size:100%		
+}
+
 #panel_mensajes .mensaje_propio
 {
 	/*border:1px solid blue;*/
@@ -172,6 +221,13 @@ footer
 	width:95%;
 	margin-left:0;	
 	display:none;
+}
+
+#panel_mensajes .negrita
+{
+	font-size:110%;
+	font-weight:bold;	
+	
 }
 
 .limpiarfloat

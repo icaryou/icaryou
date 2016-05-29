@@ -401,7 +401,13 @@ button:focus {outline:0;}
 	width: 80%;
 }
 
-.botonBusqueda{
+
+#sobre_login
+{
+	/*visibility:hidden;*/
+}
+.botonBusqueda
+{
 	display:block;
 	margin-top:20px;
 }

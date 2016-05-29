@@ -6,7 +6,13 @@
 <!--aQUI PINTAMOS LAS CONVERSACIONES ACTIVAS DEL USUARIO-->
 <div id="contenedor_paneles">
 
-
+	<div id="suplemento_conversaciones">
+		
+	</div>
+	
+	<div id="suplemento_mensajes">
+		
+	</div>
 
 	<div id="panel_conversaciones">
 		<h2 id="titulo_conversaciones">Conversaciones</h2>
