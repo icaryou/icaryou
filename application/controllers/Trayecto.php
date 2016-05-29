@@ -102,14 +102,17 @@ class Trayecto extends CI_Controller
 	{
 		$trayecto['poblacionOrigen']=$this->input->post('poblacionOrigen');
 		$trayecto['poblacionDestino']=$this->input->post('poblacionDestino');
-		
-		$this->load->Model('Trayecto_Model');
-		$trayectosEncontrados=$this->Trayecto_Model->filtrarTrayecto($trayecto);
-		
-		$datos['camposBusqueda']=$trayecto;
-		$datos['trayectosEncontrados']=$trayectosEncontrados;
-		$datos['css']="buscarTrayectoMiniPost";
-		enmarcar($this, "trayecto/buscarTrayectoMiniPost",$datos);//TODO
+		if(($trayecto['poblacionOrigen']==null) ||($trayecto['poblacionDestino']==null)){
+			enmarcar($this, "index.php");
+		}else{
+			$this->load->Model('Trayecto_Model');
+			$trayectosEncontrados=$this->Trayecto_Model->filtrarTrayecto($trayecto);
+			
+			$datos['camposBusqueda']=$trayecto;
+			$datos['trayectosEncontrados']=$trayectosEncontrados;
+			$datos['css']="buscarTrayectoMiniPost";
+			enmarcar($this, "trayecto/buscarTrayectoMiniPost",$datos);//TODO
+		}	
 	}
 	
 	public function filtrarTrayectoPost()
