@@ -44,8 +44,9 @@
 										</li>
 									
 										<li class="dropdown"><a href=""
-										class="dropdown-toggle" data-toggle="dropdown"><?php echo $this->session->userdata('nombre')." ".$this->session->userdata('apellidos') ?> <b
-											class="caret"></b></a>
+										class="dropdown-toggle" data-toggle="dropdown"><?php echo $this->session->userdata('nombre')." ".$this->session->userdata('apellidos') ?> 
+										<img id="sobre_login" width="15px" src="<?php echo base_url()?>/assets/img/sobre.png"/>
+										<b class="caret"></b></a>
 										<ul class="dropdown-menu">
 											<li><a href="<?php echo base_url()?>usuario/mostrarPerfilPropio">Mi Perfil</a></li>
 											<li><a href="<?php echo base_url()?>usuario/listarTrayectosPropios">Mis trayectos</a></li>

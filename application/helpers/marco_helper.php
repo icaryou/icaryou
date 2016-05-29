@@ -15,9 +15,21 @@ function enmarcar($controlador,$vista,$datos=[]) {
 	*/
 	$controlador->load->view('templates/head');
 	
-	if(isset($datos['css'])){
-		$controlador->load->view('templates/masCSS',$datos);
+	
+	//CSS PARA GROCERY CRUD
+	if(isset($datos['css_files']))
+	{
+		foreach($datos['css_files'] as $file)
+		{
+			echo "<link type=\"text/css\" rel=\"".$file."/>";
+			
+		}
 	}
+	
+	if(isset($datos['css']))
+	{
+		$controlador->load->view('templates/masCSS',$datos);
+	}	
 	
 	//SI HACE LA PETICION CON CONTROLADOR EN LA URL
 	
@@ -25,6 +37,17 @@ function enmarcar($controlador,$vista,$datos=[]) {
 		$datos['js']=substr(explode("/",$vista)[1], 0, -4);
 	}else{
 		$datos['js']=substr($vista, 0, -4);
+	}
+	
+	//JS PARA GROCERY CRUD
+	
+	if(isset($datos['js_files']))
+	{
+		foreach($datos['js_files'] as $file)
+		{
+			echo "<script src=\"".$file."\"></script>";
+				
+		}
 	}
 	
 	

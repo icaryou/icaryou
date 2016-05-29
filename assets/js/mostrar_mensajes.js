@@ -9,17 +9,35 @@ var emple={"employees":[
 */
 //HASTA QUE NO SE CARGA EL DOCUMENTO NO CARGA ESTAS FUNCIONES
 $(document).ready(function() {	
+	
+	
+	$( window ).resize(function() {
+var altura=$(document).height();		
 		
+		$('body').css('height',$(document).height()+"px");
+		$('#header-row').css('height',$(document).height()*0.10+"px");
+		
+		var altura_contenedor=altura*0.90;
+		
+		$('#contenedor_mensajeria').css('height',altura_contenedor+'px');
+		$('footer').css('height',$(document).height()*0.10+"px");	
+		
+		$('footer').css('display','none');
+	});
+	
+	
 	//PONER ALTURA DINAMICAMENTE
 		var altura=$(document).height();		
 		
-		$('body').css('height',$(document).height()+"px")
+		$('body').css('height',$(document).height()+"px");
 		$('#header-row').css('height',$(document).height()*0.10+"px");
 		
-		var altura_contenedor=altura*0.80-90;
+		var altura_contenedor=altura*0.90;
 		
-		$('#contenedor_mensajeria').css('height',altura_contenedor+'px')
-		$('footer').css('height',$(document).height()*0.10+"px")		
+		$('#contenedor_mensajeria').css('height',altura_contenedor+'px');
+		$('footer').css('height',$(document).height()*0.10+"px");	
+		
+		$('footer').css('display','none');
 	
 	
 	
@@ -74,7 +92,7 @@ $(document).ready(function() {
 	setInterval(function()
     		{ 		
     			actualizar_conversaciones(); 
-    		}, 3000);
+    		}, 1000);
 	
 	//AÑADIMOS EVENTO CLICK AL BOTON abrir chat
 	
@@ -109,7 +127,7 @@ function abrir_emergente()
 
 function abrir_chat(id_otro_usuario)
 {
-	  	
+	flag_mensajes_nuevos=false;	
 	
 	if((id_otro_usuario!=$('#panel_mensajes ul').attr('id'))||$('#panel_mensajes ul').attr('id')==0)
 	{
@@ -127,6 +145,7 @@ function abrir_chat(id_otro_usuario)
     	$('#panel_conversaciones').find('li').css('background','transparent');
     	
     	$('#'+id_otro_usuario).parent().css('background','#FFF');
+    	$('#'+id_otro_usuario).parent().addClass('conv_activa');
     	
 		//alert("abrimos"+id_otro_usuario+"--"+$('#conv_activa').val());
 		//EN DATA EL PRIMER DATO ES EL NOMBRE EN LADO SERVIDOR DE LA VARIABLE, EL SEGUNDO EN LADO CLIENTE    	
@@ -156,6 +175,10 @@ function abrir_chat(id_otro_usuario)
     	    }); 
 	}
 }
+
+var flag_mensajes_nuevos=false;
+
+var ultima_fecha_pintada;
 
 //PINTA LOS MENSAJES, COMO SEGUNDO PARAMETRO RECIBE TRUE O FALSE PARA BORRAR LOS QUE YA HAY, 
 //ES DECIR AL ABRIR LA CONVERSACION SI HUBIERA ALGO SE BORRA, Y ASI SOLO PINTAMOS EL INPUT UNA VEZ(ES MEJORABLE)
@@ -188,21 +211,37 @@ function pintar_chat(mensajes_cliente,borrar_mensajes)
 	*/
 		for(i=0;i<mensajes_cliente.length;i++)
 		{	
+			if(mensajes_cliente[i].sw_no_leido==1 && mensajes_cliente[i].remitente==($('#otro_usuario').val()) && !flag_mensajes_nuevos)
+			{
+				var flag_nuevos=$("<li class='mensaje mensaje_fecha'>Mensajes nuevos</li>");
+				flag_nuevos.appendTo($('#panel_mensajes ul'));
+				flag_mensajes_nuevos=true;
+			}
+			
 			var numero_mensajes_pintados=$('#panel_mensajes ul li').length;
 			
 			var nueva_fecha;
 			
-			if(numero_mensajes_pintados==0)
+			if(numero_mensajes_pintados==0)//primer mensaje fecha
 			{
+				ultima_fecha_pintada=mensajes_cliente[i].hora.split(' ')[0];
 				
-				nueva_fecha=$("<li class='mensaje mensaje_fecha'>"+mensajes_cliente[i].hora.split(' ')[0]+"</li>");
+				var fecha_troceada=mensajes_cliente[i].hora.split(' ')[0].split('-');
+				var fecha_formato_europeo=fecha_troceada[2]+"-"+fecha_troceada[1]+"-"+fecha_troceada[0];
+				
+				nueva_fecha=$("<li class='mensaje mensaje_fecha'>"+fecha_formato_europeo+"</li>");
 				nueva_fecha.appendTo($('#panel_mensajes ul'));
 			}
 			else
 			{
-				if($('.mensaje_fecha').last().html()!=mensajes_cliente[i].hora.split(' ')[0])
+				if(ultima_fecha_pintada!=mensajes_cliente[i].hora.split(' ')[0])//nueva fecha pintar
 				{
-					nueva_fecha=$("<li class='mensaje mensaje_fecha'>"+mensajes_cliente[i].hora.split(' ')[0]+"</li>");
+					ultima_fecha_pintada=mensajes_cliente[i].hora.split(' ')[0];
+					
+					var fecha_troceada=mensajes_cliente[i].hora.split(' ')[0].split('-');
+					var fecha_formato_europeo=fecha_troceada[2]+"-"+fecha_troceada[1]+"-"+fecha_troceada[0];
+					
+					nueva_fecha=$("<li class='mensaje mensaje_fecha'>"+fecha_formato_europeo+"</li>");
 					nueva_fecha.appendTo($('#panel_mensajes ul'));
 				}
 			}
@@ -213,7 +252,15 @@ function pintar_chat(mensajes_cliente,borrar_mensajes)
 			{
 				if(mensajes_cliente[i].remitente==($('#otro_usuario').val()))
 				{
-					nueva_linea=$("<li id="+mensajes_cliente[i].id+" class='mensaje mensaje_contrario'>"+mensajes_cliente[i].texto+"</li>");
+					if(mensajes_cliente[i].sw_no_leido==1)
+					{
+						nueva_linea=$("<li id="+mensajes_cliente[i].id+" class='mensaje mensaje_contrario negrita'>"+mensajes_cliente[i].texto+"</li>");
+					}
+					else
+					{
+						nueva_linea=$("<li id="+mensajes_cliente[i].id+" class='mensaje mensaje_contrario'>"+mensajes_cliente[i].texto+"</li>");
+					}
+					//CONTINUAR PONIENDO MENSAJES NEGRITA NUEVOS
 				}
 				else
 				{
@@ -285,7 +332,7 @@ function actualizar_conversaciones()
 	       dataType: "json",
 	       success: function(respuesta) {
 	    	   var conversaciones_activas=respuesta;
-	    	   //pintar_conversaciones(conversaciones_activas);
+	    	   pintar_conversaciones(conversaciones_activas);
 	       }
 	    }); 
 	
@@ -302,7 +349,34 @@ function pintar_conversaciones(conversaciones_activas)
 	{	
 		//alert(conversaciones_activas[i].usuario_chat);
 		
-		nueva_linea=$('<li><a id='+conversaciones_activas[i].usuario_chat+' class="abrir_chat">'+conversaciones_activas[i].usuario_chat_nombre+'</a></li>');
+		var nueva_linea;
+		
+		if(conversaciones_activas[i].conversacion_id==$('#conv_activa').val())
+		{
+			if(conversaciones_activas[i].no_leidos>0)
+			{
+				nueva_linea=$('<li class="conv_activa"><a id='+conversaciones_activas[i].usuario_chat+' class="abrir_chat">'+conversaciones_activas[i].usuario_chat_nombre+'</a><img src="'+BASE_URL+'/assets/img/sobre.png"/></li>');
+			}
+			else
+			{
+				nueva_linea=$('<li class="conv_activa"><a id='+conversaciones_activas[i].usuario_chat+' class="abrir_chat">'+conversaciones_activas[i].usuario_chat_nombre+'</a></li>');
+			}
+		}
+		else
+		{
+			if(conversaciones_activas[i].no_leidos>0)
+			{
+				nueva_linea=$('<li><a id='+conversaciones_activas[i].usuario_chat+' class="abrir_chat">'+conversaciones_activas[i].usuario_chat_nombre+'</a><img src="'+BASE_URL+'/assets/img/sobre.png"/></li>');
+			}
+			else
+			{
+				nueva_linea=$('<li><a id='+conversaciones_activas[i].usuario_chat+' class="abrir_chat">'+conversaciones_activas[i].usuario_chat_nombre+'</a></li>');
+			}
+		}
+		
+		
+		
+		
 		
 		$('#panel_conversaciones ul').append(nueva_linea);
 		/*
@@ -340,12 +414,27 @@ function enviarMensaje()
 	var id_otro_usuario_mensaje=$('#panel_mensajes ul').attr('id');
 	var texto=$('#input_mensajes').val();
 	
+	var cancelar_envio=false;
+	
 	if(texto.length>140)
 	{
 		alert("La longitud máxima de mensaje es 140 caracteres.");
+		cancelar_envio=true;
 	}
 	
-	if(texto!=''||texto.length>140)
+	if(texto=='')
+	{
+		cancelar_envio=true;
+	}
+	
+	if($('#conv_activa').val()==0)
+	{
+		alert("No tienes ninguna conversación seleccionada.");
+		cancelar_envio=true;
+	}
+	
+	
+	if(!cancelar_envio)
 	{
 		$.ajax({        
 		       type: "POST",

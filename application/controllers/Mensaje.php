@@ -14,6 +14,10 @@ class Mensaje extends CI_Controller
 		//$this->load->library('email');
 	}
 	
+	public function comprobar_mensaje_nuevos_login()
+	{
+	}
+	
 	//FUNCION ENVIAR MENSAJE DESDE PERFIL OTRO USUARIO, SI TIENE CONVERSACION ACTIVA REENVIAMOS A LAS CONVERSACIONES, SI NO ABRIMOS UNA VENTANA PARA INICIAR UN CHAT
 	public function comprobar_conversacion_mensaje_inicial($id_otro_usuario)
 	{
