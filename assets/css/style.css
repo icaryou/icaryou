@@ -411,10 +411,28 @@ button:focus {outline:0;}
 	display:block;
 	margin-top:20px;
 }
-
+.imgBusqueda1{
+	margin-left:37px;
+}
 .imgBusqueda{
 	width:60px;
 	height:60px;
+	margin-right:10px;
+	margin-bottom:30px;
+	float:left;
+	display:inline-block;
+}
+
+.nombreViajero{
+	text-align: center;
+}
+.usuArriba{
+	height:19%;
+	/*background-color:red;*/
+}
+
+.usuAbajo{
+	height:78%;
 }
 
 /* BOTONES PAGINATOR*/
