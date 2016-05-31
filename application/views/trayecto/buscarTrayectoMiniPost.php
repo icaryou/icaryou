@@ -157,8 +157,10 @@
 				</h2>
 				<div class="separadorHori"></div>
 				<!--  MEJORANDO MAQUETACION -->
+				<?php $contadorTrayectos=0;?>
 				<?php foreach ($trayectosEncontrados as $trayectoAgrupado):?>
-				<table class="elementoBusqueda span8 bottom-bufferElements ">
+					<?php $contadorTrayectos++;?>
+				<table class="elementoBusqueda span8 bottom-bufferElements">
 				<tr>
 					<td class="paddignCelda">
 						<span class="diasBusqueda"><?php echo $trayectoAgrupado[0]['dias']?></span>
@@ -193,11 +195,26 @@
 								<?php endif;?>
 					</td>
 					<td>
-						<h3>Usuarios</h3>
+					<div class="usuArriba">
+						<p class="usuTitulo">Usuarios</hp>
+					</div>
+					<div id="<?php echo "trayecto".$contadorTrayectos;?>" class="usuAbajo">
+						<?php $contadorUsuarios=0;?>
 						<?php foreach ($trayectoAgrupado as $usu):?>
-								<p><a href="<?php echo base_url('usuario/mostrarPerfilUsuario/'.$usu["usuarioId"])?>"><?php echo $usu["nombre"]." ".$usu["apellidos"]?></a></p>
-			
-						<?php endforeach;?>
+							<?php $contadorUsuarios++;?>
+							<div class="UsuBusqueda">
+								<img class="imgBusqueda" src="<?php echo base_url().$usu["foto"]?>"/>
+								<p class="nombreViajero"><a href="<?php echo base_url('usuario/mostrarPerfilUsuario/'.$usu["usuarioId"])?>"><?php echo $usu["nombre"]." ".$usu["apellidos"]?></a></p>
+							</div>
+			 			<?php endforeach;?>
+			 			<?php for($i=0;$i<(5-$contadorUsuarios);$i++):?>
+			 				<div class="UsuBusqueda">
+								<img src="<?php echo base_url()."assets/img/profile/avatar.png"?>"/>
+								<p class="nombreViajero">Libre</p>
+							</div>
+			 			<?php endfor;?>
+					</div>
+
 					</td>
 				</tr>
 				</table>
