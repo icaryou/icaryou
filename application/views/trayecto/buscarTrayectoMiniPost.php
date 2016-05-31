@@ -196,24 +196,19 @@
 					</td>
 					<td>
 					<div class="usuArriba">
-						<h3>Usuarios</h3>
+						<p class="usuTitulo">Usuarios</hp>
 					</div>
 					<div id="<?php echo "trayecto".$contadorTrayectos;?>" class="usuAbajo">
-						<div class="imgBusqueda imgBusqueda1"><img src="<?php echo base_url()."assets/img/profile/avatar.png"?>"/><p class="nombreViajero">Libre</p></div>
-						<div class="imgBusqueda"><img src="<?php echo base_url()."assets/img/profile/avatar.png"?>"/><p class="nombreViajero">Libre</p></div>
-						<div class="imgBusqueda"><img src="<?php echo base_url()."assets/img/profile/avatar.png"?>"/><p class="nombreViajero">Libre</p></div>
-						<div class="imgBusqueda"><img src="<?php echo base_url()."assets/img/profile/avatar.png"?>"/><p class="nombreViajero">Libre</p></div>
-						<div class="imgBusqueda"><img src="<?php echo base_url()."assets/img/profile/avatar.png"?>"/><p class="nombreViajero">Libre</p></div>
 						<?php $contadorUsuarios=0;?>
 						<?php foreach ($trayectoAgrupado as $usu):?>
 							<?php $contadorUsuarios++;?>
-							<div class="imgBusqueda">
-								<img src="<?php echo base_url()."assets/img/profile/avatar.png"?>"/>
+							<div class="UsuBusqueda">
+								<img class="imgBusqueda" src="<?php echo base_url().$usu["foto"]?>"/>
 								<p class="nombreViajero"><a href="<?php echo base_url('usuario/mostrarPerfilUsuario/'.$usu["usuarioId"])?>"><?php echo $usu["nombre"]." ".$usu["apellidos"]?></a></p>
 							</div>
 			 			<?php endforeach;?>
 			 			<?php for($i=0;$i<(5-$contadorUsuarios);$i++):?>
-			 				<div class="imgBusqueda">
+			 				<div class="UsuBusqueda">
 								<img src="<?php echo base_url()."assets/img/profile/avatar.png"?>"/>
 								<p class="nombreViajero">Libre</p>
 							</div>

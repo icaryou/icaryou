@@ -17,7 +17,7 @@
 						<div class="span6">
 
 							<div class="carousel-caption">
-								<h1>Comparte viajes Diarios</h1>
+								<h1>Comparte viajes diarios</h1>
 								<p class="lead">Crea o encuentra el trayecto que mejor se adapte
 									a tus necesidades diarias. Reg&iacute;strate y encuentra a tu
 									compa&ntilde;ero de viaje.</p>
