@@ -16,6 +16,8 @@ class Mensaje extends CI_Controller
 	
 	public function comprobar_mensaje_nuevos_login()
 	{
+		$usuario=$this->session->userdata('id');
+		echo $this->Mensaje_model->comprobar_existen_mensajes_nuevos($usuario);
 	}
 	
 	//FUNCION ENVIAR MENSAJE DESDE PERFIL OTRO USUARIO, SI TIENE CONVERSACION ACTIVA REENVIAMOS A LAS CONVERSACIONES, SI NO ABRIMOS UNA VENTANA PARA INICIAR UN CHAT

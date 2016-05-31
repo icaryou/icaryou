@@ -11,6 +11,35 @@ class Mensaje_model extends RedBean_SimpleModel //CI_Model//
 		return $id_conversacion;
 	}
 	
+	public function comprobar_existen_mensajes_nuevos($usuario_id)
+	{
+		//SELECCIONA LOS ID'S DE CONVERSACION EN LOS QUE ESTE EL USUARIO
+		$id_buscar_conversacion=R::getAll("SELECT id
+				FROM conversacion c
+				WHERE c.usuario1_id=$usuario_id OR c.usuario2_id=$usuario_id");
+		
+		
+		$conversaciones="(";
+		$una_vez=true;
+		
+		foreach ($id_buscar_conversacion as $fila)
+		{
+			if(!$una_vez)
+			{
+				$conversaciones.=",";
+			}
+			$una_vez=false;
+			$conversaciones.=$fila['id'];
+		}
+		$conversaciones.=")";
+		
+		$cantidad_no_leidos_conversacion=R::getAll("SELECT count(*) contador
+				FROM mensaje 
+				WHERE remitente!=$usuario_id AND sw_no_leido=1 AND conversacion_id IN $conversaciones");
+		
+		return $cantidad_no_leidos_conversacion[0]['contador'];
+	}
+	
 	
 	//BUSCA LAS CONVERSACIONES ACTIVAS QUE TIENE EL USUARIO
 	public function buscar_conversaciones($usuario_id)

@@ -82,6 +82,8 @@ footer
 	/*border:1px solid green;*/
 }
 
+
+
 .conv_activa
 {
 	background-color:#FFF;	
@@ -110,9 +112,10 @@ footer
 	left:10%;
 }
 
+/*sobre*/
 #panel_conversaciones ul li img
 {
-	width:8%;
+	width:6%;
 	position: absolute;
 	top:20%;
 	right:10%;
@@ -177,7 +180,15 @@ footer
 	padding:0.5% 2%;
 	max-width:50%;
 	border-radius:5px;
+	position:relative;	
 	
+}
+
+.hora_peque
+{
+	font-size:11px;
+	font-style:italic;
+	margin-right:15px;
 }
 
 #panel_mensajes .mensaje_fecha
@@ -188,6 +199,12 @@ footer
 	width:10%;
 	margin-left:40%;
 	background: #d3d3d3;
+		
+}
+
+#panel_mensajes .mensajes_nuevos
+{
+	width:15%;
 		
 }
 

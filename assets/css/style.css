@@ -404,7 +404,7 @@ button:focus {outline:0;}
 
 #sobre_login
 {
-	/*visibility:hidden;*/
+	visibility:hidden;
 }
 .botonBusqueda
 {

@@ -88,7 +88,7 @@ var altura=$(document).height();
 	}
 	
 	
-	
+	actualizar_conversaciones();
 	setInterval(function()
     		{ 		
     			actualizar_conversaciones(); 
@@ -211,9 +211,10 @@ function pintar_chat(mensajes_cliente,borrar_mensajes)
 	*/
 		for(i=0;i<mensajes_cliente.length;i++)
 		{	
+			//PRIMER MENSAJE NO LEIDO(PONEMOS LEYENDA DE MENSAJES NO LEIDOS)
 			if(mensajes_cliente[i].sw_no_leido==1 && mensajes_cliente[i].remitente==($('#otro_usuario').val()) && !flag_mensajes_nuevos)
 			{
-				var flag_nuevos=$("<li class='mensaje mensaje_fecha'>Mensajes nuevos</li>");
+				var flag_nuevos=$("<li class='mensaje mensaje_fecha mensajes_nuevos'>Mensajes nuevos</li>");
 				flag_nuevos.appendTo($('#panel_mensajes ul'));
 				flag_mensajes_nuevos=true;
 			}
@@ -222,6 +223,7 @@ function pintar_chat(mensajes_cliente,borrar_mensajes)
 			
 			var nueva_fecha;
 			
+			//primer mensaje fecha
 			if(numero_mensajes_pintados==0)//primer mensaje fecha
 			{
 				ultima_fecha_pintada=mensajes_cliente[i].hora.split(' ')[0];
@@ -234,6 +236,7 @@ function pintar_chat(mensajes_cliente,borrar_mensajes)
 			}
 			else
 			{
+				//HEMOS CAMBIADO DE DIA(PINTAMOS LA FECHA)
 				if(ultima_fecha_pintada!=mensajes_cliente[i].hora.split(' ')[0])//nueva fecha pintar
 				{
 					ultima_fecha_pintada=mensajes_cliente[i].hora.split(' ')[0];
@@ -248,31 +251,45 @@ function pintar_chat(mensajes_cliente,borrar_mensajes)
 			
 			var nueva_linea;
 			
+			//HACEMOS ESTO PARA ASEGURAR QUE NO DUPLIQUE UN MENSAJE
 			if(mensajes_cliente[i].id!=$('#panel_mensajes ul .mensaje').last().attr('id'))
 			{
+				//EL REMITENTE ES EL OTRO USUARIO
 				if(mensajes_cliente[i].remitente==($('#otro_usuario').val()))
 				{
+					
+					
 					if(mensajes_cliente[i].sw_no_leido==1)
 					{
-						nueva_linea=$("<li id="+mensajes_cliente[i].id+" class='mensaje mensaje_contrario negrita'>"+mensajes_cliente[i].texto+"</li>");
+						var hora_troceada=mensajes_cliente[i].hora.split(' ')[1].split(':');
+						var hora=hora_troceada[0]+":"+hora_troceada[1];
+						
+						nueva_linea=$("<li id="+mensajes_cliente[i].id+" class='mensaje mensaje_contrario negrita'>"+"<span class=\"hora_peque\">("+hora+")</span>"+mensajes_cliente[i].texto+"</li>");
 					}
 					else
 					{
-						nueva_linea=$("<li id="+mensajes_cliente[i].id+" class='mensaje mensaje_contrario'>"+mensajes_cliente[i].texto+"</li>");
+						var hora_troceada=mensajes_cliente[i].hora.split(' ')[1].split(':');
+						var hora=hora_troceada[0]+":"+hora_troceada[1];
+					
+						nueva_linea=$("<li id="+mensajes_cliente[i].id+" class='mensaje mensaje_contrario'>"+"<span class=\"hora_peque\">("+hora+")</span>"+mensajes_cliente[i].texto+"</li>");
 					}
 					//CONTINUAR PONIENDO MENSAJES NEGRITA NUEVOS
 				}
-				else
+				else//EL REMITENTE ES EL MISMO
 				{
-					nueva_linea=$("<li id="+mensajes_cliente[i].id+" class='mensaje mensaje_propio'>"+mensajes_cliente[i].texto+"</li>");
+					var hora_troceada=mensajes_cliente[i].hora.split(' ')[1].split(':');
+					var hora=hora_troceada[0]+":"+hora_troceada[1];
+					
+					nueva_linea=$("<li id="+mensajes_cliente[i].id+" class='mensaje mensaje_propio'>"+"<span class=\"hora_peque\">("+hora+")</span>"+mensajes_cliente[i].texto+"</li>");
 				}	
 			}	
 				//nueva_linea.insertBefore($('#li_input'));//NEW era li_input		
 				nueva_linea.appendTo($('#panel_mensajes ul'));
 		}
+		//MOVEMOS HACIA ABAJO EL SCROLL
 		if(mensajes_cliente.length>0)
 		{
-			$("#panel_mensajes").animate({ scrollTop: '1000px' }, 1);
+			$("#panel_mensajes").animate({ scrollTop: '99999px' }, 1);
 		}
 		
 		
@@ -351,12 +368,15 @@ function pintar_conversaciones(conversaciones_activas)
 		
 		var nueva_linea;
 		
+		//CONVERSACION ACTIVA
 		if(conversaciones_activas[i].conversacion_id==$('#conv_activa').val())
 		{
+			//TIENE MENSAJES NO LEIDOS
 			if(conversaciones_activas[i].no_leidos>0)
 			{
-				nueva_linea=$('<li class="conv_activa"><a id='+conversaciones_activas[i].usuario_chat+' class="abrir_chat">'+conversaciones_activas[i].usuario_chat_nombre+'</a><img src="'+BASE_URL+'/assets/img/sobre.png"/></li>');
+				nueva_linea=$('<li class="conv_activa"><a id='+conversaciones_activas[i].usuario_chat+' class="abrir_chat">'+conversaciones_activas[i].usuario_chat_nombre+'</a><img class="sobre_conversaciones" src="'+BASE_URL+'/assets/img/sobre.png"/></li>');
 			}
+			//NO TIENE MENSAJES NO LEIDOS
 			else
 			{
 				nueva_linea=$('<li class="conv_activa"><a id='+conversaciones_activas[i].usuario_chat+' class="abrir_chat">'+conversaciones_activas[i].usuario_chat_nombre+'</a></li>');
@@ -364,10 +384,12 @@ function pintar_conversaciones(conversaciones_activas)
 		}
 		else
 		{
+			//TIENE MENSAJES NO LEIDOS
 			if(conversaciones_activas[i].no_leidos>0)
 			{
-				nueva_linea=$('<li><a id='+conversaciones_activas[i].usuario_chat+' class="abrir_chat">'+conversaciones_activas[i].usuario_chat_nombre+'</a><img src="'+BASE_URL+'/assets/img/sobre.png"/></li>');
+				nueva_linea=$('<li><a id='+conversaciones_activas[i].usuario_chat+' class="abrir_chat">'+conversaciones_activas[i].usuario_chat_nombre+'</a><img class="sobre_conversaciones" src="'+BASE_URL+'/assets/img/sobre.png"/></li>');
 			}
+			//NO TIENE MENSAJES NO LEIDOS
 			else
 			{
 				nueva_linea=$('<li><a id='+conversaciones_activas[i].usuario_chat+' class="abrir_chat">'+conversaciones_activas[i].usuario_chat_nombre+'</a></li>');

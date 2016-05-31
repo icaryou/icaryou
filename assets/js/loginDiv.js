@@ -113,7 +113,34 @@ $( document ).ready(function()
                 },           
             } 
         });
+         //llamamos a la funcion una vez y creamos un intervalo
+        comprobar_mensajes_no_leidos();
+        setInterval(function()
+        		{ 		
+        			comprobar_mensajes_no_leidos(); 
+        		}, 500);
         
 	});
-        
-   
+  
+//funcion que comprueba si hay mensajes nuevos y pone el icono en el login
+function comprobar_mensajes_no_leidos()
+{
+	$.ajax({        
+	       type: "POST",
+	       url: BASE_URL+"mensaje/comprobar_mensaje_nuevos_login",
+	       //data: { id_conversacion : id_conversacion,id_ultimo_mensaje:id_ultimo_mensaje},
+	       success: function(respuesta) 
+	       {
+	    	   if((Number)(respuesta)>0)
+	    	   {
+	    		   $('#sobre_login').css('visibility','visible');
+	    	   }
+	    	   else
+	    	   {
+	    		   $('#sobre_login').css('visibility','hidden');
+	    	   }
+	       }
+	    }); 
+}  
+
+
