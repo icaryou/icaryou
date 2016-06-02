@@ -221,7 +221,7 @@
 				<?php endforeach;?>
 				<!--  AQUI ACABA LA MEJORA -->
 				<br/>
-				<div class="pagination-page span3 bottom-bufferElements "></div>	
+				<div class="pagination-page span3 bottom-bufferElements left-buffer_paginator"></div>	
 				
 			<?php endif;?>
 			<p><?=validation_errors();?></p>

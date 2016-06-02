@@ -28,15 +28,15 @@ class Trayecto extends CI_Controller
 			
 			//reglas de validacion //TODO
 			
-			$this->form_validation->set_rules('poblacionDestino', 'Población destino', 'required|trim');
-			$this->form_validation->set_rules('poblacionOrigen', 'Población origen', 'required|trim');
-			$this->form_validation->set_rules('cpOrigen', 'CP origen', 'required|exact_length[5]|is_natural|less_than[53000]|trim');
-			$this->form_validation->set_rules('cpDestino', 'CP destino', 'required|exact_length[5]|is_natural|less_than[53000]|trim');
-			$this->form_validation->set_rules('horaLlegadaDesde', 'Hora llegada desde', 'required|trim|callback__horaRegex|trim');
-			$this->form_validation->set_rules('horaLlegadaHasta', 'Hora llegada hasta', 'required|trim|callback__horaRegex|trim');
-			$this->form_validation->set_rules('horaRetornoDesde', 'Hora retorno desde ', 'required|trim|callback__horaRegex|trim');
-			$this->form_validation->set_rules('horaRetornoHasta', 'Hora retorno hasta', 'required|trim|callback__horaRegex|trim');
-			$this->form_validation->set_rules('dias[]', 'dias', 'required');
+			$this->form_validation->set_rules('poblacionDestino', 'Población destino', 'required');
+			$this->form_validation->set_rules('poblacionOrigen', 'Población origen', 'required');
+			$this->form_validation->set_rules('cpOrigen', 'CP origen', 'exact_length[5]|is_natural|less_than[53000]|trim');
+			$this->form_validation->set_rules('cpDestino', 'CP destino', 'exact_length[5]|is_natural|less_than[53000]|trim');
+			$this->form_validation->set_rules('horaLlegadaDesde', 'Hora llegada desde');
+			$this->form_validation->set_rules('horaLlegadaHasta', 'Hora llegada hasta');
+			$this->form_validation->set_rules('horaRetornoDesde', 'Hora retorno desde');
+			$this->form_validation->set_rules('horaRetornoHasta', 'Hora retorno hasta');
+			$this->form_validation->set_rules('dias[]', 'dias');
 			 
 			//Mensajes
 			// %s es el nombre del campo que ha fallado
@@ -52,7 +52,7 @@ class Trayecto extends CI_Controller
 			
 			
 			 //Lo he puesto igual a false para que no falle por las validaciones
-			if($this->form_validation->run()==false)//Si la validación es correcta
+			if($this->form_validation->run()!=false)//Si la validación es correcta
 			{
 				//RECOGIDA DE DATOS
 				$horaSalidaRango=explode(" - ",$this->input->post('horaSalidaRango'));

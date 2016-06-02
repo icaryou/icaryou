@@ -47,8 +47,7 @@
                      }
                 },
                 "poblacionOrigen": {
-                    required: true,
-                    lettersonly: true
+                    required: true
                     //PARA AÑADIR ESPRESION REGULAR PERSONAL    regx:/^[AB]{3}$/
                 },
                 "cpDestino": {
@@ -59,8 +58,7 @@
                     max:52999
                 },
                 "poblacionDestino": {
-                    required: true,
-                    lettersonly: true
+                    required: true
                     //PARA AÑADIR ESPRESION REGULAR PERSONAL    regx:/^[AB]{3}$/
                 },
                 "horaLlegada": {

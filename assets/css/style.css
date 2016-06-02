@@ -246,9 +246,14 @@ margin-top:40px;
 .top-buffer10 { margin-top:10px; }
 .left-buffer { margin-left:20px; }
 .bottom-buffer { margin-bottom:-50px; }
+.bottom-buffer_titulo { margin-bottom:-15px; }
 .bottom-bufferElements { margin-bottom:20px; }
-.loginForm {overflow-x: hidden;
-display: inline-block;
+.left-buffer_paginator{
+	margin-left:40px !important; 
+}
+.loginForm {
+	overflow-x: hidden;
+	display: inline-block;
     margin-bottom: 0;
     vertical-align: middle;
     
@@ -323,22 +328,6 @@ display: inline-block;
     border: none;
 }
 button:focus {outline:0;}
-.numberCircle{
-	margin:0 auto;
-	 border-radius: 50%;
-    behavior: url(PIE.htc); /* remove if you don't care about IE8 */
-
-    width: 36px;
-    height: 36px;
-    padding: 8px;
-
-    background: #fff;
-    border: 2px solid #666;
-    color: #666;
-    text-align: center;
-
-    font: 32px Arial, sans-serif;
-}
 
 .imgBuscarTrayecto{
 	width:250px;
@@ -370,6 +359,12 @@ button:focus {outline:0;}
 	background-color:#b5ddd4;
 	border-radius:10px;
 }
+
+.elementoBusquedaAjenos{
+	background-color:#F8D6DE;
+	border-radius:10px;
+}
+
 .diasBusqueda{
 	font-size:24px;
 	font-style:italic;

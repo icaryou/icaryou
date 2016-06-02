@@ -1,4 +1,4 @@
-  #usuarios{
+/*  #usuarios{
       width: 200px;
       height: 200px;
       display:inline-block;
@@ -81,8 +81,8 @@
   }
   .numberCircle {
     border-radius: 50%;
-    behavior: url(PIE.htc); /* remove if you don't care about IE8 */
-
+    behavior: url(PIE.htc); *//* remove if you don't care about IE8 */
+/*
     width: 36px;
     height: 36px;
     padding: 8px;
@@ -98,4 +98,4 @@
 .divider{
     border-right:1px solid #aaa;
     height:70%;
-}
+}*/
