@@ -266,14 +266,18 @@ function llamarAjax(){
 		  .done(function(res) {
 	  		  //alert("cambio");
 		    $('#rellenarAjax').html(res);
+		    paginar();
 		 });
 }
-</script>
-<script>
+
 //PAGINACION
 //mind the slight change below, personal idea of best practices
 jQuery(function($) {
-    // consider adding an id to your table,
+ paginar();
+});
+
+function paginar(){
+	   // consider adding an id to your table,
     // just incase a second table ever enters the picture..?
     var items = $("table");
 
@@ -318,6 +322,6 @@ jQuery(function($) {
 
     // and we'll also call it to check right now!
     checkFragment();
-});
+}
 </script>
 
