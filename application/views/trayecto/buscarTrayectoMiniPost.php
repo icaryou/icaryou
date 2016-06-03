@@ -265,7 +265,7 @@
 	</div>
 	<!--Modal Body-->
 	<div class="modal-body">
-		<p class="modalTexto">Crea un perfil para conectar con otros usuarios.</p>
+		<p class="modalTexto">Entra o crea un perfil para conectar con otros usuarios.</p>
 	</div>
 	<!--/Modal Body-->
 </div>
@@ -372,9 +372,6 @@ function llamarAjaxAbandonar(b){
 function ventanaRegistrate(){
 
 	$('#registrate').modal('show');
-	$('#registrate').on('hidden', function () {
-		window.location="<?php echo base_url()?>usuario/registrarUsuario";
-	});
 
 }
 
