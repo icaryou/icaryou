@@ -188,8 +188,6 @@ class Trayecto extends CI_Controller
 	public function crearTrayectoPost()
 	{
 		
-		if($this->input->post("submitOk"))//se puede quitar el "submitok"
-		{
 			//reglas de validacion
 			$this->form_validation->set_rules('cpOrigen', 'CP origen', 'required|exact_length[5]|is_natural|less_than[53000]|trim');
 			$this->form_validation->set_rules('poblacionOrigen', 'Población origen', 'required|trim');
@@ -239,15 +237,18 @@ class Trayecto extends CI_Controller
              	
                 $this->load->Model('Trayecto_Model');
                 $trayectoCreado=$this->Trayecto_Model->crearTrayecto($trayecto,$usuario);
+                header("Location:".base_url());
+                
              }
              else
              {
                 $datos["mensaje"]="Validación incorrectaa";//TODO
+                
              }
               
              //$this->load->view("trayecto/crearTrayectoPost",$datos);
              //enmarcar($this, "trayecto/crearTrayectoPost",$datos);//TODO
-		}	
+			
 	}
 	
 	public function comprobarCP()//TODO

@@ -16,7 +16,12 @@
         }).validate({
         	submitHandler: function(form) {
         	    // do other things for a valid form
-        	    form.submit();},
+        		$('#trayectoCreado').modal('show');
+        		$('#trayectoCreado').on('hidden', function () {
+        			form.submit();
+        		});
+        	    
+        		},
         	error: function(label) {
         	     $(this).addClass("error");
         	   },
@@ -78,7 +83,8 @@
                 "plazas": {
                     required:true,
                     number:true,
-                    min: 2                    
+                    min: 2,
+                    max:5
                 },              
                 
             },
@@ -123,7 +129,8 @@
                 "plazas": {
                 	required: "Introduce un numero de plazas",
                     number:"Introduce un número correcto",
-                    min: "Número mínimo 2"
+                    min: "Número mínimo 2",
+                    max: "Número máximo 5"
                 },                 
             } 
         });

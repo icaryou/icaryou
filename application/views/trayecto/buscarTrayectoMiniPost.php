@@ -207,7 +207,7 @@
 									class="btn btn-primary btn-lg btn-block" tabindex="7" data-toggle="modal" href="#hasAbandonado">Abandonar</button>				 
 								<?php endif;?>
 					</td>
-					<td>
+					<td class="paddignCelda2">
 					<div class="usuArriba">
 						<p class="usuTitulo">Usuarios</p>
 					</div>
