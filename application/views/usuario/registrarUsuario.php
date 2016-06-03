@@ -28,26 +28,26 @@
 
 					<div class="form-group ">
 						<label>Nombre</label> <input type="text" name="nombre"
-							class="form-control" id="nombre" value="Mari"/>
+							class="form-control" id="nombre" value=""/>
 					</div>
 					<div class="form-group top-buffer">
 						<label>Apellido</label> <input type="text" name="apellidos"
-							class="form-control" id="apellidos" value="cuqui"/>
+							class="form-control" id="apellidos" value=""/>
 					</div>
 
 					<div class="form-group top-buffer">
 						<label>Email</label> <input type="text" name="email"
-							class="form-control" id="email" value="sadasd@sss.com"/>
+							class="form-control" id="email" value=""/>
 					</div>
 
 					<div class="form-group top-buffer">
 					<label>Contraseña</label>
-					<input type="password" name="passwdNormal" class="form-control" id="passwdNormal" value="aaaaaaaa"/>
+					<input type="password" name="passwdNormal" class="form-control" id="passwdNormal" value=""/>
 				</div>
 				
 				<div class="form-group top-buffer">
 					<label>Repetir contraseña</label>
-					<input type="password" name="passwordRepetido" class="form-control" id="passwordRepetido" value="aaaaaaaa"/>
+					<input type="password" name="passwordRepetido" class="form-control" id="passwordRepetido" value=""/>
 				</div>
 					<div class="form-group top-buffer">
 								<div class="input-append">
@@ -66,12 +66,12 @@
 					<div class="form-group">
 						<label>Fecha nacimiento</label> <input type="text"
 							placeholder="dd/mm/aaaa" name="fechaNac" class="form-control"
-							id="fechaNac" value="11/11/1999"/>
+							id="fechaNac" value=""/>
 					</div>
 
 					<div class="form-group top-buffer">
 						<label>C&oacute;digo Postal</label> <input type="text" name="cp"
-							class="form-control" id="cp" value="22222"/> <span
+							class="form-control" id="cp" value=""/> <span
 							class="field-validation-valid help-block"></span>
 					</div>
 

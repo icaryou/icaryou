@@ -39,20 +39,20 @@
 					<div class="form-group">
 						<label for="poblacionOrigen" class="labelFilter">Poblaci&oacute;n origen</label> <input type="text"
 							name="poblacionOrigen" class="form-control isstate" id="poblacionOrigen"
-							value="Amurrio">
+							value="">
 					</div>
 					<div class="form-group top-buffer">
 						<label for="cpOrigen" class="labelFilter">C&oacute;digo Postal origen</label> <input type="text"
-							name="cpOrigen" class="form-control" id="cpOrigen" value="22222">
+							name="cpOrigen" class="form-control" id="cpOrigen" value="">
 					</div>
 					<div class="form-group top-buffer">
 						<label for="poblacionDestino" class="labelFilter">Poblaci&oacute;n destino</label> <input type="text"
 							name="poblacionDestino" class="form-control isstate"
-							id="poblacionDestino" value="Aramaio">
+							id="poblacionDestino" value="">
 					</div>
 					<div class="form-group top-buffer">
 						<label for="cpDestino" class="labelFilter">C&oacute;digo Postal destino</label> <input type="text"
-							name="cpDestino" class="form-control" id="cpDestino" value="33333">
+							name="cpDestino" class="form-control" id="cpDestino" value="">
 					</div>
 			<!-- CHECKBOX -->
 					<div class="form-group top-buffer">
@@ -94,13 +94,13 @@
 				<div class="form-group">
 						<label for="horaLlegada" class="labelFilter">Hora de llegada a destino</label> <input type="text"
 							placeholder="HH:MM" name="horaLlegada" class="form-control"
-							id="horaLlegada" value="07:12">
+							id="horaLlegada" value="">
 					</div>
 
 					<div class="form-group top-buffer">
 						<label for="horaRetorno" class="labelFilter">Hora de regreso</label> <input type="text"
 							placeholder="HH:MM" name="horaRetorno" class="form-control"
-							id="horaRetorno" value="23:00">
+							id="horaRetorno" value="">
 					</div>
 					<div class="form-group top-buffer">
 						<label class="labelFilter">Comentarios</label>
@@ -109,7 +109,7 @@
 
 					<div class="form-group top-buffer">
 						<label for="plazas" class="labelFilter">Plazas m&aacute;ximas(incluido t&uacute;).</label>
-						<input type="text" name="plazas" class="form-control" id="plazas" value="3">
+						<input type="text" name="plazas" class="form-control" id="plazas" value="">
 					</div>
 					
 					

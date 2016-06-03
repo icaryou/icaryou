@@ -187,10 +187,11 @@
 									}
 								}?>
 								<!-- PINTAMOS YA LO HAS SOLICITADO SI ESTA A LA ESPERA DE SER ACEPTADO -->
+							<?php if($this->session->userdata('id')!=null):?>
 								<?php if(!$pintarAbandonar&&$pintarYaHasSolicitado):?>				
 									<p class="top-buffer10"><strong>Estás a la espera de ser aceptado.</strong></p>				 
 								<?php endif;?>
-							
+
 								<?php if(!$pintarAbandonar&&($trayectoAgrupado[0]['plazas']>$aceptados)&&!$pintarYaHasSolicitado):?>				
 								<button class="btn btn-primary btn-lg botonBusqueda" onclick="llamarAjaxSubmit(this)" data-button="<?php echo $trayectoAgrupado[0]['trayecto_id']?>"
 									class="btn btn-primary btn-lg btn-block" tabindex="7" data-toggle="modal" href="#teHasUnido">Unirse</button>				 
@@ -206,6 +207,13 @@
 								<button class="btn btn-primary btn-lg botonBusqueda" onclick="llamarAjaxAbandonar(this)" data-button="<?php echo $trayectoAgrupado[0]['trayecto_id']?>"
 									class="btn btn-primary btn-lg btn-block" tabindex="7" data-toggle="modal" href="#hasAbandonado">Abandonar</button>				 
 								<?php endif;?>
+							<?php endif;?>	
+							<?php if($this->session->userdata('id')==null):?>
+											
+								<button class="btn btn-primary btn-lg botonBusqueda" onclick="ventanaRegistrate()"
+									class="btn btn-primary btn-lg btn-block" tabindex="7">Unirse</button>				 
+								
+							<?php endif;?>
 					</td>
 					<td class="paddignCelda2">
 					<div class="usuArriba">
@@ -244,6 +252,22 @@
 		</div>
 </div>
 
+</div>
+<!--  VENTANA MODAL REGISTRATE -->
+
+<div class="modal hide fade in" id="registrate" aria-hidden="false">
+	<div class="modal-header">
+		<i class="icon-remove" data-dismiss="modal" aria-hidden="true"></i>
+		
+		<h4 class="modalTitle"><img class="tick" src="<?php echo base_url()."assets/img/tick.png";?>"/>¿Quieres unirte?</h4>
+		
+		
+	</div>
+	<!--Modal Body-->
+	<div class="modal-body">
+		<p class="modalTexto">Crea un perfil para conectar con otros usuarios.</p>
+	</div>
+	<!--/Modal Body-->
 </div>
 
 <!--  VENTANA MODAL UNIRSE -->
@@ -343,6 +367,15 @@ function llamarAjaxAbandonar(b){
 		  .done(function(res) {
 			  llamarAjax();
 		 });
+}
+
+function ventanaRegistrate(){
+
+	$('#registrate').modal('show');
+	$('#registrate').on('hidden', function () {
+		window.location="<?php echo base_url()?>usuario/registrarUsuario";
+	});
+
 }
 
 //PAGINACION
