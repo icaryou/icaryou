@@ -14,7 +14,11 @@ $( document ).ready(function()
         }).validate({
         	submitHandler: function(form) {
         	    // do other things for a valid form
-        	    form.submit();},
+        		$('#usuarioCreado').modal('show');
+        		$('#usuarioCreado').on('hidden', function () {
+        			form.submit();
+        		});    
+        	},
         	error: function(label) {
         	     $(this).addClass("error");
         	   },

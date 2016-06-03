@@ -28,26 +28,26 @@
 
 					<div class="form-group ">
 						<label>Nombre</label> <input type="text" name="nombre"
-							class="form-control" id="nombre"/>
+							class="form-control" id="nombre" value="Mari"/>
 					</div>
 					<div class="form-group top-buffer">
 						<label>Apellido</label> <input type="text" name="apellidos"
-							class="form-control" id="apellidos"/>
+							class="form-control" id="apellidos" value="cuqui"/>
 					</div>
 
 					<div class="form-group top-buffer">
 						<label>Email</label> <input type="text" name="email"
-							class="form-control" id="email"/>
+							class="form-control" id="email" value="sadasd@sss.com"/>
 					</div>
 
 					<div class="form-group top-buffer">
 					<label>Contraseña</label>
-					<input type="password" name="passwdNormal" class="form-control" id="passwdNormal"/>
+					<input type="password" name="passwdNormal" class="form-control" id="passwdNormal" value="aaaaaaaa"/>
 				</div>
 				
 				<div class="form-group top-buffer">
 					<label>Repetir contraseña</label>
-					<input type="password" name="passwordRepetido" class="form-control" id="passwordRepetido"/>
+					<input type="password" name="passwordRepetido" class="form-control" id="passwordRepetido" value="aaaaaaaa"/>
 				</div>
 					<div class="form-group top-buffer">
 								<div class="input-append">
@@ -66,12 +66,12 @@
 					<div class="form-group">
 						<label>Fecha nacimiento</label> <input type="text"
 							placeholder="dd/mm/aaaa" name="fechaNac" class="form-control"
-							id="fechaNac"/>
+							id="fechaNac" value="11/11/1999"/>
 					</div>
 
 					<div class="form-group top-buffer">
 						<label>C&oacute;digo Postal</label> <input type="text" name="cp"
-							class="form-control" id="cp" /> <span
+							class="form-control" id="cp" value="22222"/> <span
 							class="field-validation-valid help-block"></span>
 					</div>
 
@@ -112,6 +112,23 @@
 			</form>
 		</div>
 	</div>
+	
+	<!--  VENTANA MODAL USUARIO CREADO -->
+
+<div class="modal hide fade in" id="usuarioCreado" aria-hidden="false">
+	<div class="modal-header">
+		<i class="icon-remove" data-dismiss="modal" aria-hidden="true"></i>
+		
+		<h4 class="modalTitle"><img class="tick" src="<?php echo base_url()."assets/img/tick.png";?>"/>¡Usuario creado!</h4>
+		
+		
+	</div>
+	<!--Modal Body-->
+	<div class="modal-body">
+		<p class="modalTexto">Revisa tu correo, recibirás un mail de confirmación.</p>
+	</div>
+	<!--/Modal Body-->
+</div>
 	<script>
  	$(document).ready(function(){
  		// This is the simple bit of jquery to duplicate the hidden field to subfile

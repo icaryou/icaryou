@@ -121,14 +121,15 @@ class Usuario extends CI_Controller
 			
 			$this->load->model("Usuario_Model");
 			$resultado=$this->Usuario_Model->crearUsuario($registro);//CREAMOS EN EL MODELO
+			header("Location:".base_url());
 				
-			$datos["mensaje"]="Validación correcta";//TODO
+			//$datos["mensaje"]="Validación correcta";//TODO
 				
 			}else{
-				$datos["mensaje"]="Validación incorrectaa";//TODO
+				//$datos["mensaje"]="Validación incorrectaa";//TODO
 			}
 		
-			enmarcar($this, "usuario/registrarUsuarioPost",$datos);//TODO
+			//enmarcar($this, "usuario/registrarUsuarioPost",$datos);//TODO
 			
 		}	
 		

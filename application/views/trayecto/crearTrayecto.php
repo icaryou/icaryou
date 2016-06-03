@@ -125,8 +125,7 @@
 
 
 
-					<div class="col-xs-12 col-lg-3 top-buffer">
-					
+					<div class="col-xs-12 col-lg-3 top-buffer">					
 						<input type="submit" id="submitOk" name="submitOk" value="Crear trayecto"
 							class="btn btn-primary span2 btn-lg top-buffer" tabindex="7" >
 					</div>
