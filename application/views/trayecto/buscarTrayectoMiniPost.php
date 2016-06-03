@@ -145,7 +145,7 @@
 		</div>
 		<div class="span10" id="rellenarAjax">
 		<!-- variable que necesitaremos para pintar los botones de unirse o no -->
-			<?php $pintarAbandonar=FALSE?>	
+			<?php $pintarAbandonar=false?>	
 				
 			<?php if(sizeof($trayectosEncontrados)==0):?><!-- NO ENCUENTRA TRAYECTOS -->
 				<h4>Lo lamentamos, no hemos encontrado trayectos con esas opciones.</h4>
@@ -171,16 +171,17 @@
 						<div class="comentariosBusqueda"><?php echo $trayectoAgrupado[0]['comentarios']?></div>
 						
 						<!-- PINTAMOS UNIRSE SI NO ESTA EN EL TRAYECTO Y HAY PLAZAS DISPONIBLES -->
+								<?php $pintarAbandonar=false?>	
 								<?php foreach ($trayectoAgrupado as $usu):?>
-									<?php if($usu["usuarioId"]==$this->session->userdata('id')):?>
-										<?php $pintarAbandonar=TRUE?>
-									<?php endif;?>
+									<?php if($usu["usuarioId"]==$this->session->userdata('id')){
+										$pintarAbandonar=true;
+									}?>
 								<?php endforeach;?>
 						
-						
+								<!-- <input type="hidden" value="<?php echo $trayectoAgrupado[0]['trayecto_id']?>"/> -->
 								<?php if(!$pintarAbandonar&&$trayectoAgrupado[0]['plazas']>sizeof($trayectoAgrupado)):?>				
-								<button class="btn btn-primary btn-lg botonBusqueda" onclick='location.href="<?php echo base_url('usuario/unirse_trayecto/'.$trayectoAgrupado[0]['trayecto_id'])?>"'
-									class="btn btn-primary btn-lg btn-block" tabindex="7">Unirse</button>				 
+								<button class="btn btn-primary btn-lg botonBusqueda" onclick="llamarAjaxSubmit(this)" data-button="<?php echo $trayectoAgrupado[0]['trayecto_id']?>"
+									class="btn btn-primary btn-lg btn-block" tabindex="7" data-toggle="modal" href="#teHasUnido">Unirse</button>				 
 								<?php endif;?>
 								
 								<!-- PINTAMOS COMPLETO SI NO ESTA EN EL TRAYECTO Y NO HAY PLAZAS DISPONIBLES -->
@@ -196,7 +197,7 @@
 					</td>
 					<td>
 					<div class="usuArriba">
-						<p class="usuTitulo">Usuarios</hp>
+						<p class="usuTitulo">Usuarios</p>
 					</div>
 					<div id="<?php echo "trayecto".$contadorTrayectos;?>" class="usuAbajo">
 						<?php $contadorUsuarios=0;?>
@@ -230,6 +231,24 @@
 </div>
 
 </div>
+
+<!--  VENTANA MODAL  -->
+
+<div class="modal hide fade in" id="teHasUnido" aria-hidden="false">
+	<div class="modal-header">
+		<i class="icon-remove" data-dismiss="modal" aria-hidden="true"></i>
+		
+		<h4 class="modalTitle"><img class="tick" src="<?php echo base_url()."assets/img/tick.png";?>"/>¡Te has unido!</h4>
+		
+		
+	</div>
+	<!--Modal Body-->
+	<div class="modal-body">
+		<p class="modalTexto">Puedes consultar tus trayectos en tu menú personal.</p>
+	</div>
+	<!--/Modal Body-->
+</div>
+
 <script>
 
 /* Llamada a ajax cada vez que se aplica algun filtro*/
@@ -264,9 +283,21 @@ function llamarAjax(){
 		  data: $('#formularioFiltro').serialize()
 		})
 		  .done(function(res) {
-	  		  //alert("cambio");
 		    $('#rellenarAjax').html(res);
 		    paginar();
+		 });
+}
+
+function llamarAjaxSubmit(b){
+	var boton=b;
+	var id_tray=b.getAttribute("data-button");
+	$.ajax({
+		  method: "POST",
+		  url: "<?php echo base_url()?>usuario/unirse_trayecto",
+		  data: { id_trayecto: id_tray}
+		})
+		  .done(function(res) {
+				b.style.visibility = "hidden";
 		 });
 }
 

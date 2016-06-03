@@ -449,6 +449,26 @@ button:focus {outline:0;}
 	height:78%;
 }
 
+.modalTitle{
+	color: #0DBD96;
+	text-align:center;
+	font-family:'Source Sans Pro', sans-serif;
+	font-size:26px;
+	font-weight: 400;
+	
+}
+.modalTexto{
+	text-align:center;
+	font-family:'Source Sans Pro', sans-serif;
+	font-size:20px;
+	font-weight: 400;
+}
+
+.tick{
+	width:50px;
+	margin-left:-40px;	
+}
+
 /* BOTONES PAGINATOR*/
 .light-theme .current  {
   color: #ffffff;

@@ -413,16 +413,17 @@ class Usuario extends CI_Controller
 			*/
 	}
 	
-	public function unirse_trayecto($id_trayecto)//TODO???
+	public function unirse_trayecto()//TODO???
 	{
 		
 		
 		if($this->session->userdata('logueado'))
 		{
 			$id_usuario=$this->session->userdata('id');
+			$id_trayecto=$this->input->post('id_trayecto');
 			$this->load->Model('Usuario_Model');
 			$datos['usuario_buscado']=$this->Usuario_Model->unirse_trayecto($id_usuario,$id_trayecto);
-				
+				echo $id_trayecto;
 			//enmarcar($this,'usuario/listarTrayectosUsuario.php',$datos); TODO Elegir donde le mandamos
 		}
 		else//SI NO ESTA LOGUEADO LE MANDAMOS AL LOGIN CON UN CAMPO REDIRECCION PARA QUE LUEGO LE LLEVE A LA PAGINA QUE QUERIA
