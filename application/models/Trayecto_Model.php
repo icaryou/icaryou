@@ -132,6 +132,7 @@ class Trayecto_Model extends RedBean_SimpleModel
 		foreach ($idTrayectosEncontrados as $id)
 		{
 				//CADA ITERACION BUSCA POR UN ID DE USUARIO DEVOLVIENDO TANTAS FILAS COMO USUARIOS TENGA ESE ID DE TRAYECTO
+				/*
 				array_push($trayectosEncontrados, R::getAll("select u.id usuarioId, u.nombre,u.apellidos,u.fechanac,u.foto,
 														t.id trayecto_id,t.dias,t.horallegadadestino,t.horaretornodestino,t.comentarios,t.creador,t.plazas,
 														li.poblacion as poblacionOrigen,
@@ -144,6 +145,19 @@ class Trayecto_Model extends RedBean_SimpleModel
 														join lugar ld on t.destino_id=ld.id
 														where t.id = {$id['trayecto_id']} AND aceptado=1
 														order by ut.trayecto_id, ut.id"));
+														*/
+			array_push($trayectosEncontrados, R::getAll("select u.id usuarioId, u.nombre,u.apellidos,u.fechanac,u.foto,
+					t.id trayecto_id,t.dias,t.horallegadadestino,t.horaretornodestino,t.comentarios,t.creador,t.plazas,ut.aceptado,
+					li.poblacion as poblacionOrigen,
+					ld.poblacion poblacionDestino,
+					ut.trayecto_id
+					from usuariotrayecto ut
+					join usuario u on ut.usuario_id=u.id
+					join trayecto t on ut.trayecto_id=t.id
+					join lugar li on t.inicio_id=li.id
+					join lugar ld on t.destino_id=ld.id
+					where t.id = {$id['trayecto_id']} 
+					order by ut.trayecto_id, ut.id"));
 		}
 		//CAMBIO   AGREGADO ACEPTADO=1
 	

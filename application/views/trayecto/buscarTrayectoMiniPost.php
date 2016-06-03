@@ -171,28 +171,40 @@
 						<div class="comentariosBusqueda"><?php echo $trayectoAgrupado[0]['comentarios']?></div>
 						
 						<!-- PINTAMOS UNIRSE SI NO ESTA EN EL TRAYECTO Y HAY PLAZAS DISPONIBLES -->
-								<?php $pintarAbandonar=false?>	
-								<?php foreach ($trayectoAgrupado as $usu):?>
-									<?php if($usu["usuarioId"]==$this->session->userdata('id')){
-										$pintarAbandonar=true;
-									}?>
-								<?php endforeach;?>
-						
-								<!-- <input type="hidden" value="<?php echo $trayectoAgrupado[0]['trayecto_id']?>"/> -->
-								<?php if(!$pintarAbandonar&&$trayectoAgrupado[0]['plazas']>sizeof($trayectoAgrupado)):?>				
+								<?php $pintarAbandonar=false;
+								$pintarYaHasSolicitado=false;
+								$aceptados=0;?>	
+								<?php foreach ($trayectoAgrupado as $usu){
+									if($usu["aceptado"]==1){
+										$aceptados++;
+										if($usu["usuarioId"]==$this->session->userdata('id')){
+											$pintarAbandonar=true;
+										}
+									}else if($usu["aceptado"]==0){
+										if($usu["usuarioId"]==$this->session->userdata('id')){
+											$pintarYaHasSolicitado=true;
+										}	
+									}
+								}?>
+								<!-- PINTAMOS YA LO HAS SOLICITADO SI ESTA A LA ESPERA DE SER ACEPTADO -->
+								<?php if(!$pintarAbandonar&&$pintarYaHasSolicitado):?>				
+									<p class="top-buffer10"><strong>Estás a la espera de ser aceptado.</strong></p>				 
+								<?php endif;?>
+							
+								<?php if(!$pintarAbandonar&&($trayectoAgrupado[0]['plazas']>$aceptados)&&!$pintarYaHasSolicitado):?>				
 								<button class="btn btn-primary btn-lg botonBusqueda" onclick="llamarAjaxSubmit(this)" data-button="<?php echo $trayectoAgrupado[0]['trayecto_id']?>"
 									class="btn btn-primary btn-lg btn-block" tabindex="7" data-toggle="modal" href="#teHasUnido">Unirse</button>				 
 								<?php endif;?>
 								
 								<!-- PINTAMOS COMPLETO SI NO ESTA EN EL TRAYECTO Y NO HAY PLAZAS DISPONIBLES -->
-								<?php if(!$pintarAbandonar&&$trayectoAgrupado[0]['plazas']==sizeof($trayectoAgrupado)):?>				
-								<p>Trayecto completo</p>				 
+								<?php if(!$pintarAbandonar&&$trayectoAgrupado[0]['plazas']==$aceptados):?>				
+								<p class="top-buffer10"><strong>Trayecto completo</strong></p>				 
 								<?php endif;?>
 								
 								<!-- PINTAMOS ABANDONAR SI NO ESTA EN EL TRAYECTO Y HAY PLAZAS DISPONIBLES -->
 								<?php if(isset($pintarAbandonar)&&$pintarAbandonar):?>				
-								<button class="btn btn-primary btn-lg botonBusqueda" onclick='location.href="<?php echo base_url('usuario/abandonar_trayecto/'.$trayectoAgrupado[0]['trayecto_id'])?>"'
-									class="btn btn-primary btn-lg btn-block" tabindex="7">Abandonar</button>				 
+								<button class="btn btn-primary btn-lg botonBusqueda" onclick="llamarAjaxAbandonar(this)" data-button="<?php echo $trayectoAgrupado[0]['trayecto_id']?>"
+									class="btn btn-primary btn-lg btn-block" tabindex="7" data-toggle="modal" href="#hasAbandonado">Abandonar</button>				 
 								<?php endif;?>
 					</td>
 					<td>
@@ -202,13 +214,15 @@
 					<div id="<?php echo "trayecto".$contadorTrayectos;?>" class="usuAbajo">
 						<?php $contadorUsuarios=0;?>
 						<?php foreach ($trayectoAgrupado as $usu):?>
+							<?php if($usu["aceptado"]==1):?>
 							<?php $contadorUsuarios++;?>
 							<div class="UsuBusqueda">
 								<img class="imgBusqueda" src="<?php echo base_url().$usu["foto"]?>"/>
 								<p class="nombreViajero"><a href="<?php echo base_url('usuario/mostrarPerfilUsuario/'.$usu["usuarioId"])?>"><?php echo $usu["nombre"]." ".$usu["apellidos"]?></a></p>
 							</div>
+							<?php endif;?>
 			 			<?php endforeach;?>
-			 			<?php for($i=0;$i<(5-$contadorUsuarios);$i++):?>
+			 			<?php for($i=0;$i<($usu["plazas"]-$contadorUsuarios);$i++):?>
 			 				<div class="UsuBusqueda">
 								<img src="<?php echo base_url()."assets/img/profile/avatar.png"?>"/>
 								<p class="nombreViajero">Libre</p>
@@ -232,13 +246,30 @@
 
 </div>
 
-<!--  VENTANA MODAL  -->
+<!--  VENTANA MODAL UNIRSE -->
 
 <div class="modal hide fade in" id="teHasUnido" aria-hidden="false">
 	<div class="modal-header">
 		<i class="icon-remove" data-dismiss="modal" aria-hidden="true"></i>
 		
 		<h4 class="modalTitle"><img class="tick" src="<?php echo base_url()."assets/img/tick.png";?>"/>¡Te has unido!</h4>
+		
+		
+	</div>
+	<!--Modal Body-->
+	<div class="modal-body">
+		<p class="modalTexto">Puedes consultar tus trayectos en tu menú personal.</p>
+	</div>
+	<!--/Modal Body-->
+</div>
+
+<!--  VENTANA MODAL ABANDONAR -->
+
+<div class="modal hide fade in" id="hasAbandonado" aria-hidden="false">
+	<div class="modal-header">
+		<i class="icon-remove" data-dismiss="modal" aria-hidden="true"></i>
+		
+		<h4 class="modalTitle"><img class="tick" src="<?php echo base_url()."assets/img/tick.png";?>"/>Has abandonado</h4>
 		
 		
 	</div>
@@ -297,7 +328,20 @@ function llamarAjaxSubmit(b){
 		  data: { id_trayecto: id_tray}
 		})
 		  .done(function(res) {
-				b.style.visibility = "hidden";
+			  llamarAjax();
+		 });
+}
+
+function llamarAjaxAbandonar(b){
+	var boton=b;
+	var id_tray=b.getAttribute("data-button");
+	$.ajax({
+		  method: "POST",
+		  url: "<?php echo base_url()?>usuario/abandonar_trayecto",
+		  data: { id_trayecto: id_tray}
+		})
+		  .done(function(res) {
+			  llamarAjax();
 		 });
 }
 
