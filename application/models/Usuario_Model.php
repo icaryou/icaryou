@@ -147,36 +147,43 @@ class Usuario_Model extends RedBean_SimpleModel //CI_Model//
 				
 	}
 	
-	public function abandonar_trayecto($id_usuario,$id_trayecto)
-	{
-		//COGEMOS LA FILA CON ESOS ID'S
-	
+public function abandonar_trayecto($id_usuario,$id_trayecto)
+	{		
+		//COGEMOS LA FILA CON ESOS ID'S		
 		$id=R::getRow("select id from usuariotrayecto ut
 										WHERE ut.usuario_id like :usuario
 										AND ut.trayecto_id like :trayecto
 										AND aceptado=1",array(
 													':usuario'=>$id_usuario,
 													':trayecto'=>$id_trayecto,
-											));
+											));		
 		//CARGAMOS ESE BEAN CON EL ID ANTERIOR
 		$usuariotrayecto=R::load('usuariotrayecto',$id['id']);
+		
 		//LE CAMBIAMOS A -1 EL ACEPTADO Y ACTUALIZAMOS
-		var_dump($usuariotrayecto);
 		$usuariotrayecto->aceptado=-1;
-		$id=R::store($usuariotrayecto);
-	
+		$id=R::store($usuariotrayecto);		
+		
 		//CREO YA COGEMOS EL PRIMER USUARIO QUE ESTA EN ESE TRAYECTO
 		$id_nuevo_admin=R::getRow("select usuario_id from usuariotrayecto ut
 										WHERE ut.trayecto_id like :trayecto
 										AND aceptado=1",array(
 													':trayecto'=>$id_trayecto,
-											));
-	
-		$trayecto_id_trayecto=R::load('trayecto',$id_trayecto);
-		//LE PONEMOS COMO NUEVO ADMINISTRADOR
-		$trayecto_id_trayecto->creador=$id_nuevo_admin['usuario_id'];
-		$id_trayecto_cambiado=R::store($trayecto_id_trayecto);
-	
+											));	
+		if($id_nuevo_admin!=NULL)//HAY MAS USUARIOS
+		{
+			$trayecto_id_trayecto=R::load('trayecto',$id_trayecto);
+			//LE PONEMOS COMO NUEVO ADMINISTRADOR
+			$trayecto_id_trayecto->creador=$id_nuevo_admin['usuario_id'];
+			$id_trayecto_cambiado=R::store($trayecto_id_trayecto);
+		}
+		else//NO QUEDAN USUARIOS EN EL TRAYE
+		{
+			R::exec( "DELETE FROM usuariotrayecto WHERE trayecto_id=$id_trayecto");			
+			R::exec( "DELETE FROM lugar WHERE id=(SELECT inicio_id FROM TRAYECTO WHERE id=$id_trayecto)");
+			R::exec( "DELETE FROM lugar WHERE id=(SELECT destino_id FROM TRAYECTO WHERE id=$id_trayecto)");
+			R::exec( "DELETE FROM trayecto WHERE id=$id_trayecto");
+		}	
 	}
 	
 	public function loguearUsuario($login)
