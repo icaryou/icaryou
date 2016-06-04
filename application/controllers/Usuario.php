@@ -372,6 +372,7 @@ class Usuario extends CI_Controller
 		{
 			$this->load->Model('Trayecto_Model');
 			$datos['trayectosPropiosEncontrados']=$this->Trayecto_Model->listarTrayectosPropios($this->session->userdata('id'));
+			$datos['js']="listarTrayectosPropios";
 			$datos['css']="listadoTrayectos";
 			enmarcar($this,'usuario/listarTrayectosPropios.php',$datos);
 		}
@@ -415,9 +416,7 @@ class Usuario extends CI_Controller
 	}
 	
 	public function unirse_trayecto()//TODO???
-	{
-		
-		
+	{		
 		if($this->session->userdata('logueado'))
 		{
 			$id_usuario=$this->session->userdata('id');
@@ -425,6 +424,12 @@ class Usuario extends CI_Controller
 			$this->load->Model('Usuario_Model');
 			$datos['usuario_buscado']=$this->Usuario_Model->unirse_trayecto($id_usuario,$id_trayecto);
 			//enmarcar($this,'usuario/listarTrayectosUsuario.php',$datos); TODO Elegir donde le mandamos
+			
+			$info_trayecto=$datos['usuario_buscado'][0];			
+			
+			echo $info_trayecto['creador']."*"."Te han enviado una solicitud para tu trayecto con origen {$info_trayecto['poblacionOrigen']} y destino
+			{$info_trayecto['poblacionDestino']}.";
+			
 		}
 		else//SI NO ESTA LOGUEADO LE MANDAMOS AL LOGIN CON UN CAMPO REDIRECCION PARA QUE LUEGO LE LLEVE A LA PAGINA QUE QUERIA
 		{
@@ -442,6 +447,14 @@ class Usuario extends CI_Controller
 			$id_trayecto=$this->input->post('id_trayecto');
 			$this->load->Model('Usuario_Model');
 			$datos['usuario_buscado']=$this->Usuario_Model->abandonar_trayecto($id_usuario,$id_trayecto);
+			
+			$info_trayecto=$datos['usuario_buscado'][0];				
+			
+			$destinatario=$this->Usuario_Model->obtenerUsuarioPorId($id_usuario);
+			
+					
+			echo $info_trayecto['creador']."*"."El usuario $destinatario->nombre $destinatario->apellidos ha abandonado tu trayecto con origen {$info_trayecto['poblacionOrigen']} y destino
+			{$info_trayecto['poblacionDestino']}.";
 			
 			//enmarcar($this,'usuario/listarTrayectosUsuario.php',$datos); TODO Elegir donde le mandamos
 		}

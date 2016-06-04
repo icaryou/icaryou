@@ -352,6 +352,24 @@ function llamarAjaxSubmit(b){
 		  data: { id_trayecto: id_tray}
 		})
 		  .done(function(res) {
+
+			  var destinatario=res.split("*")[0];
+              var texto=res.split("*")[1];
+              
+              $.ajax({        
+				       type: "POST",
+				       url: BASE_URL+"mensaje/crear_mensaje_admin",
+				       data: { destinatario : destinatario,texto:texto},
+				       success: function(respuesta) 
+			           {
+				    	   ///////
+				       }
+					});	
+
+
+
+
+			  
 			  llamarAjax();
 		 });
 }
@@ -365,6 +383,21 @@ function llamarAjaxAbandonar(b){
 		  data: { id_trayecto: id_tray}
 		})
 		  .done(function(res) {
+	
+			  var destinatario=res.split("*")[0];
+              var texto=res.split("*")[1];
+			  
+			  $.ajax({        
+			       type: "POST",
+			       url: BASE_URL+"mensaje/crear_mensaje_admin",
+			       data: { destinatario : destinatario,texto:texto},
+			       success: function(respuesta) 
+		           {
+			    	   ///////
+			       }
+				});	
+
+			  
 			  llamarAjax();
 		 });
 }

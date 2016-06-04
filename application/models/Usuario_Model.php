@@ -144,11 +144,24 @@ class Usuario_Model extends RedBean_SimpleModel //CI_Model//
 		$linea_usuario_trayecto->trayecto_id=$id_trayecto;
 		
 		$id=R::store($linea_usuario_trayecto);			
+		
+		$info_trayecto=R::getAll("select t.creador, u.nombre,u.apellidos,li.poblacion as poblacionOrigen,ld.poblacion poblacionDestino
+				from trayecto t
+				join usuario u on t.creador=u.id
+				join lugar li on t.inicio_id=li.id
+				join lugar ld on t.destino_id=ld.id
+				where t.id = $id_trayecto");
+		
+		return $info_trayecto;
+		
+		
+		
 				
 	}
 	
 public function abandonar_trayecto($id_usuario,$id_trayecto)
-	{		
+	{	
+		
 		//COGEMOS LA FILA CON ESOS ID'S		
 		$id=R::getRow("select id from usuariotrayecto ut
 										WHERE ut.usuario_id like :usuario
@@ -184,6 +197,18 @@ public function abandonar_trayecto($id_usuario,$id_trayecto)
 			R::exec( "DELETE FROM lugar WHERE id=(SELECT destino_id FROM TRAYECTO WHERE id=$id_trayecto)");
 			R::exec( "DELETE FROM trayecto WHERE id=$id_trayecto");
 		}	
+		
+		
+		$info_trayecto=R::getAll("select t.creador,u.nombre,u.apellidos,li.poblacion as poblacionOrigen,ld.poblacion poblacionDestino
+				from trayecto t
+				join usuario u on t.creador=u.id
+				join lugar li on t.inicio_id=li.id
+				join lugar ld on t.destino_id=ld.id
+				where t.id = $id_trayecto");
+		
+				
+		return $info_trayecto;
+		
 	}
 	
 	public function loguearUsuario($login)

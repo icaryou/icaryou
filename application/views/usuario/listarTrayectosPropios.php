@@ -57,15 +57,26 @@
 					</td>
 					<td>
 					<div class="usuArriba">
-						<p class="usuTitulo">Usuarios</hp>
+						<p class="usuTitulo">Usuarios</p>
 					</div>
 					<div id="<?php echo "trayecto".$contadorTrayectos;?>" class="usuAbajo">
-						<?php $contadorUsuarios=0;?>
-						<?php foreach ($trayectoAgrupado as $usu):?>
+						<?php $contadorUsuarios=0;?>						
+						<?php foreach ($trayectoAgrupado as $usu):?>	
+						
 							<?php $contadorUsuarios++;?>
 							<div class="UsuBusqueda">
 								<img class="imgBusqueda" src="<?php echo base_url().$usu["foto"]?>"/>
 								<p class="nombreViajero"><a href="<?php echo base_url('usuario/mostrarPerfilUsuario/'.$usu["usuarioId"])?>"><?php echo $usu["nombre"]." ".$usu["apellidos"]?></a></p>
+								
+								<?php if($usu['aceptado']==0):?>								
+    								<button id="<?php echo $usu['usuarioId']."*".$usu['trayecto_id']?>" class="aceptar_usuario_trayecto">Aceptar usuario</button>
+    								<button id="<?php echo $usu['usuarioId']."*".$usu['trayecto_id']?>" class="rechazar_usuario_trayecto">Rechazar usuario</button>
+								<?php endif;?>
+								
+								<?php if($usu['usuarioId']!=$this->session->userdata('id') && $usu['aceptado']==1):?>								
+    								<button id="<?php echo $usu['usuarioId']."*".$usu['trayecto_id']?>" class="eliminar_usuario_trayecto">Eliminar usuario</button>
+								<?php endif;?>
+								
 							</div>
 			 			<?php endforeach;?>
 			 			<?php for($i=0;$i<(5-$contadorUsuarios);$i++):?>
@@ -136,7 +147,7 @@
 					</td>
 					<td>
 					<div class="usuArriba">
-						<p class="usuTitulo">Usuarios</hp>
+						<p class="usuTitulo">Usuarios</p>
 					</div>
 					<div id="<?php echo "trayecto".$contadorTrayectos;?>" class="usuAbajo">
 						<?php $contadorUsuarios=0;?>
@@ -167,7 +178,6 @@
 </div>
 <?php endif;?>
 
-</div>
 	<div class="container">
 	<div class="span3 pull-right"></div>
 	<input TYPE="button" class="btn btn-primary botonBusqueda span2 top-buffer pull-right" VALUE="Volver" onClick="history.go(-1);">

@@ -275,6 +275,74 @@ class Trayecto extends CI_Controller
 		*/
 	}
 	
+	public function aceptar_usuario_trayecto()
+	{
+		$id_usuario=$_REQUEST['id_usuario'];
+		$id_trayecto=$_REQUEST['id_trayecto'];
+	
+		if($this->session->userdata('logueado'))
+		{
+			$this->load->Model('Trayecto_Model');
+			$info_trayecto=$this->Trayecto_Model->aceptar_usuario_trayecto($id_usuario,$id_trayecto)[0];
+			
+			//var_dump($info_trayecto);
+			
+			echo $id_usuario."*"."Ha sido aceptada su solicitud para el trayecto con origen {$info_trayecto['poblacionOrigen']} y destino 
+			{$info_trayecto['poblacionDestino']} administrado por {$info_trayecto['nombre']} {$info_trayecto['apellidos']}.";
+		}
+		else//SI NO ESTA LOGUEADO LE MANDAMOS AL LOGIN CON UN CAMPO REDIRECCION PARA QUE LUEGO LE LLEVE A LA PAGINA QUE QUERIA
+		{
+			$datos['errorLogin']='Por favor inicia sesion';
+			enmarcar($this,'index.php',$datos);
+		}
+	
+	}
+	
+	public function eliminar_usuario_trayecto()
+	{	
+		$id_usuario=$_REQUEST['id_usuario'];
+		$id_trayecto=$_REQUEST['id_trayecto'];	
+		
+		if($this->session->userdata('logueado'))
+		{
+			$this->load->Model('Trayecto_Model');
+			$info_trayecto=$this->Trayecto_Model->eliminar_usuario_trayecto($id_usuario,$id_trayecto)[0];
+			
+			echo $id_usuario."*"."Has sido eliminado del trayecto con origen {$info_trayecto['poblacionOrigen']} y destino
+			{$info_trayecto['poblacionDestino']} administrado por {$info_trayecto['nombre']} {$info_trayecto['apellidos']}.";
+	
+		}
+		else//SI NO ESTA LOGUEADO LE MANDAMOS AL LOGIN CON UN CAMPO REDIRECCION PARA QUE LUEGO LE LLEVE A LA PAGINA QUE QUERIA
+		{
+			$datos['errorLogin']='Por favor inicia sesion';
+			enmarcar($this,'index.php',$datos);
+		}
+		
+	}
+	
+	public function rechazar_usuario_trayecto()
+	{
+		$id_usuario=$_REQUEST['id_usuario'];
+		$id_trayecto=$_REQUEST['id_trayecto'];
+	
+		if($this->session->userdata('logueado'))
+		{
+			$this->load->Model('Trayecto_Model');
+			$info_trayecto=$this->Trayecto_Model->eliminar_usuario_trayecto($id_usuario,$id_trayecto)[0];
+				
+			echo $id_usuario."*"."Ha sido rechazada su solicitud para el trayecto con origen {$info_trayecto['poblacionOrigen']} y destino
+			{$info_trayecto['poblacionDestino']} administrado por {$info_trayecto['nombre']} {$info_trayecto['apellidos']}.";
+	
+		}
+		else//SI NO ESTA LOGUEADO LE MANDAMOS AL LOGIN CON UN CAMPO REDIRECCION PARA QUE LUEGO LE LLEVE A LA PAGINA QUE QUERIA
+		{
+			$datos['errorLogin']='Por favor inicia sesion';
+			enmarcar($this,'index.php',$datos);
+		}
+	
+	}
+	
+	
 	//FUNCIONES PERSONALIZADAS ---  SE PUEDEN AGREGAR EN LIBRARIES/FORM_VALIDATION.PHP
 	public function _horaRegex($hora) {
 		if (preg_match('/^([01]\d|2[0-3]):([0-5]\d)$/', $hora ) )

@@ -93,7 +93,16 @@ class Mensaje extends CI_Controller
 		}		
 	}
 	
+	public function crear_mensaje_admin()
+	{
+		$id_destinario=$_REQUEST['destinatario'];
+		$texto=$_REQUEST['texto'];
+		$hora=Date("Y-m-d H:i:s");
 	
+	
+		$this->Mensaje_model->crear_mensaje($texto,Date("Y-m-d H:i:s"),31,$id_destinario);	
+	
+	}
 	
 	public function crear_mensaje()
 	{

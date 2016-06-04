@@ -182,13 +182,15 @@ class Trayecto_Model extends RedBean_SimpleModel
 			t.id trayecto_id,t.dias,t.horallegadadestino,t.horaretornodestino,t.comentarios,t.creador,t.plazas,
 			li.poblacion as poblacionOrigen,
 			ld.poblacion poblacionDestino,
-			ut.trayecto_id
+			ut.trayecto_id,
+		    ut.aceptado
 			from usuariotrayecto ut
 			join usuario u on ut.usuario_id=u.id
 			join trayecto t on ut.trayecto_id=t.id
 			join lugar li on t.inicio_id=li.id
 			join lugar ld on t.destino_id=ld.id
 			where t.id = {$id['trayecto_id']}
+			AND ut.aceptado!=-1
 			order by ut.trayecto_id, ut.id"));
 		}	
 		
@@ -213,7 +215,8 @@ class Trayecto_Model extends RedBean_SimpleModel
 					t.id trayecto_id,t.dias,t.horallegadadestino,t.horaretornodestino,t.comentarios,t.creador,t.plazas,
 					li.poblacion as poblacionOrigen,
 					ld.poblacion poblacionDestino,
-					ut.trayecto_id
+					ut.trayecto_id,
+		    		ut.aceptado
 					from usuariotrayecto ut
 					join usuario u on ut.usuario_id=u.id
 					join trayecto t on ut.trayecto_id=t.id
@@ -259,6 +262,61 @@ class Trayecto_Model extends RedBean_SimpleModel
 		$usuario_trayecto->trayecto=$trayecto;
 		$usuario_trayecto->aceptado=true;
 		R::Store($usuario_trayecto);
+	}
+	
+	public function aceptar_usuario_trayecto($id_usuario,$id_trayecto)
+	{
+		//R::exec( "UPDATE usuariotrayecto SET aceptado=1 WHERE trayecto_id=$id_trayecto AND usuario_id=$id_usuario");
+		
+		$id_ut=R::getAll("SELECT id FROM usuariotrayecto where trayecto_id=$id_trayecto 
+				AND usuario_id=$id_usuario ORDER BY id DESC LIMIT 1");
+		
+		$id_ut=$id_ut[0]['id'];
+	
+		
+		R::exec( "UPDATE usuariotrayecto SET aceptado=1 WHERE id=$id_ut");
+		
+		
+		
+		$info_trayecto=R::getAll("select u.nombre,u.apellidos,li.poblacion as poblacionOrigen,ld.poblacion poblacionDestino
+			from trayecto t
+			join usuario u on t.creador=u.id
+			join lugar li on t.inicio_id=li.id
+			join lugar ld on t.destino_id=ld.id
+			where t.id = $id_trayecto");
+		
+		return $info_trayecto;
+	
+	}
+	
+	public function eliminar_usuario_trayecto($id_usuario,$id_trayecto)
+	{
+		R::exec( "UPDATE usuariotrayecto SET aceptado=-1 WHERE trayecto_id=$id_trayecto AND usuario_id=$id_usuario");
+		
+		$info_trayecto=R::getAll("select u.nombre,u.apellidos,li.poblacion as poblacionOrigen,ld.poblacion poblacionDestino
+				from trayecto t
+				join usuario u on t.creador=u.id
+				join lugar li on t.inicio_id=li.id
+				join lugar ld on t.destino_id=ld.id
+				where t.id = $id_trayecto");
+		
+		return $info_trayecto;
+	
+	}
+	
+	public function rechazar_usuario_trayecto($id_usuario,$id_trayecto)
+	{
+		R::exec( "UPDATE usuariotrayecto SET aceptado=-1 WHERE trayecto_id=$id_trayecto AND usuario_id=$id_usuario");
+	
+		$info_trayecto=R::getAll("select u.nombre,u.apellidos,li.poblacion as poblacionOrigen,ld.poblacion poblacionDestino
+				from trayecto t
+				join usuario u on t.creador=u.id
+				join lugar li on t.inicio_id=li.id
+				join lugar ld on t.destino_id=ld.id
+				where t.id = $id_trayecto");
+	
+		return $info_trayecto;
+	
 	}
 	
 	
