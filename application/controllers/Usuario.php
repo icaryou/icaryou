@@ -14,9 +14,7 @@ class Usuario extends CI_Controller
 		//$this->load->library('email');
 	}
 	
-	public function sendMail($emailReceiver="", $message="", $subject="",$code="",$id_usuario=0) {
-		
-		echo "----";
+	public function sendMail($emailReceiver="", $message="", $subject="",$code="",$id_usuario=0) {	
 		
         $icaryouEmail = 'icaryouspain@gmail.com';
         $icaryouPass = 'Micochecit0';
@@ -118,21 +116,29 @@ MENSAJE;
 		if($respuesta==1)
 		{
 			$datos['tipo']='activado';
+			$datos['h4']="¡Has activado tu cuenta!";
+			$datos['textoModal']="Ya puedes loguearte desde el menú principal.";
 			enmarcar($this,'index.php',$datos);
 		}
 		elseif($respuesta==-1)
 		{
 			$datos['tipo']='baneado';
+			$datos['h4']="Ups... Has sido baneado";
+			$datos['textoModal']="Lo sentimos, actualmente no puedes acceder con tu cuenta.";
 			enmarcar($this,'index.php',$datos);
 		}
 		elseif($respuesta==2)
 		{
-			$datos['tipo']='ya estaba activado';
+			$datos['tipo']='reactivando';
+			$datos['h4']="Este usuario ya está activo";
+			$datos['textoModal']="Puedes loguearte desde el menú principal.";
 			enmarcar($this,'index.php',$datos);
 		}
 		else
 		{
-			$datos['tipo']='nose ha podido activar';
+			$datos['tipo']='noactivado';
+			$datos['h4']="Ups... Algo ha ido mal";
+			$datos['textoModal']="Lo sentimos, inténtalo de nuevo.";
 			enmarcar($this,'index.php',$datos);
 		}
     }

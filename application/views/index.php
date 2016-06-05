@@ -189,7 +189,31 @@
 </div>
 
 
+
+<!--  VENTANA MODAL MAIL CONFIRMACION -->
+
+<div class="modal hide fade in" id="mailConfirmacion" aria-hidden="false">
+	<div class="modal-header">
+		<i class="icon-remove" data-dismiss="modal" aria-hidden="true"></i>
+		
+		<h4 class="modalTitle"><img class="tick" src="<?php echo base_url()."assets/img/tick.png";?>"/><?php echo isset($h4)?$h4:"";?></h4>
+		
+		
+	</div>
+	<!--Modal Body-->
+	<div class="modal-body">
+		<p class="modalTexto"><?php echo isset($textoModal)?$textoModal:"";?></p>
+	</div>
+	<!--/Modal Body-->
 </div>
+
+<?php if(isset($tipo)):?>
+	<script>
+		$(document).ready(function(){
+		$('#mailConfirmacion').modal('show');
+		});
+	</script>
+<?php endif;?>
 
 <?php if(isset($error)):?>
 
