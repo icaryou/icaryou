@@ -17,7 +17,7 @@ class Usuario_Model extends RedBean_SimpleModel //CI_Model//
 	}
 	
 	public function crearUsuario($registro)
-	{	
+	{			
 		$usuario=R::dispense('usuario');
 		$usuario->email=$registro['email'];
 		$usuario->password=sha1($registro['passwd']);		
@@ -31,14 +31,44 @@ class Usuario_Model extends RedBean_SimpleModel //CI_Model//
 		$usuario->sw_activo=false;
 		$usuario->sw_mensajes_nuevos=false;
 		
-		$id=R::store($usuario);			
+		$id=R::store($usuario);		
+		
+		return $id;
+	}
+	
+	
+	public function activar_usuario($usuario,$code)
+	{
+		$usuario=R::findOne("usuario","id=?",array($usuario));
+		$respuesta=0;
+		
+		$code_nuevo=sha1(substr($usuario->email,-1).substr($usuario->email,0,2).substr($usuario->cp,0,3)."is6");
+		
+				
+		if($usuario->sw_activo==0&&$code_nuevo==$code)//ACTIVACION
+		{
+			$usuario->sw_activo=1;
+			$id=R::store($usuario);
+			$respuesta=1;
+		}
+		elseif($usuario->sw_activo==-1)//BANEADO
+		{
+			$respuesta=-1;
+		}
+		elseif($usuario->sw_activo==1)//YA ACTIVADO
+		{
+			$respuesta=2;
+		}
+		else
+		{
+			$respuesta=0;
+		}
+		
+		return $respuesta;
 	}
 	
 	public function editarPerfil($perfil,$email)
 	{
-		
-		
-		
 		$usuario=R::findOne("usuario","email=?",array($email));
 		
 		if($usuario!=null)

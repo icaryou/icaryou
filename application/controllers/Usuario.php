@@ -14,11 +14,129 @@ class Usuario extends CI_Controller
 		//$this->load->library('email');
 	}
 	
-	public function enviarEmail()//DEBUG
-	{		
-		$this->load->model("Usuario_Model");
-		$usuario=$this->Usuario_Model->enviarEmail();//COMPROBAMOS EN EL MODELO
-	}
+	public function sendMail($emailReceiver="", $message="", $subject="",$code="",$id_usuario=0) {
+		
+		echo "----";
+		
+        $icaryouEmail = 'icaryouspain@gmail.com';
+        $icaryouPass = 'Micochecit0';
+        
+        
+        $message=<<<MENSAJE
+        
+		<!html>
+		    <head>
+		        <title>Icaryou</title>
+		        
+		        <style>
+		            
+		            body
+		            {
+		                padding:5%;
+		            }
+		            .color_corp
+		            {
+		                color:#0DBD96;
+		            }
+		        </style>
+		        
+		    </head>
+		    <body>
+		        <h1>Bienvenido a <span class="color_corp">Icaryou</span>.</h1>
+		        
+		        <p>Para activar tu usuario pincha en el siguiente enlace por favor: </p>
+		        
+		        <p><a href="http://localhost/icaryou/usuario/activar_usuario/$id_usuario/$code">http://localhost/icaryou/usuario/activar_usuario/$id_usuario/$code</a></p>
+		        
+		        <p>Atentamente, el equipo de Icaryou.</p>
+		    </body>
+		</html>
+        		
+        
+MENSAJE;
+               
+        $subject="Confirmación registro Icaryou";
+        
+        $this->load->library ( 'email' );
+        
+        $configGmail = null;
+        
+        if ($_SERVER ['SERVER_NAME'] == 'localhost' || $_SERVER ['SERVER_NAME'] == '127.0.0.1') {
+            
+            $configGmail = array (
+                    'protocol' => 'smtp',
+                    'smtp_host' => 'ssl://smtp.gmail.com',
+                    'smtp_port' => 465,
+                    'smtp_user' => $icaryouEmail, // correo desde el cual se envia
+                    'smtp_pass' => $icaryouPass, // contraseña del correo
+                    'mailtype' => 'html',
+                    'charset' => 'utf-8',
+                    'newline' => "\r\n" 
+            );
+        } else {
+            
+            $configGmail = array (
+                    // 'protocol' => 'smtp',
+                    'smtp_host' => 'ssl://smtp.gmail.com', // 'ssl://smtp.googlemail.com'//ssl://smtp.gmail.com
+                    'smtp_port' => 587, // 465//25
+                    'smtp_user' => $icaryouEmail, // change it to yours
+                    'smtp_pass' => $icaryouPass, // change it to yours
+                    'mailtype' => 'html',
+                    'charset' => 'utf-8',
+                    'newline' => "\r\n",
+                    'validation' => TRUE,
+                    'smtp_crypto' => 'tls', // tls or ssl
+                    'wordwrap' => TRUE 
+            );
+        }
+        
+        $this->email->initialize ( $configGmail );
+        
+        $this->email->from ( $icaryouEmail, 'Icaryou Spain' );
+        $this->email->to ( $emailReceiver );
+        
+        $this->email->subject ( $subject );
+        
+        $this->email->message ( $message );
+        
+        if ($this->email->send ()) {
+        	var_dump($this->email->print_debugger());
+        	return true;
+        } else {
+        	var_dump($this->email->print_debugger());
+            return false;
+        }
+        echo "----";
+        var_dump($this->email->print_debugger());
+    }
+	
+    public function activar_usuario($usuario,$code)
+    {
+    	$this->load->model("Usuario_Model");
+		$respuesta=$this->Usuario_Model->activar_usuario($usuario,$code);//CREAMOS EN EL MODELO	
+		
+		if($respuesta==1)
+		{
+			$datos['tipo']='activado';
+			enmarcar($this,'index.php',$datos);
+		}
+		elseif($respuesta==-1)
+		{
+			$datos['tipo']='baneado';
+			enmarcar($this,'index.php',$datos);
+		}
+		elseif($respuesta==2)
+		{
+			$datos['tipo']='ya estaba activado';
+			enmarcar($this,'index.php',$datos);
+		}
+		else
+		{
+			$datos['tipo']='nose ha podido activar';
+			enmarcar($this,'index.php',$datos);
+		}
+    }
+    
 	
 	public function comprobarEmail()//PETICION AJAX DESDE FORMULARIO
 	{
@@ -120,7 +238,18 @@ class Usuario extends CI_Controller
 			
 			
 			$this->load->model("Usuario_Model");
-			$resultado=$this->Usuario_Model->crearUsuario($registro);//CREAMOS EN EL MODELO
+			$id_creado=$this->Usuario_Model->crearUsuario($registro);//CREAMOS EN EL MODELO
+			
+						
+			
+			$code=substr($this->input->post('email'), -1).substr($this->input->post('email'),0,2).substr($this->input->post('cp'),0,3)."is6";
+						
+			$code=sha1($code);
+			
+			//mja288is693ec478b45407ba7540589f628e19857db1e8d4d
+			
+			$this->sendMail($this->input->post('email'), "", "",$code,$id_creado);
+			
 			header("Location:".base_url());
 				
 			//$datos["mensaje"]="Validación correcta";//TODO
@@ -135,6 +264,7 @@ class Usuario extends CI_Controller
 		
 		
 	}	//FIN REGISTRARUSUARIOPOST
+	
 	
 	public function guardarYResizeImagenPerfil($config){
 		$this->load->library('upload', $config);

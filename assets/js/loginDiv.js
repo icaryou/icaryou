@@ -118,7 +118,7 @@ $( document ).ready(function()
         setInterval(function()
         		{ 		
         			comprobar_mensajes_no_leidos(); 
-        		}, 500);
+        		}, 5000);
         
 	});
   
