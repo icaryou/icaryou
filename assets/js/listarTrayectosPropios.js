@@ -22,7 +22,8 @@ $( document ).ready(function()
 				           {
 					    	   ///////
 					       }
-						});	    
+						});	 
+	                llamarAjax(1);
 		       }
 			});
 		});
@@ -50,7 +51,8 @@ $( document ).ready(function()
 				           {
 					    	   ///////
 					       }
-						});			                
+						});		
+	                llamarAjax(1);
 		       }
 			});
 		});
@@ -78,11 +80,11 @@ $( document ).ready(function()
 				           {
 					    	   ///////
 					       }
-						});			                
+						});	
+	                llamarAjax(1);
 		       }
 			});
 		});
 		
 });
-
 

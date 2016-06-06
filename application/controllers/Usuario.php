@@ -526,6 +526,39 @@ MENSAJE;
 		*/
 	}
 	
+	public function listarTrayectosPropiosRellenar()
+	{
+		//VALIDAMOS SI HAY USUARIO ACTIVO
+		if($this->session->userdata('logueado'))
+		{
+			$this->load->Model('Trayecto_Model');
+			$datos['trayectosPropiosEncontrados']=$this->Trayecto_Model->listarTrayectosPropios($this->session->userdata('id'));
+			$datos['js']="listarTrayectosPropios";
+			$datos['css']="listadoTrayectos";
+			$tipoTrayecto=$this->input->post('tipoTrayecto');
+
+			if($tipoTrayecto==1){
+				$resultadoParaDiv=$this->load->view("usuario/rellenarTrayecPropios", $datos, true);
+			}else if($tipoTrayecto==2){
+				$resultadoParaDiv=$this->load->view("usuario/rellenarTrayecAjenos", $datos, true);
+			}
+			
+			echo $resultadoParaDiv;
+		}
+		else//SI NO ESTA LOGUEADO LE MANDAMOS AL LOGIN CON UN CAMPO REDIRECCION PARA QUE LUEGO LE LLEVE A LA PAGINA QUE QUERIA
+		{
+			$datos['redireccion']='usuario/listarTrayectosPropios';
+			$datos['errorLogin']='Por favor inicia sesion';
+			enmarcar($this,'index.php',$datos);
+		}
+		/*
+			$this->load->Model('Trayecto_Model');
+			$datos['trayectosPropiosEncontrados']=$this->Trayecto_Model->listarTrayectosPropios($this->session->userdata('id'));
+	
+			enmarcar($this,'usuario/listarTrayectosPropios.php',$datos);
+			*/
+	}
+	
 	public function ver_trayectos_usuario($id_usuario)//TODO???
 	{
 		//VALIDAMOS SI HAY USUARIO ACTIVO

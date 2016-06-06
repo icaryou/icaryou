@@ -148,7 +148,7 @@
 			<?php $pintarAbandonar=false?>	
 				
 			<?php if(sizeof($trayectosEncontrados)==0):?><!-- NO ENCUENTRA TRAYECTOS -->
-				<h4>Lo lamentamos, no hemos encontrado trayectos con esas opciones.</h4>
+				<h2>Lo lamentamos, no hemos encontrado trayectos con esas opciones.</h2>
 			<?php endif;?>
 			
 			<?php if(sizeof($trayectosEncontrados)!=0):?><!--ENCUENTRA TRAYECTOS -->
