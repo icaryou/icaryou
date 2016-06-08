@@ -15,15 +15,31 @@
 						<div class="comentariosBusqueda"><?php echo $trayectoAgrupado[0]['comentarios']?></div>
 						
 						<!-- PINTAMOS UNIRSE SI NO ESTA EN EL TRAYECTO Y HAY PLAZAS DISPONIBLES -->
-								<?php foreach ($trayectoAgrupado as $usu):?>
-									<?php if($usu["usuarioId"]==$this->session->userdata('id')):?>
-										<?php $pintarAbandonar=TRUE?>
-									<?php endif;?>
-								<?php endforeach;?>
+								<?php $pintarAbandonar=false;
+								$pintarYaHasSolicitado=false;
+								$aceptados=0;?>	
+								<?php foreach ($trayectoAgrupado as $usu){
+									$pintarAbandonar=false;
+									$pintarYaHasSolicitado=false;
+									if($usu["aceptado"]==1){
+										$aceptados++;
+										if($usu["usuarioId"]==$this->session->userdata('id')){
+											$pintarAbandonar=true;
+										}
+									}else if($usu["aceptado"]==0){
+										if($usu["usuarioId"]==$this->session->userdata('id')){
+											$pintarYaHasSolicitado=true;
+										}	
+									}
+								}?>
+								
+								<?php if(!$pintarAbandonar&&$pintarYaHasSolicitado):?>				
+									<p class="top-buffer10"><strong>Estás a la espera de ser aceptado.</strong></p>				 
+								<?php endif;?>
 								
 								<!-- PINTAMOS ABANDONAR SI NO ESTA EN EL TRAYECTO Y HAY PLAZAS DISPONIBLES -->
 								<?php if(isset($pintarAbandonar)&&$pintarAbandonar):?>				
-								<button class="btn btn-primary btn-lg botonBusqueda" onclick="llamarAjaxAbandonar(this,1)" data-button="<?php echo $trayectoAgrupado[0]['trayecto_id']?>"
+								<button class="btn btn-primary btn-lg botonBusqueda" onclick="llamarAjaxAbandonar(this,2)" data-button="<?php echo $trayectoAgrupado[0]['trayecto_id']?>"
 									class="btn btn-primary btn-lg btn-block" tabindex="7" data-toggle="modal" href="#hasAbandonado">Abandonar</button>					 
 								<?php endif;?>
 					</td>
