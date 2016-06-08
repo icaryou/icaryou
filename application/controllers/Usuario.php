@@ -14,9 +14,7 @@ class Usuario extends CI_Controller
 		//$this->load->library('email');
 	}
 	
-	public function sendMail($emailReceiver="", $message="", $subject="",$code="",$id_usuario=0) {
-		
-		echo "----";
+	public function sendMail($emailReceiver="", $message="", $subject="",$code="",$id_usuario=0) {	
 		
         $icaryouEmail = 'icaryouspain@gmail.com';
         $icaryouPass = 'Micochecit0';
@@ -118,21 +116,29 @@ MENSAJE;
 		if($respuesta==1)
 		{
 			$datos['tipo']='activado';
+			$datos['h4']="¡Has activado tu cuenta!";
+			$datos['textoModal']="Ya puedes loguearte desde el menú principal.";
 			enmarcar($this,'index.php',$datos);
 		}
 		elseif($respuesta==-1)
 		{
 			$datos['tipo']='baneado';
+			$datos['h4']="Ups... Has sido baneado";
+			$datos['textoModal']="Lo sentimos, actualmente no puedes acceder con tu cuenta.";
 			enmarcar($this,'index.php',$datos);
 		}
 		elseif($respuesta==2)
 		{
-			$datos['tipo']='ya estaba activado';
+			$datos['tipo']='reactivando';
+			$datos['h4']="Este usuario ya está activo";
+			$datos['textoModal']="Puedes loguearte desde el menú principal.";
 			enmarcar($this,'index.php',$datos);
 		}
 		else
 		{
-			$datos['tipo']='nose ha podido activar';
+			$datos['tipo']='noactivado';
+			$datos['h4']="Ups... Algo ha ido mal";
+			$datos['textoModal']="Lo sentimos, inténtalo de nuevo.";
 			enmarcar($this,'index.php',$datos);
 		}
     }
@@ -520,6 +526,39 @@ MENSAJE;
 		*/
 	}
 	
+	public function listarTrayectosPropiosRellenar()
+	{
+		//VALIDAMOS SI HAY USUARIO ACTIVO
+		if($this->session->userdata('logueado'))
+		{
+			$this->load->Model('Trayecto_Model');
+			$datos['trayectosPropiosEncontrados']=$this->Trayecto_Model->listarTrayectosPropios($this->session->userdata('id'));
+			$datos['js']="listarTrayectosPropios";
+			$datos['css']="listadoTrayectos";
+			$tipoTrayecto=$this->input->post('tipoTrayecto');
+
+			if($tipoTrayecto==1){
+				$resultadoParaDiv=$this->load->view("usuario/rellenarTrayecPropios", $datos, true);
+			}else if($tipoTrayecto==2){
+				$resultadoParaDiv=$this->load->view("usuario/rellenarTrayecAjenos", $datos, true);
+			}
+			
+			echo $resultadoParaDiv;
+		}
+		else//SI NO ESTA LOGUEADO LE MANDAMOS AL LOGIN CON UN CAMPO REDIRECCION PARA QUE LUEGO LE LLEVE A LA PAGINA QUE QUERIA
+		{
+			$datos['redireccion']='usuario/listarTrayectosPropios';
+			$datos['errorLogin']='Por favor inicia sesion';
+			enmarcar($this,'index.php',$datos);
+		}
+		/*
+			$this->load->Model('Trayecto_Model');
+			$datos['trayectosPropiosEncontrados']=$this->Trayecto_Model->listarTrayectosPropios($this->session->userdata('id'));
+	
+			enmarcar($this,'usuario/listarTrayectosPropios.php',$datos);
+			*/
+	}
+	
 	public function ver_trayectos_usuario($id_usuario)//TODO???
 	{
 		//VALIDAMOS SI HAY USUARIO ACTIVO
@@ -543,6 +582,41 @@ MENSAJE;
 	
 			enmarcar($this,'usuario/listarTrayectosPropios.php',$datos);
 			*/
+	}
+	
+	public function ver_trayectos_usuario_rellenar()//TODO???
+	{
+		//VALIDAMOS SI HAY USUARIO ACTIVO
+		if($this->session->userdata('logueado'))
+		{
+			$id_usuario=$this->input->post('id_usuario');
+			$this->load->Model('Usuario_Model');
+			$datos['usuario_buscado']=$this->Usuario_Model->obtenerUsuarioPorId($id_usuario);
+				
+			$this->load->Model('Trayecto_Model');
+			$datos['trayectosEncontrados']=$this->Trayecto_Model->listar_trayectos_usuario($id_usuario);
+			
+			$tipoTrayecto=$this->input->post('tipoTrayecto');
+			
+			if($tipoTrayecto==1){
+				$resultadoParaDiv=$this->load->view("usuario/rellenarTrayecUsuarioP", $datos, true);
+			}else if($tipoTrayecto==2){
+				$resultadoParaDiv=$this->load->view("usuario/rellenarTrayecUsuarioA", $datos, true);
+			}
+				
+			echo $resultadoParaDiv;
+		}
+		else//SI NO ESTA LOGUEADO LE MANDAMOS AL LOGIN CON UN CAMPO REDIRECCION PARA QUE LUEGO LE LLEVE A LA PAGINA QUE QUERIA
+		{
+			$datos['errorLogin']='Por favor inicia sesion';
+			enmarcar($this,'index.php',$datos);
+		}
+		/*
+		 $this->load->Model('Trayecto_Model');
+		 $datos['trayectosPropiosEncontrados']=$this->Trayecto_Model->listarTrayectosPropios($this->session->userdata('id'));
+	
+		 enmarcar($this,'usuario/listarTrayectosPropios.php',$datos);
+		 */
 	}
 	
 	public function unirse_trayecto()//TODO???
