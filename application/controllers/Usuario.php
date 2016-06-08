@@ -536,8 +536,6 @@ MENSAJE;
 			$datos['trayectosPropiosEncontrados']=$this->Trayecto_Model->listarTrayectosPropios($this->session->userdata('id'));
 			$datos['js']="listarTrayectosPropios";
 			$datos['css']="listadoTrayectos";
-			$tipoTrayecto=$this->input->post('tipoTrayecto');
-
 			
 			$resultadoParaDiv=$this->load->view("usuario/rellenarTrayecPropios", $datos, true);
 			
@@ -594,14 +592,9 @@ MENSAJE;
 				
 			$this->load->Model('Trayecto_Model');
 			$datos['trayectosEncontrados']=$this->Trayecto_Model->listar_trayectos_usuario($id_usuario);
+						
+			$resultadoParaDiv=$this->load->view("usuario/rellenarTrayecAjenos", $datos, true);
 			
-			$tipoTrayecto=$this->input->post('tipoTrayecto');
-			
-			if($tipoTrayecto==1){
-				$resultadoParaDiv=$this->load->view("usuario/rellenarTrayecUsuarioP", $datos, true);
-			}else if($tipoTrayecto==2){
-				$resultadoParaDiv=$this->load->view("usuario/rellenarTrayecUsuarioA", $datos, true);
-			}
 				
 			echo $resultadoParaDiv;
 		}

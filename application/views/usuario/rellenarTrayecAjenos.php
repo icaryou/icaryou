@@ -2,24 +2,28 @@
 <?php foreach ($trayectosEncontrados as $trayectoAgrupado):?>
 <!-- EN CADA $TRAYECTO AGRUPADO TENEMOS UN SOLO TRAYECTO PERO TANTAS FILAS COMO USUARIOS TENGA ESE TRAYECTO -->
 
-	<?php if($trayectoAgrupado[0]['creador']==$usuario_buscado->id):?>
+	
 	<?php $contadorTrayectos++;?>
-
-			<table id="tablaPropios" class="elementoBusqueda span10 bottom-bufferElements">
+		<?php if($trayectoAgrupado[0]['creador']==$usuario_buscado->id):?>
+				<table class="elementoBusqueda span10 bottom-bufferElements">
+		<?php endif;?>
+		<?php if($trayectoAgrupado[0]['creador']!=$usuario_buscado->id):?>
+				<table class="elementoBusquedaAjenos span10 bottom-bufferElements">
+		<?php endif;?>
 				<tr>
-					<td class="paddignCelda">
+					<td class="paddignCeldaTrayec">
 						<span class="diasBusqueda"><?php echo $trayectoAgrupado[0]['dias']?></span>
 						<span class="horasBusqueda"><?php echo $trayectoAgrupado[0]['horallegadadestino']?> - 
 						<?php echo $trayectoAgrupado[0]['horaretornodestino']?></span>
 						<div class="lugaresBusqueda"><img class="casitas" src="<?php echo base_url();?>/assets/img/casitaVerde.png"/><?php echo $trayectoAgrupado[0]['poblacionOrigen']?></div>
 						<div class="lugaresBusqueda"><img class="casitas" src="<?php echo base_url();?>/assets/img/casitaRosa.png"/><?php echo $trayectoAgrupado[0]['poblacionDestino']?></div>
 						<div class="comentariosBusqueda"><?php echo $trayectoAgrupado[0]['comentarios']?></div>
-						<!-- PINTAMOS UNIRSE SI NO ESTA EN EL TRAYECTO Y HAY PLAZAS DISPONIBLES -->
 						
-						<?php $pintarAbandonar=false;
+						<!-- PINTAMOS UNIRSE SI NO ESTA EN EL TRAYECTO Y HAY PLAZAS DISPONIBLES -->
+								<?php $pintarAbandonar=false;
 								$pintarYaHasSolicitado=false;
 								$aceptados=0;?>	
-						<?php foreach ($trayectoAgrupado as $usu){
+								<?php foreach ($trayectoAgrupado as $usu){
 									if($usu["aceptado"]==1){
 										$aceptados++;
 										if($usu["usuarioId"]==$this->session->userdata('id')){
@@ -30,31 +34,31 @@
 											$pintarYaHasSolicitado=true;
 										}	
 									}
-						}?>
-
-<!-- PINTAMOS YA LO HAS SOLICITADO SI ESTA A LA ESPERA DE SER ACEPTADO -->
+								}?>
+								<!-- PINTAMOS YA LO HAS SOLICITADO SI ESTA A LA ESPERA DE SER ACEPTADO -->
 							<?php if($this->session->userdata('id')!=null):?>
 								<?php if(!$pintarAbandonar&&$pintarYaHasSolicitado):?>				
 									<p class="top-buffer10"><strong>Estás a la espera de ser aceptado.</strong></p>				 
 								<?php endif;?>
-
+								
 								<?php if(!$pintarAbandonar&&($trayectoAgrupado[0]['plazas']>$aceptados)&&!$pintarYaHasSolicitado):?>				
-								<button class="btn btn-primary btn-lg botonBusqueda" onclick="llamarAjaxSubmit(this,1)" data-button="<?php echo $trayectoAgrupado[0]['trayecto_id']?>"
-									data-user="<?php echo $usuario_buscado->id;?>" class="btn btn-primary btn-lg btn-block" tabindex="7" data-toggle="modal" href="#teHasUnido">Unirse</button>				 
+								<button class="btn btn-primary btn-lg botonBusqueda" onclick="llamarAjaxSubmit(this)" data-button="<?php echo $trayectoAgrupado[0]['trayecto_id']?>"
+									class="btn btn-primary btn-lg btn-block" tabindex="7" data-toggle="modal" href="#teHasUnido">Unirse</button>				 
 								<?php endif;?>
 								
 								<!-- PINTAMOS COMPLETO SI NO ESTA EN EL TRAYECTO Y NO HAY PLAZAS DISPONIBLES -->
-								<?php if(!$pintarAbandonar&&$trayectoAgrupado[0]['plazas']==$aceptados):?>				
+								<?php if(!$pintarAbandonar&&($trayectoAgrupado[0]['plazas']==$aceptados)):?>				
 								<p class="top-buffer10"><strong>Trayecto completo</strong></p>				 
 								<?php endif;?>
 								
 								<!-- PINTAMOS ABANDONAR SI NO ESTA EN EL TRAYECTO Y HAY PLAZAS DISPONIBLES -->
 								<?php if(isset($pintarAbandonar)&&$pintarAbandonar):?>				
-								<button class="btn btn-primary btn-lg botonBusqueda" onclick="llamarAjaxAbandonar(this,1)" data-button="<?php echo $trayectoAgrupado[0]['trayecto_id']?>"
-									data-user="<?php echo $usuario_buscado->id;?>" class="btn btn-primary btn-lg btn-block" tabindex="7" data-toggle="modal" href="#hasAbandonado">Abandonar</button>				 
+								<button class="btn btn-primary btn-lg botonBusqueda" onclick="llamarAjaxAbandonar(this)" data-button="<?php echo $trayectoAgrupado[0]['trayecto_id']?>"
+									class="btn btn-primary btn-lg btn-block" tabindex="7" data-toggle="modal" href="#hasAbandonado">Abandonar</button>				 
 								<?php endif;?>
-							<?php endif;?>	
-					</td>	
+					
+				
+					</td>
 					<td class="paddignCelda2">
 						<div class="usuArriba">
 							<p class="usuTitulo">Usuarios</p>
@@ -79,7 +83,7 @@
 						</div>
 
 					</td>
-			</tr>					
-		</table>		
+				</tr>
+				</table>
 	<?php endif;?>
 <?php endforeach;?>
