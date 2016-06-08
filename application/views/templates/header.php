@@ -32,6 +32,7 @@
 										<li class="active"><a href="<?= base_url();?>usuario/registrarUsuario">Regístrate</a></li>
 										<li class="login"><a id="botonLogin" data-toggle="modal" href="#loginForm">Inicia sesi&oacute;n</a></li>
 									<?php endif;?>
+									
 									<!--LOGUEADO -->
 									<?php if($this->session->userdata('logueado')):?>
 									<li class="dropdown"><a href=""
@@ -52,6 +53,11 @@
 											<li><a href="<?php echo base_url()?>usuario/listarTrayectosPropios">Mis trayectos</a></li>
 											<li><a href="<?php echo base_url()?>mensaje/mostrar_mensajes">Mis mensajes</a></li>
 											<li><a href="<?php echo base_url()?>usuario/logoutUsuario">Logout</a></li>
+																							
+											<?php if($this->session->userdata('esAdmin')==1):?>
+												<li><a href="<?php echo base_url()?>admin_app">Panel admin</a></li>
+											<?php endif;?>
+											
 										</ul>
 										</li>
 									<?php endif;?>

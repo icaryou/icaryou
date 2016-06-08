@@ -53,7 +53,6 @@ class Mensaje_model extends RedBean_SimpleModel //CI_Model//
 		WHERE c.usuario1_id=$usuario_id OR c.usuario2_id=$usuario_id");	
 				
 		
-		
 		$usuarios_buscar_conversacion=array();
 		
 		//SELECCIONA LAS CONVERSACIONES DE LOS  ID'S ANTERIORES EN LOS QUE TENGA CHAT ACTIVO(SIN BORRAR)
@@ -130,10 +129,26 @@ class Mensaje_model extends RedBean_SimpleModel //CI_Model//
 				WHERE (usuario1_id=$usuario AND usuario2_id=$id_otro_usuario) OR
 				(usuario1_id=$id_otro_usuario AND usuario2_id=$usuario)");
 		
-		
-		
-		
-		
+		//NUEVO 5/06
+		/*
+		$todo=R::getAll("SELECT id, CASE
+				WHEN c.USUARIO1_ID = $usuario then c.iniciochatusuario1
+				ELSE c.iniciochatusuario2
+				END inicio_chat
+				FROM conversacion c
+				WHERE (c.usuario1_id=$usuario AND c.usuario2_id=$id_otro_usuario) OR
+				(c.usuario1_id=$id_otro_usuario AND c.usuario2_id=$usuario)");
+		*/
+	
+		//NUEVO 5/06
+		/*
+		$mensajes=R::getAll("SELECT m.id,m.sw_no_leido,m.remitente,m.hora,m.texto
+				FROM mensaje m
+				JOIN conversacion c
+				on c.id=m.conversacion_id
+				WHERE m.conversacion_id={$id_conversacion['id']} AND m.hora>'{$todo[0]['inicio_chat']}'");
+		*/
+		//funciona 5/06
 		$mensajes=R::getAll("SELECT *
 				FROM mensaje
 				WHERE conversacion_id={$id_conversacion['id']}");
@@ -146,13 +161,11 @@ class Mensaje_model extends RedBean_SimpleModel //CI_Model//
 	//BUSCA NUEVOS MENSAJES CONSTANTEMENTE Y PONE COMO LEIDOS TOODOS LOS DE ESA CONVERSACION QUE ES LA QUE TIENE ABIERTA EL USUARIO
 	//(PONE COMO LEIDOS LOS QUE TENIA EL COMO DESTINATARIO)
 	public function buscar_nuevos_mensajes_chat($id_conversacion,$id_ultimo_mensaje,$usuario_activo)
-	{	
-		
-		
+	{			
 		$mensajes=R::getAll("SELECT *
 				FROM mensaje
 				WHERE conversacion_id=$id_conversacion AND id>$id_ultimo_mensaje");
-	
+		
 		R::exec( "UPDATE mensaje SET sw_no_leido=0 WHERE remitente!=$usuario_activo AND conversacion_id={$id_conversacion}" );
 		
 		return $mensajes;
@@ -211,6 +224,19 @@ class Mensaje_model extends RedBean_SimpleModel //CI_Model//
 		
 	}
 	
+	public function resetear_conversacion($id_conversacion,$usuario_activo)
+	{
+		$hora_nueva=Date("Y-m-d H:i:s");
+		
+		//echo $hora_nueva;
+		//var_dump($fecha_nueva) ;
+		
+		//echo $fecha_nueva->date;
+		
+		R::exec( "UPDATE conversacion SET iniciochatusuario1='$hora_nueva' WHERE id=$id_conversacion AND usuario1_id=$usuario_activo");
+		
+		R::exec( "UPDATE conversacion SET iniciochatusuario2='$hora_nueva' WHERE id=$id_conversacion AND usuario2_id=$usuario_activo");
+	}
 	
 	
 	

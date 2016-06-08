@@ -163,6 +163,15 @@ class Mensaje extends CI_Controller
 		
 	}
 	
+	
+	public function resetear_conversacion()
+	{	
+		$id_conversacion=$_REQUEST['id_conversacion'];
+		$usuario_activo=$this->session->userdata('id');
+		$mensajes=$this->Mensaje_model->resetear_conversacion($id_conversacion,$usuario_activo);
+	
+	}
+	
 	//FUNCIONES PERSONALIZADAS VALIDACION ---  SE PUEDEN AGREGAR EN LIBRARIES/FORM_VALIDATION.PHP
 	
 	//dd/mm/yyyy

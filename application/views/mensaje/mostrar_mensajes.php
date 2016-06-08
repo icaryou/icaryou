@@ -90,7 +90,6 @@
 	</form>
 	
 </div>
-
 <div id="sombra"></div>
 -->
 <?php endif;?>
