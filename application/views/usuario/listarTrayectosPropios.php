@@ -99,7 +99,6 @@
 <?php $contadorTrayectos=0;?>
 <?php foreach ($trayectosPropiosEncontrados as $trayectoAgrupado):?>
 <!-- EN CADA $TRAYECTO AGRUPADO TENEMOS UN SOLO TRAYECTO PERO TANTAS FILAS COMO USUARIOS TENGA ESE TRAYECTO -->
-
 <?php if($trayectoAgrupado[0]['creador']!=$this->session->userdata('id')):?>
 <?php $contadorTrayectos++;?>
 				<table id="tablaAjenos" class="elementoBusquedaAjenos span10 bottom-bufferElements">
@@ -113,11 +112,25 @@
 						<div class="comentariosBusqueda"><?php echo $trayectoAgrupado[0]['comentarios']?></div>
 						
 						<!-- PINTAMOS UNIRSE SI NO ESTA EN EL TRAYECTO Y HAY PLAZAS DISPONIBLES -->
-								<?php foreach ($trayectoAgrupado as $usu):?>
-									<?php if($usu["usuarioId"]==$this->session->userdata('id')):?>
-										<?php $pintarAbandonar=TRUE?>
-									<?php endif;?>
-								<?php endforeach;?>
+								<?php $pintarAbandonar=false;
+								$pintarYaHasSolicitado=false;
+								$aceptados=0;?>	
+								<?php foreach ($trayectoAgrupado as $usu){
+									if($usu["aceptado"]==1){
+										$aceptados++;
+										if($usu["usuarioId"]==$this->session->userdata('id')){
+											$pintarAbandonar=true;
+										}
+									}else if($usu["aceptado"]==0){
+										if($usu["usuarioId"]==$this->session->userdata('id')){
+											$pintarYaHasSolicitado=true;
+										}	
+									}
+								}?>
+								
+								<?php if(!$pintarAbandonar&&$pintarYaHasSolicitado):?>				
+									<p class="top-buffer10"><strong>Estás a la espera de ser aceptado.</strong></p>				 
+								<?php endif;?>
 								
 								<!-- PINTAMOS ABANDONAR SI NO ESTA EN EL TRAYECTO Y HAY PLAZAS DISPONIBLES -->
 								<?php if(isset($pintarAbandonar)&&$pintarAbandonar):?>				
@@ -135,7 +148,7 @@
 							<?php $contadorUsuarios++;?>
 							<div class="UsuTrayecto">
 								<img class="imgUsuTrayecto" src="<?php echo base_url().$usu["foto"]?>"/>
-								<p class="nombreViajero"><a href="<?php echo base_url('usuario/mostrarPerfilUsuario/'.$usu["usuarioId"])?>"><?php echo $usu["nombre"]." ".$usu["apellidos"]?></a></p>
+								<p class="nombreViajero"><a href="<?php echo base_url('usuario/mostrarPerfilUsuario/'.$usu["usuarioId"]);?>"><?php echo $usu["nombre"]?></a></p>
 							</div>
 			 			<?php endforeach;?>
 			 			<?php for($i=0;$i<($usu["plazas"]-$contadorUsuarios);$i++):?>

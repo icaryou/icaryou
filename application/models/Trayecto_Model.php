@@ -171,7 +171,7 @@ class Trayecto_Model extends RedBean_SimpleModel
 		
 		
 		//SELECCIONAMOS LOS IDS DE SUS TRAYECTOS
-		$idTrayectosPropiosEncontrados=R::getAll("select ut.trayecto_id from usuariotrayecto ut where ut.usuario_id=$id AND aceptado=1 ");//TODO cmabiar por $id
+		$idTrayectosPropiosEncontrados=R::getAll("select ut.trayecto_id from usuariotrayecto ut where ut.usuario_id=$id AND aceptado!=-1 ");//TODO cmabiar por $id
 				
 		$trayectosPropiosEncontrados=array();	
 		
@@ -194,7 +194,6 @@ class Trayecto_Model extends RedBean_SimpleModel
 			order by ut.trayecto_id, ut.id"));
 		}	
 		
-		
 		return $trayectosPropiosEncontrados;
 		
 	}
@@ -211,7 +210,7 @@ class Trayecto_Model extends RedBean_SimpleModel
 		foreach ($id_trayectos_encontrados as $id)
 		{
 			//CADA ITERACION BUSCA POR UN ID DE USUARIO DEVOLVIENDO TANTAS FILAS COMO USUARIOS TENGA ESE ID DE TRAYECTO
-			array_push($trayectos_encontrados, R::getAll("select u.id usuarioId, u.nombre,u.apellidos,u.fechanac,
+			array_push($trayectos_encontrados, R::getAll("select u.id usuarioId, u.nombre,u.apellidos,u.fechanac, u.foto,
 					t.id trayecto_id,t.dias,t.horallegadadestino,t.horaretornodestino,t.comentarios,t.creador,t.plazas,
 					li.poblacion as poblacionOrigen,
 					ld.poblacion poblacionDestino,

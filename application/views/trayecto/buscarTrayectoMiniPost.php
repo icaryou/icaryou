@@ -198,7 +198,7 @@
 								<?php endif;?>
 								
 								<!-- PINTAMOS COMPLETO SI NO ESTA EN EL TRAYECTO Y NO HAY PLAZAS DISPONIBLES -->
-								<?php if(!$pintarAbandonar&&$trayectoAgrupado[0]['plazas']==$aceptados):?>				
+								<?php if(!$pintarAbandonar&&($trayectoAgrupado[0]['plazas']==$aceptados)):?>				
 								<p class="top-buffer10"><strong>Trayecto completo</strong></p>				 
 								<?php endif;?>
 								
@@ -282,7 +282,7 @@
 	</div>
 	<!--Modal Body-->
 	<div class="modal-body">
-		<p class="modalTexto">Puedes consultar tus trayectos en tu menú personal.</p>
+		<p class="modalTexto">Ya solo falta que el creador del trayecto acepte tu solicitud.</p>
 	</div>
 	<!--/Modal Body-->
 </div>
