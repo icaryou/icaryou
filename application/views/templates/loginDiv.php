@@ -46,7 +46,7 @@
 			<p class="col-lg-3 top-buffer">
 				<a href="<?=base_url('usuario/registrarUsuario')?>">Crear una cuenta</a>
 			</p>
-<div id="errorSubmit" class="tooltip center-block " title="El usuario o la contraseña son incorrectos."></div>
+<div id="errorSubmit" class="tooltip center-block " title="El usuario o la contraseña son incorrectos o usuario inactivo."></div>
 
 
 

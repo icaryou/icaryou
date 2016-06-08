@@ -92,7 +92,7 @@ var altura=$(document).height();
 	setInterval(function()
     		{ 		
     			actualizar_conversaciones(); 
-    		}, 1000);
+    		}, 10000);
 	
 	//AÑADIMOS EVENTO CLICK AL BOTON abrir chat
 	
@@ -167,7 +167,7 @@ function abrir_chat(id_otro_usuario)
     	    		setInterval(function()
     	    		{ 		
     	    			actualizar_mensajes_chat(); 
-    	    		}, 1000);
+    	    		}, 10000);
     	    		
     	    	   
     	    	   $('#input_mensajes').css('display','block');

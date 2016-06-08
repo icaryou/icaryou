@@ -19,6 +19,7 @@ class Usuario extends CI_Controller
         $icaryouEmail = 'icaryouspain@gmail.com';
         $icaryouPass = 'Micochecit0';
         
+        $direccion=base_url()."usuario/activar_usuario/$id_usuario/$code";
         
         $message=<<<MENSAJE
         
@@ -44,7 +45,7 @@ class Usuario extends CI_Controller
 		        
 		        <p>Para activar tu usuario pincha en el siguiente enlace por favor: </p>
 		        
-		        <p><a href="http://localhost/icaryou/usuario/activar_usuario/$id_usuario/$code">http://localhost/icaryou/usuario/activar_usuario/$id_usuario/$code</a></p>
+		        <p><a href="$direccion">$direccion</a></p>
 		        
 		        <p>Atentamente, el equipo de Icaryou.</p>
 		    </body>
@@ -701,9 +702,15 @@ MENSAJE;
 			
 			$this->load->model("Usuario_Model");
 			$usuario=$this->Usuario_Model->loguearUsuario($login);//COMPROBAMOS EN EL MODELO
+						
 			
-			if ($usuario!=null)//ENCUENTRA USUARIO
+			if($usuario!=null && $usuario->sw_activo!=1)
 			{
+				$response = false;
+			}
+			
+			else if ($usuario!=null)//ENCUENTRA USUARIO
+			{				
 				$usuario_data = array(
 						'id' => $usuario->id,
 						'nombre' => $usuario->nombre,
@@ -714,7 +721,8 @@ MENSAJE;
 						'cp' => $usuario->cp,
 						'foto' => $usuario->foto,
 						'cochepropio' => $usuario->cochepropio,
-						'logueado' => TRUE
+						'logueado' => TRUE,
+						'esAdmin' => $usuario->admin
 				);
 				$this->session->set_userdata($usuario_data);
 				//SI SE HUBIERA FORZADO EL LOGIN POR INTENTAR ACCEDER A UN SITIO SIN PERMISO LE MANSDAMOS AL MISMO				

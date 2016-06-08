@@ -30,6 +30,7 @@ class Usuario_Model extends RedBean_SimpleModel //CI_Model//
 		$usuario->foto=isset($registro['foto'])?$registro['foto']:null;
 		$usuario->sw_activo=false;
 		$usuario->sw_mensajes_nuevos=false;
+		$usuario->admin=0;
 		
 		$id=R::store($usuario);		
 		
@@ -243,7 +244,10 @@ public function abandonar_trayecto($id_usuario,$id_trayecto)
 	
 	public function loguearUsuario($login)
 	{		
-		$usuario=R::findOne("usuario","email=? AND password=?",array($login['email'],sha1($login['password'])));		
+		$usuario=R::findOne("usuario","email=? AND password=?",array($login['email'],sha1($login['password'])));	
+		
+		//$usuario=R::findOne("usuario","email=? AND password=? AND sw_activo=?",array($login['email'],sha1($login['password'])),1);
+		
 		//OTRA FORMA
 		//$usuario=R::getAll( 'select * from usuario where email= :emailLogin AND password = :passwordLogin',array(':emailLogin'=>$login['email'],':passwordLogin' => sha1($login['password'])) );
 		
