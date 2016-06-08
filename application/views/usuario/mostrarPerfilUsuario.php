@@ -28,6 +28,7 @@
 						<td class="span3"><strong>Apellidos</strong></td>
 						<td><?php echo $usuario['apellidos']?></td>
 					</tr>
+					<!--  
 					<tr>
 						<td class="span3"><strong>Email</strong></td>
 						<td><?php echo $usuario['email']?></td>
@@ -36,6 +37,7 @@
 						<td class="span3"><strong>Fecha de nacimiento</strong></td>
 						<td><?php echo $usuario['fechanac']?></td>
 					</tr>
+					-->
 					<tr>
 						<td class="span3"><strong>Código postal</strong></td>
 						<td><?php echo $usuario['cp']?></td>
