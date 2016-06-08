@@ -538,11 +538,9 @@ MENSAJE;
 			$datos['css']="listadoTrayectos";
 			$tipoTrayecto=$this->input->post('tipoTrayecto');
 
-			if($tipoTrayecto==1){
-				$resultadoParaDiv=$this->load->view("usuario/rellenarTrayecPropios", $datos, true);
-			}else if($tipoTrayecto==2){
-				$resultadoParaDiv=$this->load->view("usuario/rellenarTrayecAjenos", $datos, true);
-			}
+			
+			$resultadoParaDiv=$this->load->view("usuario/rellenarTrayecPropios", $datos, true);
+			
 			
 			echo $resultadoParaDiv;
 		}
