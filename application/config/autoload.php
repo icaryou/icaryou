@@ -58,7 +58,10 @@ $autoload['packages'] = array();
 |
 |	$autoload['libraries'] = array('user_agent' => 'ua');
 */
-$autoload['libraries'] = ['rb','session','form_validation','session','email','database'];
+$autoload['libraries'] = ['session','form_validation','session','email','database'];
+
+// load RedBeanPHP
+include(APPPATH.'libraries/rb.php');
 
 /*
 | -------------------------------------------------------------------
