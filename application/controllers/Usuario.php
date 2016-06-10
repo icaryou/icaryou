@@ -482,7 +482,8 @@ MENSAJE;
 							'cp' => $usuario->cp,
 							'foto' => $usuario->foto,
 							'cochepropio' => $usuario->cochepropio,
-							'logueado' => TRUE
+							'logueado' => TRUE,
+						'esAdmin' => $usuario->admin
 					);
 					$this->session->set_userdata($usuario_data);
 				}
