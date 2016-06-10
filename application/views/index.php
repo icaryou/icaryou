@@ -130,64 +130,26 @@
 
 <div class="row feature-box">
 	<div class="span12 cnt-title">
-		<h1>At vero eos et accusamus et iusto odio dignissimos</h1>
-		<span>Contrary to popular belief, Lorem Ipsum is not simply random
-			text.</span>
+		<h1>Trayectos destacados</h1>
 	</div>
 
 	<div class="span4">
-		<img src="<?= base_url();?>assets/img/icon3.png">
-		<h2>Feature A</h2>
-		<p>Pellentesque habitant morbi tristique senectus et netus et
-			malesuada fames ac turpis egestas.</p>
-
-		<a href="#">Read More &rarr;</a>
+		<a href="<?= base_url();?>trayecto/buscarTrayectosMiniPost?poblacionOrigen=Madrid&poblacionDestino=Fuenlabrada"><img src="<?= base_url();?>assets/img/masbuscados1.png"></a>
 
 	</div>
 
 	<div class="span4">
-		<img src="<?= base_url();?>assets/img/icon2.png">
-		<h2>Feature B</h2>
-		<p>Consectetur adipisicing elit, sed do eiusmod tempor incididunt ut
-			labore et dolore magna aliqua.</p>
-		<a href="#">Read More &rarr;</a>
+		<a href="<?= base_url();?>trayecto/buscarTrayectosMiniPost?poblacionOrigen=Barcelona&poblacionDestino=Tarragona"><img src="<?= base_url();?>assets/img/masbuscados2.png"></a>
 	</div>
 
 	<div class="span4">
-		<img src="<?= base_url();?>assets/img/icon1.png">
-		<h2>Feature C</h2>
-		<p>Vestibulum tortor quam, feugiat vitae, ultricies eget, tempor sit
-			amet, ante.</p>
-		<a href="#">Read More &rarr;</a>
+		<a href="<?= base_url();?>trayecto/buscarTrayectosMiniPost?poblacionOrigen=Amurrio&poblacionDestino=Arraia-Maeztu"><img src="<?= base_url();?>assets/img/masbuscados3.png"></a>
+
 	</div>
 </div>
 
 
 <!-- /.Feature -->
-
-<div class="hr-divider"></div>
-
-<!-- Row View -->
-
-
-<div class="row">
-	<div class="span6">
-		<img src="<?= base_url();?>assets/img/responsive.png">
-	</div>
-
-	<div class="span6">
-		<img class="hidden-phone" src="<?= base_url();?>assets/img/icon4.png"
-			alt="">
-		<h1>Fully Responsive</h1>
-		<p>Pellentesque habitant morbi tristique senectus et netus et
-			malesuada fames ac turpis egestas. Vestibulum tortor quam, feugiat
-			vitae, ultricies eget, tempor sit amet, ante. Donec eu libero sit
-			amet quam egestas semper. Aenean ultricies mi vitae est. Mauris
-			placerat eleifend leo.</p>
-		<a href="#">Read More &rarr;</a>
-	</div>
-</div>
-
 
 
 <!--  VENTANA MODAL MAIL CONFIRMACION -->
@@ -206,7 +168,7 @@
 	</div>
 	<!--/Modal Body-->
 </div>
-
+</div>
 <?php if(isset($tipo)):?>
 	<script>
 		$(document).ready(function(){
