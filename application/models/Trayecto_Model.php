@@ -307,6 +307,8 @@ class Trayecto_Model extends RedBean_SimpleModel
 	
 	public function rechazar_usuario_trayecto($id_usuario,$id_trayecto)
 	{
+			
+		
 		R::exec( "UPDATE usuariotrayecto SET aceptado=-1 WHERE trayecto_id=$id_trayecto AND usuario_id=$id_usuario");
 	
 		$info_trayecto=R::getAll("select u.nombre,u.apellidos,li.poblacion as poblacionOrigen,ld.poblacion poblacionDestino

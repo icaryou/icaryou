@@ -100,7 +100,7 @@ class Mensaje extends CI_Controller
 		$hora=Date("Y-m-d H:i:s");
 	
 	
-		$this->Mensaje_model->crear_mensaje($texto,Date("Y-m-d H:i:s"),31,$id_destinario);	
+		$this->Mensaje_model->crear_mensaje($texto,Date("Y-m-d H:i:s"),1,$id_destinario);	
 	
 	}
 	

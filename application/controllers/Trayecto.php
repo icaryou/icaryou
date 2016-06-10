@@ -328,7 +328,7 @@ class Trayecto extends CI_Controller
 		if($this->session->userdata('logueado'))
 		{
 			$this->load->Model('Trayecto_Model');
-			$info_trayecto=$this->Trayecto_Model->eliminar_usuario_trayecto($id_usuario,$id_trayecto)[0];
+			$info_trayecto=$this->Trayecto_Model->rechazar_usuario_trayecto($id_usuario,$id_trayecto)[0];
 				
 			echo $id_usuario."*"."Ha sido rechazada su solicitud para el trayecto con origen {$info_trayecto['poblacionOrigen']} y destino
 			{$info_trayecto['poblacionDestino']} administrado por {$info_trayecto['nombre']} {$info_trayecto['apellidos']}.";
