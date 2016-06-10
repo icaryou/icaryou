@@ -100,8 +100,8 @@ class Trayecto extends CI_Controller
 	
 	public function buscarTrayectosMiniPost()
 	{
-		$trayecto['poblacionOrigen']=$this->input->post('poblacionOrigen');
-		$trayecto['poblacionDestino']=$this->input->post('poblacionDestino');
+		$trayecto['poblacionOrigen']=($this->input->post('poblacionOrigen')!=null)?$this->input->post('poblacionOrigen'):$this->input->get('poblacionOrigen');
+		$trayecto['poblacionDestino']=($this->input->post('poblacionDestino')!=null)?$this->input->post('poblacionDestino'):$this->input->get('poblacionDestino');
 		if(($trayecto['poblacionOrigen']==null) ||($trayecto['poblacionDestino']==null)){
 			enmarcar($this, "index.php");
 		}else{
