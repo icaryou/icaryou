@@ -154,18 +154,7 @@ class Trayecto extends CI_Controller
 	
 	public function crearTrayecto() 
 	{		
-		/*	
-		//VALIDAMOS SI HAY USUARIO ACTIVO		 
-		if($this->session->userdata('logueado'))
-		{
-			enmarcar($this,'trayecto/crearTrayecto.php');
-		}
-		else//SI NO ESTA LOGUEADO LE MANDAMOS AL LOGIN CON UN CAMPO REDIRECCION PARA QUE LUEGO LE LLEVE A LA PAGINA QUE QUERIA
-		{			
-			$datos['redireccion']='trayecto/crearTrayecto';  
-			enmarcar($this,'usuario/loginUsuario.php',$datos);
-			
-		}*/
+		
 		
 		//VALIDAMOS SI HAY USUARIO ACTIVO
 		if($this->session->userdata('logueado'))
@@ -179,10 +168,6 @@ class Trayecto extends CI_Controller
 			enmarcar($this,'trayecto/crearTrayecto.php',$datos);
 				
 		}
-		
-
-		
-		
 	}
 	
 	public function crearTrayectoPost()
@@ -246,33 +231,13 @@ class Trayecto extends CI_Controller
                 
              }
               
-             //$this->load->view("trayecto/crearTrayectoPost",$datos);
-             //enmarcar($this, "trayecto/crearTrayectoPost",$datos);//TODO
 			
 	}
 	
 	public function comprobarCP()//TODO
 	{
 		echo "true";
-		/*
-		if (isset($_REQUEST['cpOrigen'])&&$_REQUEST['cpOrigen']!='')
-		{
-			$this->load->model("Trayecto_Model");
-			$resultado=$this->Trayecto_Model->comprobarCP($_REQUEST['cpOrigen']);
-			if($resultado!=null)
-			{
-				echo 'false';//SI ENCUENTRA EMAIL DEVOLVEMOS FALSE(ERROR)
-			}
-			else
-			{
-				echo 'true';
-			}
-		}
-		else
-		{
-			echo 'false';//No deberia entra aqui, pero lo ponemos por si acaso
-		}	
-		*/
+		
 	}
 	
 	public function aceptar_usuario_trayecto()

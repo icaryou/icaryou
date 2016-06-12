@@ -79,12 +79,7 @@ class Mensaje extends CI_Controller
 				$datos['abrirEmergente']=0;
 				enmarcar($this,'mensaje/mostrar_mensajes.php',$datos);
 			}
-			/*
-			echo $id_usuario_abrir_conversacion;
-			echo $abrir_emergente;
-			die;
-			*/
-			//enmarcar($this,'mensaje/mostrar_mensajes.php',$datos);
+			
 		}
 		else//SI NO ESTA LOGUEADO LE MANDAMOS AL LOGIN CON UN CAMPO REDIRECCION PARA QUE LUEGO LE LLEVE A LA PAGINA QUE QUERIA
 		{

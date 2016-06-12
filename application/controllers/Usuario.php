@@ -245,15 +245,13 @@ MENSAJE;
 			
 			
 			$this->load->model("Usuario_Model");
-			$id_creado=$this->Usuario_Model->crearUsuario($registro);//CREAMOS EN EL MODELO
-			
+			$id_creado=$this->Usuario_Model->crearUsuario($registro);//CREAMOS EN EL MODELO			
 						
 			
 			$code=substr($this->input->post('email'), -1).substr($this->input->post('email'),0,2).substr($this->input->post('cp'),0,3)."is6";
 						
-			$code=sha1($code);
+			$code=sha1($code);			
 			
-			//mja288is693ec478b45407ba7540589f628e19857db1e8d4d
 			
 			$this->sendMail($this->input->post('email'), "", "",$code,$id_creado);
 			
@@ -494,10 +492,8 @@ MENSAJE;
 				$datos["mensaje"]="Validación incorrectaa";//TODO
 			}
 	
-			//$this->load->view("usuario/registrarUsuarioPost",$datos);
-			//enmarcar($this, "usuario/mostrarPerfil.php",$datos);//TODO
-			$this->mostrarPerfilPropio();
-			//header("Location:".base_url().'usuario/mostrarPerfil');	
+		
+			$this->mostrarPerfilPropio();	
 		}
 	
 	
@@ -520,12 +516,7 @@ MENSAJE;
 			$datos['errorLogin']='Por favor inicia sesion';
 			enmarcar($this,'index.php',$datos);
 		}
-		/*
-		$this->load->Model('Trayecto_Model');
-		$datos['trayectosPropiosEncontrados']=$this->Trayecto_Model->listarTrayectosPropios($this->session->userdata('id'));
 		
-		enmarcar($this,'usuario/listarTrayectosPropios.php',$datos);
-		*/
 	}
 	
 	public function listarTrayectosPropiosRellenar()
@@ -549,12 +540,7 @@ MENSAJE;
 			$datos['errorLogin']='Por favor inicia sesion';
 			enmarcar($this,'index.php',$datos);
 		}
-		/*
-			$this->load->Model('Trayecto_Model');
-			$datos['trayectosPropiosEncontrados']=$this->Trayecto_Model->listarTrayectosPropios($this->session->userdata('id'));
-	
-			enmarcar($this,'usuario/listarTrayectosPropios.php',$datos);
-			*/
+		
 	}
 	
 	public function ver_trayectos_usuario($id_usuario)//TODO???
@@ -574,12 +560,7 @@ MENSAJE;
 			$datos['errorLogin']='Por favor inicia sesion';
 			enmarcar($this,'index.php',$datos);
 		}
-		/*
-			$this->load->Model('Trayecto_Model');
-			$datos['trayectosPropiosEncontrados']=$this->Trayecto_Model->listarTrayectosPropios($this->session->userdata('id'));
-	
-			enmarcar($this,'usuario/listarTrayectosPropios.php',$datos);
-			*/
+		
 	}
 	
 	public function ver_trayectos_usuario_rellenar()//TODO???
@@ -604,12 +585,7 @@ MENSAJE;
 			$datos['errorLogin']='Por favor inicia sesion';
 			enmarcar($this,'index.php',$datos);
 		}
-		/*
-		 $this->load->Model('Trayecto_Model');
-		 $datos['trayectosPropiosEncontrados']=$this->Trayecto_Model->listarTrayectosPropios($this->session->userdata('id'));
-	
-		 enmarcar($this,'usuario/listarTrayectosPropios.php',$datos);
-		 */
+		
 	}
 	
 	public function unirse_trayecto()//TODO???
@@ -718,46 +694,18 @@ MENSAJE;
 				);
 				$this->session->set_userdata($usuario_data);
 				//SI SE HUBIERA FORZADO EL LOGIN POR INTENTAR ACCEDER A UN SITIO SIN PERMISO LE MANSDAMOS AL MISMO				
-				//$this->session->userdata('redireccion')!=null?header("Location:".base_url().$this->session->userdata('redireccion')):header("Location:".base_url().'trayecto/buscarTrayectos');
-				//isset($_REQUEST['redireccion'])?header("Location:".base_url().$this->input->post('redireccion')):header("Location:".base_url().'trayecto/buscarTrayectos');
-				//$response = isset($_REQUEST['redireccion'])?$this->input->post('redireccion'):true;
+				
 				$response = true;
-				//$this->session->set_userdata('nombre', 'blasa'); PARA CAMBIAR SOLO UN VALOR
 			}
 			else//NO ENCUENTRA
 			{
 				$response = false;
-				/*
-				//GUARDAMOS DOS DATOS EN SESIONES TEMPORALES Y RETORNAMOS A LOGIN
-				$this->session->set_flashdata('errorLogin', 'El usuario o la contraseña son incorrectos.');
-				$this->session->set_flashdata('email', $login['email']);
-				//header("Location:".base_url().'usuario/loginUsuario');
-				header("Location:".base_url().'trayecto/buscarTrayectos');
 				
-
-				$urlPartida=explode("/",$_REQUEST['urlOrigen']);
-				
-				
-				if(sizeof($urlPartida)<=3)
-				{
-					header("Location:".base_url());
-					//header("Location:".base_url().'usuario/loginUsuario');
-				}
-				else
-				{
-					header("Location:".base_url().$urlPartida[sizeof($urlPartida)-2]."/".$urlPartida[sizeof($urlPartida)-1]);
-				}
-				
-				
-				//header("Location:".base_url().$_SERVER['PHP_SELF']);
-				 * 
-				 */
 			}
 		}
 		echo $response;
 		
-		//enmarcar($this,'usuario/registrarUsuario.php');
-		//$this->load->view('usuario/registrarUsuario.php');
+		
 		 
 	}
 	
@@ -788,11 +736,7 @@ MENSAJE;
 			enmarcar($this,'index.php',$datos);
 		}
 		
-		//RECOGEMOS DOS VARIABLES POR SI RETORNAMOS DE UN INTENTO DE LOGIN FALLIDO(LOGINUSUARIOPOST)
-		/*
-		$datos['error']=$this->session->flashdata('error');
-		enmarcar($this,'usuario/cambiarPassword.php',$datos);
-		*/
+		
 	}
 	
 	public function cambiarPasswordPost()

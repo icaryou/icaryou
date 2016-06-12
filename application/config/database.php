@@ -78,6 +78,25 @@ $username = "root";
 $password = "";
 $database = "icaryou2";
 
+//icaryou
+
+if ( ! ($_SERVER ['SERVER_NAME'] == 'localhost' || $_SERVER ['SERVER_NAME'] == '127.0.0.1')) {
+	$hostname = "mysql.hostinger.es";
+	$username = "u159310763_root";
+	$password = "Micochecit0";
+	$database = "u159310763_icy";
+}
+
+
+//icaryouspain
+
+if ( ! ($_SERVER ['SERVER_NAME'] == 'localhost' || $_SERVER ['SERVER_NAME'] == '127.0.0.1')) {
+	$hostname = "mysql.hostinger.es";
+	$username = "u411005979_icar";
+	$password = "Micochecit0";
+	$database = "u411005979_icar";
+}
+
 $db['default'] = array(
 	'dsn'	=> '',
 	'hostname' => $hostname,

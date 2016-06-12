@@ -54,7 +54,7 @@
 						</div>
 
 						<div class="span6">
-							<img src="<?= base_url();?>assets/img/slide/slide2.jpg">
+							<img src="<?= base_url();?>assets/img/slide/slide2.png">
 						</div>
 
 					</div>

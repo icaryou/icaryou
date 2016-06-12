@@ -444,6 +444,14 @@ function enviarMensaje()
 		cancelar_envio=true;
 	}
 	
+	
+	if(id_otro_usuario_mensaje==1)
+	{
+		cancelar_envio=true;
+		alert("No puedes mandar mensajes instantaneos al admin, usa el email!!!");
+		var texto=$('#input_mensajes').val('');
+	}
+	
 	if(texto=='')
 	{
 		cancelar_envio=true;
